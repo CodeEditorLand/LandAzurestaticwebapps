@@ -1,7 +1,7 @@
 {
-    "configurations": {
-        "app": {
-            "context": "./src"
-        }
-    }
+	"configurations": {
+		"app": {
+			"context": "./src"
+		}
+	}
 }

@@ -1,48 +1,48 @@
 {
-  "name": "hello",
-  "version": "0.0.1",
-  "private": "false",
-  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
-  "bugs": {
-    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Nikola Hristov",
-    "email": "nikola@nikolahristov.tech",
-    "url": "https://nikolahristov.tech"
-  },
-  "publisher": "playform",
-  "type": "module",
-  "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts",
-    "serve": "vue-cli-service serve"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ],
-  "dependencies": {
-    "core-js": "3.33.1",
-    "vue": "3.3.7"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~5.0.8",
-    "@vue/cli-plugin-eslint": "~5.0.8",
-    "@vue/cli-service": "~5.0.8",
-    "babel-eslint": "10.0.3",
-    "eslint": "8.52.0",
-    "eslint-plugin-vue": "9.18.1",
-    "typescript-esbuild": "0.3.1",
-    "vue-template-compiler": "2.7.15"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+	"name": "hello",
+	"version": "0.0.1",
+	"private": "false",
+	"homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
+	"bugs": {
+		"url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Nikola Hristov",
+		"email": "nikola@nikolahristov.tech",
+		"url": "https://nikolahristov.tech"
+	},
+	"publisher": "playform",
+	"type": "module",
+	"scripts": {
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"serve": "vue-cli-service serve"
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions"
+	],
+	"dependencies": {
+		"core-js": "3.33.1",
+		"vue": "3.3.7"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "~5.0.8",
+		"@vue/cli-plugin-eslint": "~5.0.8",
+		"@vue/cli-service": "~5.0.8",
+		"babel-eslint": "10.0.3",
+		"eslint": "8.52.0",
+		"eslint-plugin-vue": "9.18.1",
+		"typescript-esbuild": "0.3.1",
+		"vue-template-compiler": "2.7.15"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }
