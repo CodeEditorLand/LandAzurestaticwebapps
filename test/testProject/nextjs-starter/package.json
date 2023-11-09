@@ -1,40 +1,19 @@
 {
-	"name": "nextjs-static-website",
-	"version": "0.0.1",
-	"private": "false",
-	"homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
-	"bugs": {
-		"url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
-	},
-	"license": "MIT",
-	"author": {
-		"name": "Nikola Hristov",
-		"email": "nikola@nikolahristov.tech",
-		"url": "https://nikolahristov.tech"
-	},
-	"publisher": "playform",
-	"type": "module",
-	"scripts": {
-		"build": "next build && next export",
-		"dev": "next dev",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"start": "next start"
-	},
-	"dependencies": {
-		"isomorphic-unfetch": "4.0.2",
-		"next": "14.0.0",
-		"react": "18.2.0",
-		"react-dom": "18.2.0"
-	},
-	"devDependencies": {
-		"serve": "14.2.1",
-		"typescript-esbuild": "0.3.1"
-	},
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "nextjs-static-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start"
+  },
+  "dependencies": {
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^10.0.7",
+    "react": "^17.0.2",
+    "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "serve": "^11.3.2"
+  }
 }
