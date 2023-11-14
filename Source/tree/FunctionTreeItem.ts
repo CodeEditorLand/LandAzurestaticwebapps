@@ -4,40 +4,34 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { StaticSiteFunctionOverviewARMResource } from "@azure/arm-appservice";
-import {
-	AzExtTreeItem,
-	nonNullProp,
-	TreeItemIconPath,
-} from "@microsoft/vscode-azext-utils";
+import { AzExtTreeItem, nonNullProp, TreeItemIconPath } from "@microsoft/vscode-azext-utils";
 import { treeUtils } from "../utils/treeUtils";
 import { FunctionsTreeItem } from "./FunctionsTreeItem";
 
 export class FunctionTreeItem extends AzExtTreeItem {
-	public static contextValue: string = "azureStaticFunction";
-	public readonly contextValue: string = FunctionTreeItem.contextValue;
-	public data: StaticSiteFunctionOverviewARMResource;
 
-	constructor(
-		parent: FunctionsTreeItem,
-		func: StaticSiteFunctionOverviewARMResource
-	) {
-		super(parent);
-		this.data = func;
-	}
+    public static contextValue: string = 'azureStaticFunction';
+    public readonly contextValue: string = FunctionTreeItem.contextValue;
+    public data: StaticSiteFunctionOverviewARMResource;
 
-	public get name(): string {
-		return nonNullProp(this.data, "functionName");
-	}
+    constructor(parent: FunctionsTreeItem, func: StaticSiteFunctionOverviewARMResource) {
+        super(parent);
+        this.data = func;
+    }
 
-	public get id(): string {
-		return nonNullProp(this.data, "id");
-	}
+    public get name(): string {
+        return nonNullProp(this.data, 'functionName');
+    }
 
-	public get label(): string {
-		return this.name;
-	}
+    public get id(): string {
+        return nonNullProp(this.data, 'id');
+    }
 
-	public get iconPath(): TreeItemIconPath {
-		return treeUtils.getIconPath("azFuncFunction");
-	}
+    public get label(): string {
+        return this.name;
+    }
+
+    public get iconPath(): TreeItemIconPath {
+        return treeUtils.getIconPath('azFuncFunction');
+    }
 }
