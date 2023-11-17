@@ -1,62 +1,93 @@
 /*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
 import { MessageItem } from "vscode";
 import { localize } from "./utils/localize";
 
-export const githubApiEndpoint: string = 'https://api.github.com';
-export const remoteRepositoriesId: string = 'ms-vscode.remote-repositories';
+export const githubApiEndpoint: string = "https://api.github.com";
+export const remoteRepositoriesId: string = "ms-vscode.remote-repositories";
 
-export const defaultAppLocation: string = '/';
-export const defaultApiLocation: string = 'api';
-export const productionEnvironmentName: string = 'Production';
+export const defaultAppLocation: string = "/";
+export const defaultApiLocation: string = "api";
+export const productionEnvironmentName: string = "Production";
 
-export const appSubpathSetting: string = 'appSubpath';
-export const apiSubpathSetting: string = 'apiSubpath';
-export const appArtifactSubpathSetting: string = 'appArtifactSubpath';
-export const outputSubpathSetting: string = 'outputSubpath';
+export const appSubpathSetting: string = "appSubpath";
+export const apiSubpathSetting: string = "apiSubpath";
+export const appArtifactSubpathSetting: string = "appArtifactSubpath";
+export const outputSubpathSetting: string = "outputSubpath";
 
-export const configFileName: string = 'staticwebapp.config.json';
+export const configFileName: string = "staticwebapp.config.json";
 
-export const showActionsMsg: MessageItem = { title: localize('openActions', 'Open Actions in GitHub') };
+export const showActionsMsg: MessageItem = {
+	title: localize("openActions", "Open Actions in GitHub"),
+};
 
-export const openExistingProject = 'openExistingProject';
+export const openExistingProject = "openExistingProject";
 
-export const onlyGitHubSupported: string = localize('onlyGitHubSupported', 'Only Static Web Apps linked to GitHub are supported at this time.');
+export const onlyGitHubSupported: string = localize(
+	"onlyGitHubSupported",
+	"Only Static Web Apps linked to GitHub are supported at this time."
+);
 
 export const isStartGroup = (t: string): boolean => /##\[group\]/.test(t);
-export const isEndGroup = (t: string): boolean => /##\[endgroup\]/.test(t)
+export const isEndGroup = (t: string): boolean => /##\[endgroup\]/.test(t);
 
-export const githubAuthProviderId: string = 'github';
+export const githubAuthProviderId: string = "github";
 // same scopes as the GitHub extension so we won't have to prompt for auth again
-export const githubScopes: string[] = ['repo', 'workflow', 'user:email', 'read:user'];
+export const githubScopes: string[] = [
+	"repo",
+	"workflow",
+	"user:email",
+	"read:user",
+];
 
-export const angularOutputLocation = 'dist/<project-name>';
+export const angularOutputLocation = "dist/<project-name>";
 
-export const swaCliPackageName = '@azure/static-web-apps-cli';
-export const installSwaCliUrl: string = 'https://aka.ms/installSwaCli';
+export const swaCliPackageName = "@azure/static-web-apps-cli";
+export const installSwaCliUrl: string = "https://aka.ms/installSwaCli";
 
-export const emulatorAddress = 'http://localhost:4280';
-export const swaWatchProblemMatcher = '$swa-watch';
-export const swa: string = 'swa';
-export const funcAddress: string = 'http://localhost:7071';
-export const pwaChrome: string = 'pwa-chrome';
-export const shell: string = 'shell';
-export const minSwaCliVersion = '0.8.0';
-export const swaCliConfigFileName = 'swa-cli.config.json';
+export const emulatorAddress = "http://localhost:4280";
+export const swaWatchProblemMatcher = "$swa-watch";
+export const swa: string = "swa";
+export const funcAddress: string = "http://localhost:7071";
+export const pwaChrome: string = "pwa-chrome";
+export const shell: string = "shell";
+export const minSwaCliVersion = "0.8.0";
+export const swaCliConfigFileName = "swa-cli.config.json";
 
 export const swaFilter = {
-    type: 'microsoft.web/staticsites',
+	type: "microsoft.web/staticsites",
 };
 
 // https://docs.microsoft.com/en-us/azure/static-web-apps/apis#constraints
-export const reservedSettingsPrefixes: (RegExp | string)[] = [/^APPSETTING_/, /^AZUREBLOBSTORAGE_/, /^AZUREFILESSTORAGE_/, /^AZURE_FUNCTION_/, /^CONTAINER_/, /^DIAGNOSTICS_/, /^DOCKER_/, /^FUNCTIONS_/, /^IDENTITY_/, /^MACHINEKEY_/, /^MAINSITE_/, /^MSDEPLOY_/, /^SCMSITE_/, /^SCM_/, /^WEBSITES_/, /^WEBSITE_/, /^WEBSOCKET_/, /^AzureWeb/];
+export const reservedSettingsPrefixes: (RegExp | string)[] = [
+	/^APPSETTING_/,
+	/^AZUREBLOBSTORAGE_/,
+	/^AZUREFILESSTORAGE_/,
+	/^AZURE_FUNCTION_/,
+	/^CONTAINER_/,
+	/^DIAGNOSTICS_/,
+	/^DOCKER_/,
+	/^FUNCTIONS_/,
+	/^IDENTITY_/,
+	/^MACHINEKEY_/,
+	/^MAINSITE_/,
+	/^MSDEPLOY_/,
+	/^SCMSITE_/,
+	/^SCM_/,
+	/^WEBSITES_/,
+	/^WEBSITE_/,
+	/^WEBSOCKET_/,
+	/^AzureWeb/,
+];
 
-export const gitignoreFileName = '.gitignore';
+export const gitignoreFileName = ".gitignore";
 
-export const openRemoteProjectMsg: MessageItem = { title: localize('openRemoteProject', 'Open remote repository') };
+export const openRemoteProjectMsg: MessageItem = {
+	title: localize("openRemoteProject", "Open remote repository"),
+};
 
 // Source: https://github.com/github/gitignore/blob/master/Node.gitignore
 export const defaultGitignoreContents: string = `# Logs
