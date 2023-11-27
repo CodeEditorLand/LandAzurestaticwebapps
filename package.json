@@ -463,11 +463,11 @@
     "@types/git-url-parse": "9.0.3",
     "@types/gulp": "4.0.17",
     "@types/mocha": "10.0.6",
-    "@types/node": "20.9.4",
+    "@types/node": "20.10.0",
     "@types/semver": "7.5.6",
     "@types/vscode": "1.84.2",
     "@typescript-eslint/eslint-plugin": "6.12.0",
-    "@vscode/test-electron": "2.3.6",
+    "@vscode/test-electron": "2.3.8",
     "@vscode/vsce": "2.22.0",
     "eslint": "8.54.0",
     "eslint-plugin-import": "2.29.0",
@@ -486,7 +486,7 @@
     "typescript-esbuild": "0.3.1"
   },
   "dependencies": {
-    "@azure/arm-appservice": "14.0.0",
+    "@azure/arm-appservice": "14.1.0",
     "@azure/arm-resources": "5.2.0",
     "@microsoft/vscode-azext-azureappsettings": "0.2.0",
     "@microsoft/vscode-azext-azureutils": "2.0.2",
