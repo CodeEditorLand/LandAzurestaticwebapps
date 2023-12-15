@@ -38,7 +38,7 @@ export async function createHttpFunction(
 		: getWorkspaceSetting(
 				apiSubpathSetting,
 				workspace.workspaceFolders[0].uri
-		  ) || defaultApiLocation;
+			) || defaultApiLocation;
 	const folderPath: string = path.join(
 		workspace.workspaceFolders[0].uri.fsPath,
 		apiLocation

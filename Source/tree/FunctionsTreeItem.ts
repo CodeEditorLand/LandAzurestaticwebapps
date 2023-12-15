@@ -54,14 +54,14 @@ export class FunctionsTreeItem extends AzExtParentTreeItem {
 						this.parent.parent.resourceGroup,
 						this.parent.parent.name
 					)
-			  )
+				)
 			: await uiUtils.listAllIterator(
 					client.staticSites.listStaticSiteBuildFunctions(
 						this.parent.parent.resourceGroup,
 						this.parent.parent.name,
 						this.parent.buildId
 					)
-			  );
+				);
 
 		const treeItems: AzExtTreeItem[] =
 			await this.createTreeItemsWithErrorHandling(

@@ -82,11 +82,11 @@ export class GitError extends Error {
 							"auth failed specific",
 							"Failed to authenticate to git remote:\n\n{0}",
 							match[1]
-					  )
+						)
 					: localize(
 							"auth failed",
 							"Failed to authenticate to git remote."
-					  );
+						);
 				break;
 			case GitErrorCodes.NoUserNameConfigured:
 			case GitErrorCodes.NoUserEmailConfigured:
