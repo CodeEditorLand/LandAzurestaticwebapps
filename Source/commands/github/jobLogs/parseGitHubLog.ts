@@ -17,7 +17,7 @@ export type LogState = {
 export function parseGitHubLog(
 	rawLogs: string,
 	startedAt: Date,
-	completedAt: Date
+	completedAt: Date,
 ): LogState {
 	const linesArray = rawLogs.split("\r\n");
 	const state: LogState = {
@@ -34,7 +34,7 @@ export function parseGitHubLog(
 		const currentTimestamp: Date | undefined = isValidTimestamp(
 			entry,
 			startedAt,
-			completedAt
+			completedAt,
 		);
 
 		if (!currentTimestamp && !state.withinGroup) {
@@ -73,7 +73,7 @@ export function parseGitHubLog(
 function isValidTimestamp(
 	entry: string,
 	startedAt: Date,
-	completedAt: Date
+	completedAt: Date,
 ): Date | undefined {
 	const timestampRegExp = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{7}Z/;
 	const timestamp = timestampRegExp.exec(entry);
@@ -108,7 +108,7 @@ function pushFoldingIndex(entry: string, index: number, state: LogState): void {
 function isWithinGroup(
 	entry: string,
 	state: LogState,
-	withinTimestampRange: boolean
+	withinTimestampRange: boolean,
 ): void {
 	if (state.withinGroup) {
 		// if it _is_ an endgroup, then withinGroup should be false
@@ -139,7 +139,7 @@ function isOverlappingStep(entry: string, state: LogState): boolean {
 // some entries in a group are not within the timestamp range but should still be displayed together
 function shouldPushStep(
 	state: LogState,
-	withinTimestampRange: boolean
+	withinTimestampRange: boolean,
 ): boolean {
 	return state.withinGroup || withinTimestampRange;
 }

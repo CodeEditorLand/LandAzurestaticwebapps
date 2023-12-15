@@ -52,21 +52,21 @@ export class NodeDetector {
 
 		isNodeApp =
 			(await AzExtFsExtra.pathExists(
-				Uri.joinPath(uri, NodeConstants.PackageJsonFileName)
+				Uri.joinPath(uri, NodeConstants.PackageJsonFileName),
 			)) ||
 			(await AzExtFsExtra.pathExists(
-				Uri.joinPath(uri, NodeConstants.PackageLockJsonFileName)
+				Uri.joinPath(uri, NodeConstants.PackageLockJsonFileName),
 			)) ||
 			(await AzExtFsExtra.pathExists(
-				Uri.joinPath(uri, NodeConstants.YarnLockFileName)
+				Uri.joinPath(uri, NodeConstants.YarnLockFileName),
 			));
 
 		hasYarnrcYmlFile = await AzExtFsExtra.pathExists(
-			Uri.joinPath(uri, NodeConstants.YarnrcYmlName)
+			Uri.joinPath(uri, NodeConstants.YarnrcYmlName),
 		);
 		const yarnLockUri: Uri = Uri.joinPath(
 			uri,
-			NodeConstants.YarnLockFileName
+			NodeConstants.YarnLockFileName,
 		);
 		isYarnLockFileValidYamlFormat =
 			(await AzExtFsExtra.pathExists(yarnLockUri)) &&
@@ -74,7 +74,7 @@ export class NodeDetector {
 
 		if (
 			await AzExtFsExtra.pathExists(
-				Uri.joinPath(uri, NodeConstants.LernaJsonFileName)
+				Uri.joinPath(uri, NodeConstants.LernaJsonFileName),
 			)
 		) {
 			hasLernaJsonFile = true;
@@ -82,7 +82,7 @@ export class NodeDetector {
 		}
 
 		hasLageConfigJSFile = await AzExtFsExtra.pathExists(
-			Uri.joinPath(uri, NodeConstants.LageConfigJSFileName)
+			Uri.joinPath(uri, NodeConstants.LageConfigJSFileName),
 		);
 
 		// Copying the logic currently running in Kudu:
@@ -102,7 +102,7 @@ export class NodeDetector {
 				for (const iisStartupFile of NodeConstants.IisStartupFiles) {
 					if (
 						await AzExtFsExtra.pathExists(
-							Uri.joinPath(uri, iisStartupFile)
+							Uri.joinPath(uri, iisStartupFile),
 						)
 					) {
 						// "App in repo is not a Node.js app as it has the file {iisStartupFile}"
@@ -147,21 +147,21 @@ export class NodeDetector {
 	}
 
 	private async getVersionFromPackageJson(
-		uri: Uri
+		uri: Uri,
 	): Promise<string | undefined> {
 		const packageJson = await this.getPackageJsonObject(uri);
 		return packageJson?.engines?.node;
 	}
 
 	private async getPackageJsonObject(
-		uri: Uri
+		uri: Uri,
 	): Promise<PackageJson | undefined> {
 		try {
 			return <{ engines?: { node?: string } }>(
 				JSON.parse(
 					await AzExtFsExtra.readFile(
-						Uri.joinPath(uri, NodeConstants.PackageJsonFileName)
-					)
+						Uri.joinPath(uri, NodeConstants.PackageJsonFileName),
+					),
 				)
 			);
 		} catch (err) {
@@ -177,7 +177,7 @@ export class NodeDetector {
 		if (packageJson?.devDependencies !== undefined) {
 			const devDependencies = packageJson.devDependencies;
 			for (const framework of Object.keys(
-				NodeConstants.DevDependencyFrameworkKeyWordToName
+				NodeConstants.DevDependencyFrameworkKeyWordToName,
 			)) {
 				if (devDependencies[framework]) {
 					detectedFrameworkResult.push({
@@ -194,7 +194,7 @@ export class NodeDetector {
 		if (packageJson?.dependencies !== undefined) {
 			const dependencies = packageJson.dependencies;
 			for (const framework of Object.keys(
-				NodeConstants.DependencyFrameworkKeyWordToName
+				NodeConstants.DependencyFrameworkKeyWordToName,
 			)) {
 				if (dependencies[framework]) {
 					detectedFrameworkResult.push({
@@ -210,7 +210,7 @@ export class NodeDetector {
 
 		if (
 			await AzExtFsExtra.pathExists(
-				Uri.joinPath(uri, NodeConstants.FlutterYamlFileName)
+				Uri.joinPath(uri, NodeConstants.FlutterYamlFileName),
 			)
 		) {
 			detectedFrameworkResult.push({
@@ -226,7 +226,7 @@ export class NodeDetector {
 		let npmClientName: string = "";
 		if (
 			!(await AzExtFsExtra.pathExists(
-				Uri.joinPath(uri, NodeConstants.LernaJsonFileName)
+				Uri.joinPath(uri, NodeConstants.LernaJsonFileName),
 			))
 		) {
 			return npmClientName;
@@ -236,8 +236,8 @@ export class NodeDetector {
 			const learnJson = <{ npmClient?: string }>(
 				JSON.parse(
 					await AzExtFsExtra.readFile(
-						Uri.joinPath(uri, NodeConstants.LernaJsonFileName)
-					)
+						Uri.joinPath(uri, NodeConstants.LernaJsonFileName),
+					),
 				)
 			);
 			if (learnJson?.npmClient) {
@@ -248,7 +248,7 @@ export class NodeDetector {
 			}
 		} catch (err) {
 			console.error(
-				`Exception caught while trying to deserialize ${NodeConstants.LernaJsonFileName}`
+				`Exception caught while trying to deserialize ${NodeConstants.LernaJsonFileName}`,
 			);
 		}
 		return npmClientName;

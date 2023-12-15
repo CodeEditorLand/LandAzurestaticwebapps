@@ -27,15 +27,15 @@ function getContentProvider(): GitHubLogContentProvider {
 		ext.context.subscriptions.push(
 			workspace.registerTextDocumentContentProvider(
 				contentScheme,
-				_cachedContentProvider
-			)
+				_cachedContentProvider,
+			),
 		);
 	}
 	return _cachedContentProvider;
 }
 
 export function getGitHubLogFoldingRanges(
-	document: TextDocument
+	document: TextDocument,
 ): FoldingRange[] {
 	const contentProvider = getContentProvider();
 	return contentProvider.getGitHubLogFoldingRanges(document.uri);
@@ -44,13 +44,13 @@ export function getGitHubLogFoldingRanges(
 export async function openGitHubLogContent(
 	node: JobTreeItem | StepTreeItem,
 	content: string,
-	foldingRanges: FoldingRange[]
+	foldingRanges: FoldingRange[],
 ): Promise<GitHubLogContent> {
 	const contentProvider = getContentProvider();
 	return await contentProvider.openGitHubLogContent(
 		node,
 		content,
-		foldingRanges
+		foldingRanges,
 	);
 }
 
@@ -81,7 +81,7 @@ class GitHubLogContentProvider implements TextDocumentContentProvider {
 	public async openGitHubLogContent(
 		node: JobTreeItem | StepTreeItem,
 		content: string,
-		foldingRanges: FoldingRange[]
+		foldingRanges: FoldingRange[],
 	): Promise<GitHubLogContent> {
 		// Remove special characters which may prove troublesome when parsing the uri. We'll allow the same set as `encodeUriComponent`
 		const removeSpecialCharRegExp: RegExp = /[^a-z0-9\-\_\.\!\~\*\'\(\)]/gi;
@@ -96,7 +96,7 @@ class GitHubLogContentProvider implements TextDocumentContentProvider {
 
 		const gitHubLogContent: GitHubLogContent = new GitHubLogContent(
 			content,
-			foldingRanges
+			foldingRanges,
 		);
 		this._contentMap.set(uri.toString(), gitHubLogContent);
 
@@ -108,11 +108,11 @@ class GitHubLogContentProvider implements TextDocumentContentProvider {
 
 	public async provideTextDocumentContent(
 		uri: Uri,
-		_token: CancellationToken
+		_token: CancellationToken,
 	): Promise<string> {
 		const gitHubLogContent: GitHubLogContent = nonNullValue(
 			this._contentMap.get(uri.toString()),
-			"GitHubLogContentProvider._contentMap.get"
+			"GitHubLogContentProvider._contentMap.get",
 		);
 		return gitHubLogContent.content;
 	}

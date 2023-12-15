@@ -45,7 +45,7 @@ let webConfig = dev.getDefaultWebpackConfig({
 	},
 	target: "webworker",
 	resolveFallbackAliases: {
-		"process": require.resolve("process/browser.js"),
+		process: require.resolve("process/browser.js"),
 	},
 	plugins: [
 		new webpack.ProvidePlugin({

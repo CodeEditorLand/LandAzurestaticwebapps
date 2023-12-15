@@ -26,6 +26,6 @@ export async function revealTreeItem(resourceId: string): Promise<void> {
 					expand: true,
 				});
 			}
-		}
+		},
 	);
 }

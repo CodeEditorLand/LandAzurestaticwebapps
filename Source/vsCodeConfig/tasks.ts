@@ -23,7 +23,7 @@ export function getTasks(folder: WorkspaceFolder): ITask[] {
 
 export async function updateTasks(
 	folder: WorkspaceFolder,
-	tasks: ITask[]
+	tasks: ITask[],
 ): Promise<void> {
 	await getTasksConfig(folder).update(tasksKey, tasks);
 }
@@ -34,7 +34,7 @@ export function getTasksVersion(folder: WorkspaceFolder): string | undefined {
 
 export async function updateTasksVersion(
 	folder: WorkspaceFolder,
-	version: string
+	version: string,
 ): Promise<void> {
 	await getTasksConfig(folder).update(versionKey, version);
 }
@@ -76,7 +76,7 @@ export class SwaTask extends Task {
 	constructor(
 		scope: WorkspaceFolder,
 		name: string,
-		execution: ShellExecution
+		execution: ShellExecution,
 	) {
 		const taskDefinition: TaskDefinition = {
 			type: shell,
@@ -88,7 +88,7 @@ export class SwaTask extends Task {
 			name,
 			swa,
 			execution,
-			swaWatchProblemMatcher
+			swaWatchProblemMatcher,
 		);
 		this.isBackground = true;
 	}

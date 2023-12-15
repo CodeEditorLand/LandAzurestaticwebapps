@@ -23,7 +23,7 @@ import { AzureFunctionsExtensionApi } from "./vscode-azurefunctions.api";
  */
 export async function getFunctionsApi(
 	context: IActionContext,
-	installMessage?: string
+	installMessage?: string,
 ): Promise<AzureFunctionsExtensionApi> {
 	const funcExtensionId: string = "ms-azuretools.vscode-azurefunctions";
 	const funcExtension: apiUtils.AzureExtensionApiProvider | undefined =
@@ -37,9 +37,9 @@ export async function getFunctionsApi(
 		installMessage ??
 			localize(
 				"funcInstall",
-				'You must have the "Azure Functions" extension installed to perform this operation.'
+				'You must have the "Azure Functions" extension installed to perform this operation.',
 			),
-		{ title: "Install", stepName: "installFunctions" }
+		{ title: "Install", stepName: "installFunctions" },
 	);
 	const commandToRun: string = "extension.open";
 	void commands.executeCommand(commandToRun, funcExtensionId);
@@ -62,8 +62,8 @@ export async function getGitApi(): Promise<IGit> {
 					throw new Error(
 						localize(
 							"unableGit",
-							"Unable to retrieve VS Code Git API. Please ensure git is properly installed and reload VS Code."
-						)
+							"Unable to retrieve VS Code Git API. Please ensure git is properly installed and reload VS Code.",
+						),
 					);
 			}
 
@@ -80,8 +80,8 @@ export async function getGitApi(): Promise<IGit> {
 			throw new Error(
 				localize(
 					"gitEnabled",
-					"If you would like to use git features, please enable git in your [settings](command:workbench.action.openSettings?%5B%22git.enabled%22%5D). To learn more about how to use git and source control in VS Code [read our docs](https://aka.ms/vscode-scm)."
-				)
+					"If you would like to use git features, please enable git in your [settings](command:workbench.action.openSettings?%5B%22git.enabled%22%5D). To learn more about how to use git and source control in VS Code [read our docs](https://aka.ms/vscode-scm).",
+				),
 			);
 		} else {
 			throw err;
@@ -90,7 +90,7 @@ export async function getGitApi(): Promise<IGit> {
 }
 
 export async function getApiExport<T>(
-	extensionId: string
+	extensionId: string,
 ): Promise<T | undefined> {
 	const extension: Extension<T> | undefined =
 		extensions.getExtension(extensionId);
@@ -108,7 +108,7 @@ export async function getApiExport<T>(
 export async function getResourceGroupsApi(): Promise<AzureHostExtensionApi> {
 	const rgApiProvider =
 		await getApiExport<apiUtils.AzureExtensionApiProvider>(
-			"ms-azuretools.vscode-azureresourcegroups"
+			"ms-azuretools.vscode-azureresourcegroups",
 		);
 	if (rgApiProvider) {
 		return rgApiProvider.getApi<AzureHostExtensionApi>("0.0.1");
@@ -116,8 +116,8 @@ export async function getResourceGroupsApi(): Promise<AzureHostExtensionApi> {
 		throw new Error(
 			localize(
 				"noResourceGroupExt",
-				"Could not find the Azure Resource Groups extension"
-			)
+				"Could not find the Azure Resource Groups extension",
+			),
 		);
 	}
 }

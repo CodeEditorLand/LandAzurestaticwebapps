@@ -42,7 +42,7 @@ export class FunctionsTreeItem extends AzExtParentTreeItem {
 
 	public async loadMoreChildrenImpl(
 		_clearCache: boolean,
-		context: IActionContext
+		context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		const client: WebSiteManagementClient = await createWebSiteClient([
 			context,
@@ -52,23 +52,23 @@ export class FunctionsTreeItem extends AzExtParentTreeItem {
 			? await uiUtils.listAllIterator(
 					client.staticSites.listStaticSiteFunctions(
 						this.parent.parent.resourceGroup,
-						this.parent.parent.name
-					)
-				)
+						this.parent.parent.name,
+					),
+			  )
 			: await uiUtils.listAllIterator(
 					client.staticSites.listStaticSiteBuildFunctions(
 						this.parent.parent.resourceGroup,
 						this.parent.parent.name,
-						this.parent.buildId
-					)
-				);
+						this.parent.buildId,
+					),
+			  );
 
 		const treeItems: AzExtTreeItem[] =
 			await this.createTreeItemsWithErrorHandling(
 				functions,
 				"invalidFunction",
 				(func) => new FunctionTreeItem(this, func),
-				(func) => func.name
+				(func) => func.name,
 			);
 
 		if (treeItems.length === 0) {
@@ -76,7 +76,7 @@ export class FunctionsTreeItem extends AzExtParentTreeItem {
 				new GenericTreeItem(this, {
 					label: localize(
 						"noFunctions",
-						"No Functions have been pushed to this Static Web App."
+						"No Functions have been pushed to this Static Web App.",
 					),
 					contextValue: "noFunctions",
 				}),

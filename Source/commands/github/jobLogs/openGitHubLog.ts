@@ -17,7 +17,7 @@ import { LogState, parseGitHubLog } from "./parseGitHubLog";
 
 export async function openGitHubLog(
 	context: IActionContext,
-	node?: StepTreeItem
+	node?: StepTreeItem,
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<StepTreeItem>(context, {
@@ -37,7 +37,7 @@ export async function openGitHubLog(
 		const logState: LogState = parseGitHubLog(
 			rawLogs,
 			new Date(node.data.started_at ?? ""),
-			new Date(node.data.completed_at ?? "")
+			new Date(node.data.completed_at ?? ""),
 		);
 		content = logState.filteredJobsLog.length
 			? logState.filteredJobsLog.join(EOL)
@@ -50,7 +50,7 @@ export async function openGitHubLog(
 
 		content = localize(
 			"expiredLogs",
-			"The logs for this run have expired and are no longer available."
+			"The logs for this run have expired and are no longer available.",
 		);
 	}
 

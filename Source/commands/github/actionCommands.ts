@@ -25,11 +25,11 @@ import { createOctokitClient } from "./createOctokitClient";
 
 export async function rerunAction(
 	context: IActionContext,
-	node?: ActionTreeItem
+	node?: ActionTreeItem,
 ): Promise<void> {
 	const noItemFoundErrorMessage: string = localize(
 		"noCompleted",
-		"No completed actions found."
+		"No completed actions found.",
 	);
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<ActionTreeItem>(
@@ -37,14 +37,14 @@ export async function rerunAction(
 			{
 				filter: swaFilter,
 				expectedChildContextValue: ActionTreeItem.contextValueCompleted,
-			}
+			},
 		);
 	}
 
 	const rerunRunning: string = localize(
 		"rerunRunning",
 		'Rerun for action "{0}" has started.',
-		node.data.id
+		node.data.id,
 	);
 	ext.outputChannel.appendLog(rerunRunning);
 
@@ -61,11 +61,11 @@ export async function rerunAction(
 
 export async function cancelAction(
 	context: IActionContext,
-	node?: ActionTreeItem
+	node?: ActionTreeItem,
 ): Promise<void> {
 	const noItemFoundErrorMessage: string = localize(
 		"noInProgress",
-		"No in-progress actions found."
+		"No in-progress actions found.",
 	);
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<ActionTreeItem>(
@@ -74,14 +74,14 @@ export async function cancelAction(
 				filter: swaFilter,
 				expectedChildContextValue:
 					ActionTreeItem.contextValueInProgress,
-			}
+			},
 		);
 	}
 
 	const cancelRunning: string = localize(
 		"cancelRunning",
 		'Cancel for action "{0}" has started.',
-		node.data.id
+		node.data.id,
 	);
 	ext.outputChannel.appendLog(cancelRunning);
 
@@ -99,7 +99,7 @@ export async function cancelAction(
 export async function checkActionStatus(
 	context: IActionContext,
 	node: ActionTreeItem,
-	initialCreate: boolean = false
+	initialCreate: boolean = false,
 ): Promise<Conclusion> {
 	const startTime: number = Date.now();
 	const client: Octokit = await createOctokitClient(context);
@@ -120,7 +120,7 @@ export async function checkActionStatus(
 					"actionCompleted",
 					'Action "{0}" has completed with the conclusion "{1}".',
 					node.data.id,
-					workflowRun.conclusion
+					workflowRun.conclusion,
 				);
 				ext.outputChannel.appendLog(actionCompleted);
 				void window.showInformationMessage(actionCompleted);
@@ -128,7 +128,7 @@ export async function checkActionStatus(
 
 			await node.refresh(context);
 			context.telemetry.properties.secToReport = String(
-				(Date.now() - startTime) / 1000
+				(Date.now() - startTime) / 1000,
 			);
 			context.telemetry.properties.conclusion =
 				workflowRun.conclusion || "";
@@ -145,7 +145,7 @@ export async function checkActionStatus(
 			"timedOut",
 			'The action "{0}" is still running.  Check "{1}" for its status',
 			node.data.id,
-			node.data.html_url
+			node.data.html_url,
 		);
 		ext.outputChannel.appendLog(operationTimedOut);
 		void window.showInformationMessage(operationTimedOut);

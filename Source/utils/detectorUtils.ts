@@ -14,7 +14,7 @@ export interface FolderDetectionResult extends DetectorResults {
 
 export async function detectAppFoldersInWorkspace(
 	context: IActionContext,
-	workspaceFolder: WorkspaceFolder
+	workspaceFolder: WorkspaceFolder,
 ): Promise<FolderDetectionResult[]> {
 	const results: (DetectorResults & { uri: Uri })[] = [];
 

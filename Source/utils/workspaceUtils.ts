@@ -46,8 +46,8 @@ export async function selectWorkspaceFolder(
 	context: IActionContext,
 	placeHolder: string,
 	getSubPath?: (
-		f: WorkspaceFolder
-	) => string | undefined | Promise<string | undefined>
+		f: WorkspaceFolder,
+	) => string | undefined | Promise<string | undefined>,
 ): Promise<Uri> {
 	return await selectWorkspaceItem(
 		context,
@@ -63,7 +63,7 @@ export async function selectWorkspaceFolder(
 					: undefined,
 			openLabel: localize("select", "Select"),
 		},
-		getSubPath
+		getSubPath,
 	);
 }
 
@@ -72,8 +72,8 @@ export async function selectWorkspaceItem(
 	placeHolder: string,
 	options: OpenDialogOptions,
 	getSubPath?: (
-		f: WorkspaceFolder
-	) => string | undefined | Promise<string | undefined>
+		f: WorkspaceFolder,
+	) => string | undefined | Promise<string | undefined>,
 ): Promise<Uri> {
 	const folders: readonly WorkspaceFolder[] =
 		workspace.workspaceFolders || [];
@@ -91,7 +91,7 @@ export async function selectWorkspaceItem(
 					description: uri.fsPath,
 					data: uri,
 				};
-			})
+			}),
 		);
 
 	folderPicks.push({
@@ -108,7 +108,7 @@ export async function selectWorkspaceItem(
 }
 
 export async function tryGetWorkspaceFolder(
-	context: IActionContext
+	context: IActionContext,
 ): Promise<WorkspaceFolder | undefined> {
 	context.telemetry.properties.noWorkspaceResult = "canceled";
 	if (
@@ -123,7 +123,7 @@ export async function tryGetWorkspaceFolder(
 		const selectAppFolder: string = "selectAppFolder";
 		const folder = await selectWorkspaceFolder(
 			context,
-			localize(selectAppFolder, "Select folder with your app")
+			localize(selectAppFolder, "Select folder with your app"),
 		);
 		context.telemetry.properties.noWorkspaceResult = "multiRootProject";
 		return workspace.getWorkspaceFolder(folder);
@@ -131,12 +131,12 @@ export async function tryGetWorkspaceFolder(
 }
 
 export async function showNoWorkspacePrompt(
-	context: IActionContext
+	context: IActionContext,
 ): Promise<void> {
 	const noWorkspaceWarning: string = "noWorkspaceWarning";
 	const message: string = localize(
 		noWorkspaceWarning,
-		"You must have a git project open to create a Static Web App."
+		"You must have a git project open to create a Static Web App.",
 	);
 	const buttons: MessageItem[] = [];
 	const cloneProjectMsg: MessageItem = {
@@ -160,7 +160,7 @@ export async function showNoWorkspacePrompt(
 	const result = await context.ui.showWarningMessage(
 		message,
 		{ modal: true, stepName: noWorkspaceWarning },
-		...buttons
+		...buttons,
 	);
 	if (result === cloneProjectMsg) {
 		await cloneRepo(context, "");
@@ -189,7 +189,7 @@ export async function openFolder(context: IActionContext): Promise<void> {
 
 export async function getSubFolders(
 	context: IActionContext,
-	uri: Uri
+	uri: Uri,
 ): Promise<Uri[]> {
 	const files = await workspace.fs.readDirectory(uri);
 	const subfolders: Uri[] = [];

@@ -14,7 +14,7 @@ import { localize } from "../utils/localize";
 
 export async function viewProperties(
 	_context: IActionContext,
-	treeItem?: IAzureResourceTreeItem
+	treeItem?: IAzureResourceTreeItem,
 ): Promise<void> {
 	const node = nonNullValue(treeItem);
 
@@ -23,7 +23,7 @@ export async function viewProperties(
 			await node.getDataImpl();
 		} else {
 			throw new Error(
-				localize('No data exists on resource "{0}"', node.label)
+				localize('No data exists on resource "{0}"', node.label),
 			);
 		}
 	}

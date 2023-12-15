@@ -40,7 +40,7 @@ import { StaticWebAppResolver } from "./StaticWebAppResolver";
 export async function activate(
 	context: vscode.ExtensionContext,
 	perfStats: { loadStartTime: number; loadEndTime: number },
-	ignoreBundle?: boolean
+	ignoreBundle?: boolean,
 ): Promise<apiUtils.AzureExtensionApiProvider> {
 	// the entry point for vscode.dev is this activate, not main.js, so we need to instantiate perfStats here
 	// the perf stats don't matter for vscode because there is no main file to load-- we may need to see if we can track the download time
@@ -50,7 +50,7 @@ export async function activate(
 	ext.ignoreBundle = ignoreBundle;
 	ext.outputChannel = createAzExtOutputChannel(
 		"Azure Static Web Apps",
-		ext.prefix
+		ext.prefix,
 	);
 	context.subscriptions.push(ext.outputChannel);
 
@@ -72,43 +72,43 @@ export async function activate(
 			await vscode.authentication.getSession(
 				githubAuthProviderId,
 				githubScopes,
-				{ createIfNone: false }
+				{ createIfNone: false },
 			);
 
 			context.subscriptions.push(
 				vscode.languages.registerFoldingRangeProvider(
 					{ scheme: contentScheme },
-					new GitHubLogFoldingProvider()
-				)
+					new GitHubLogFoldingProvider(),
+				),
 			);
 			context.subscriptions.push(
 				vscode.debug.registerDebugConfigurationProvider(
 					pwaChrome,
-					new StaticWebAppDebugProvider()
-				)
+					new StaticWebAppDebugProvider(),
+				),
 			);
 			context.subscriptions.push(
 				vscode.debug.registerDebugConfigurationProvider(
 					swa,
 					new StaticWebAppDebugProvider(),
-					vscode.DebugConfigurationProviderTriggerKind.Dynamic
-				)
+					vscode.DebugConfigurationProviderTriggerKind.Dynamic,
+				),
 			);
 			context.subscriptions.push(
 				vscode.debug.registerDebugConfigurationProvider(
 					swa,
 					new StaticWebAppDebugProvider(),
-					vscode.DebugConfigurationProviderTriggerKind.Initial
-				)
+					vscode.DebugConfigurationProviderTriggerKind.Initial,
+				),
 			);
 			context.subscriptions.push(
-				vscode.tasks.registerTaskProvider(shell, new SwaTaskProvider())
+				vscode.tasks.registerTaskProvider(shell, new SwaTaskProvider()),
 			);
 
 			ext.rgApi = await getResourceGroupsApi();
 			ext.rgApi.registerApplicationResourceResolver(
 				AzExtResourceType.StaticWebApps,
-				new StaticWebAppResolver()
+				new StaticWebAppResolver(),
 			);
 
 			ext.remoteRepoApi = new RemoteRepoApi();
@@ -117,7 +117,7 @@ export async function activate(
 
 			ext.experimentationService =
 				await createExperimentationService(context);
-		}
+		},
 	);
 
 	// remoteRepoApi is combined with the SWA API required for resource gropus, but the remote repo relies on extension exports

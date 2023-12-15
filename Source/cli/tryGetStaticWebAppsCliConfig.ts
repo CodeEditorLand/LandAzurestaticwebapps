@@ -52,7 +52,7 @@ export interface StaticWebAppsCliConfig {
 }
 
 export async function tryGetStaticWebAppsCliConfig(
-	workspaceFolder: Uri
+	workspaceFolder: Uri,
 ): Promise<StaticWebAppsCliConfigFile | undefined> {
 	const swaCliConfigUri = Uri.joinPath(workspaceFolder, swaCliConfigFileName);
 
@@ -60,16 +60,16 @@ export async function tryGetStaticWebAppsCliConfig(
 		try {
 			return JSON.parse(
 				await AzExtFsExtra.readFile(
-					Uri.joinPath(workspaceFolder, swaCliConfigFileName)
-				)
+					Uri.joinPath(workspaceFolder, swaCliConfigFileName),
+				),
 			) as StaticWebAppsCliConfigFile;
 		} catch (e) {
 			throw new Error(
 				localize(
 					"failedReadSwaCliConfig",
 					"Error reading swa-cli.config.json file: {0}",
-					parseError(e).message
-				)
+					parseError(e).message,
+				),
 			);
 		}
 	}

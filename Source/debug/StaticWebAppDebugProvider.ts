@@ -39,7 +39,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 	private static readonly configPrefix: string = "SWA: Run ";
 
 	public async provideDebugConfigurations(
-		folder: WorkspaceFolder
+		folder: WorkspaceFolder,
 	): Promise<DebugConfiguration[]> {
 		return (
 			(await callWithTelemetryAndErrorHandling(
@@ -48,37 +48,37 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 					const result: DebugConfiguration[] = [];
 
 					const swaCliConfigFile = await tryGetStaticWebAppsCliConfig(
-						folder.uri
+						folder.uri,
 					);
 					if (swaCliConfigFile) {
 						context.telemetry.measurements.configsCount =
 							Object.entries(
-								swaCliConfigFile?.configurations ?? []
+								swaCliConfigFile?.configurations ?? [],
 							).length;
 						result.push(
 							...Object.entries(
-								swaCliConfigFile?.configurations ?? []
+								swaCliConfigFile?.configurations ?? [],
 							).map(([name, options]) =>
 								this.createDebugConfiguration(
 									name,
 									options.appLocation,
-									swaCliConfigFileName
-								)
-							)
+									swaCliConfigFileName,
+								),
+							),
 						);
 					}
 
 					const appFolders = await detectAppFoldersInWorkspace(
 						context,
-						folder
+						folder,
 					);
 					context.telemetry.measurements.appCount = appFolders.length;
 					const foundPresets: IBuildPreset[] = [];
 					appFolders.forEach((appFolder) => {
 						const buildPreset = buildPresets.find((preset) =>
 							appFolder.frameworks.find(
-								(info) => info.framework === preset.displayName
-							)
+								(info) => info.framework === preset.displayName,
+							),
 						);
 
 						if (buildPreset) {
@@ -88,9 +88,9 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 									path.basename(appFolder.uri.fsPath),
 									path.relative(
 										folder.uri.fsPath,
-										appFolder.uri.fsPath
-									)
-								)
+										appFolder.uri.fsPath,
+									),
+								),
 							);
 						}
 					});
@@ -99,7 +99,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 						.map((preset) => preset.id)
 						.join(", ");
 					return result;
-				}
+				},
 			)) ?? []
 		);
 	}
@@ -107,7 +107,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 	public async resolveDebugConfiguration(
 		folder: WorkspaceFolder | undefined,
 		debugConfiguration: DebugConfiguration,
-		cancellationToken: CancellationToken
+		cancellationToken: CancellationToken,
 	): Promise<DebugConfiguration | undefined> {
 		return await callWithTelemetryAndErrorHandling(
 			"staticWebApps.resolveDebugConfiguration",
@@ -128,8 +128,8 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 						context,
 						localize(
 							"installSwaCli",
-							"You must have the Azure Static Web Apps CLI installed to debug your static web app."
-						)
+							"You must have the Azure Static Web Apps CLI installed to debug your static web app.",
+						),
 					);
 					if (!hasSwaCli) {
 						return undefined;
@@ -146,13 +146,13 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 							context,
 							localize(
 								"funcInstallForDebugging",
-								'You must have the "Azure Functions" extension installed to debug a Functions API.'
-							)
+								'You must have the "Azure Functions" extension installed to debug a Functions API.',
+							),
 						);
 
 						const configName =
 							this.parseDebugConfigurationName(
-								debugConfiguration
+								debugConfiguration,
 							);
 						const swaCliConfigFile =
 							await tryGetStaticWebAppsCliConfig(folder.uri);
@@ -171,13 +171,13 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 								.showWarningMessage(
 									localize(
 										"funcApiDetected",
-										"Did not start debugging Functions API because 'apiLocation' property is missing or invalid."
+										"Did not start debugging Functions API because 'apiLocation' property is missing or invalid.",
 									),
 									{
 										learnMoreLink:
 											"https://aka.ms/setupSwaCliCode",
 									},
-									fixMi
+									fixMi,
 								)
 								.then(async (action) => {
 									if (action === fixMi) {
@@ -185,9 +185,9 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 										await AzExtFsExtra.writeJSON(
 											Uri.joinPath(
 												folder.uri,
-												swaCliConfigFileName
+												swaCliConfigFileName,
 											).fsPath,
-											swaCliConfigFile
+											swaCliConfigFile,
 										);
 									}
 								});
@@ -201,14 +201,14 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 				}
 
 				return debugConfiguration;
-			}
+			},
 		);
 	}
 
 	private createDebugConfiguration(
 		name: string,
 		appLocation: string = "",
-		postfix?: string
+		postfix?: string,
 	): DebugConfiguration {
 		return {
 			name: `${StaticWebAppDebugProvider.configPrefix}${name}${
@@ -226,13 +226,13 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 	}
 
 	private async startDebuggingFunctions(
-		folder: WorkspaceFolder
+		folder: WorkspaceFolder,
 	): Promise<void> {
 		let funcConfig = this.getFuncDebugConfig(folder);
 		if (!funcConfig) {
 			await commands.executeCommand(
 				"azureFunctions.initProjectForVSCode",
-				folder.uri.fsPath
+				folder.uri.fsPath,
 			);
 			funcConfig = this.getFuncDebugConfig(folder);
 		}
@@ -243,27 +243,27 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 	}
 
 	private getFuncDebugConfig(
-		folder: WorkspaceFolder
+		folder: WorkspaceFolder,
 	): DebugConfiguration | undefined {
 		const debugConfigurations = getDebugConfigs(folder);
 		return debugConfigurations.find((debugConfig) =>
 			debugConfig.name.match(
-				new RegExp(/^Attach to (.+) Functions$/, "i")
-			)
+				new RegExp(/^Attach to (.+) Functions$/, "i"),
+			),
 		);
 	}
 
 	private parseDebugConfigurationName(
-		debugConfiguration: DebugConfiguration
+		debugConfiguration: DebugConfiguration,
 	): string {
 		return debugConfiguration.name.substring(
-			StaticWebAppDebugProvider.configPrefix.length
+			StaticWebAppDebugProvider.configPrefix.length,
 		);
 	}
 
 	private isSwaDebugConfig(debugConfiguration: DebugConfiguration): boolean {
 		return !!debugConfiguration?.name?.startsWith(
-			StaticWebAppDebugProvider.configPrefix
+			StaticWebAppDebugProvider.configPrefix,
 		);
 	}
 }

@@ -11,15 +11,15 @@ import { localize } from "../utils/localize";
 import { selectWorkspaceFolder } from "../utils/workspaceUtils";
 
 export async function createSwaConfigFile(
-	context: IActionContext
+	context: IActionContext,
 ): Promise<void> {
 	const destPath: URI = await selectWorkspaceFolder(
 		context,
 		localize(
 			"selectConfigFileLocation",
 			'Select location to create "{0}"',
-			configFileName
-		)
+			configFileName,
+		),
 	);
 	const configFilePath: URI = Utils.joinPath(destPath, configFileName);
 
@@ -27,7 +27,7 @@ export async function createSwaConfigFile(
 		const configFileExists: string = localize(
 			"configFileExists",
 			'Static Web App configuration file "{0}" already exists.',
-			configFilePath.fsPath
+			configFilePath.fsPath,
 		);
 		const overwrite: MessageItem = {
 			title: localize("overwrite", "Overwrite"),
@@ -35,7 +35,7 @@ export async function createSwaConfigFile(
 		await context.ui.showWarningMessage(
 			configFileExists,
 			{ modal: true },
-			overwrite
+			overwrite,
 		);
 	}
 

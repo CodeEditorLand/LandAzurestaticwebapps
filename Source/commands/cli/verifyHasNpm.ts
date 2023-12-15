@@ -9,7 +9,7 @@ import { cpUtils } from "../../utils/cpUtils";
 
 export async function verifyHasNpm(
 	context: IActionContext,
-	message?: string
+	message?: string,
 ): Promise<boolean> {
 	if (await hasNpm()) {
 		return true;

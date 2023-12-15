@@ -34,7 +34,7 @@ export class RemoteRepoApi
 	}
 
 	public async openRepository(
-		uri: vscode.Uri
+		uri: vscode.Uri,
 	): Promise<RemoteRepository | null> {
 		return this.repositories.find((repo) => uri === repo.rootUri) || null;
 	}
@@ -85,12 +85,12 @@ export class RemoteRepoApi
 			(prev, current) => {
 				return prev + current.repositories.length;
 			},
-			0
+			0,
 		);
 		void vscode.commands.executeCommand(
 			"setContext",
 			"gitHubOpenRepositoryCount",
-			reposCount
+			reposCount,
 		);
 	}
 
@@ -100,23 +100,25 @@ export class RemoteRepoApi
 
 		this._disposables.push(
 			provider.onDidCloseRepository((e) =>
-				this._onDidCloseRepository.fire(e)
-			)
+				this._onDidCloseRepository.fire(e),
+			),
 		);
 		this._disposables.push(
 			provider.onDidOpenRepository((e) => {
 				this._updateReposContext();
 				this._onDidOpenRepository.fire(e);
-			})
+			}),
 		);
 		if (provider.onDidChangeState) {
 			this._disposables.push(
-				provider.onDidChangeState((e) => this._onDidChangeState.fire(e))
+				provider.onDidChangeState((e) =>
+					this._onDidChangeState.fire(e),
+				),
 			);
 		}
 		if (provider.onDidPublish) {
 			this._disposables.push(
-				provider.onDidPublish((e) => this._onDidPublish.fire(e))
+				provider.onDidPublish((e) => this._onDidPublish.fire(e)),
 			);
 		}
 
@@ -137,13 +139,13 @@ export class RemoteRepoApi
 	}
 
 	registerPostCommitCommandsProvider(
-		provider: PostCommitCommandsProvider
+		provider: PostCommitCommandsProvider,
 	): vscode.Disposable {
 		const disposables = Array.from(this._providers.values()).map(
 			(gitProvider) => {
 				if (gitProvider.registerPostCommitCommandsProvider) {
 					return gitProvider.registerPostCommitCommandsProvider(
-						provider
+						provider,
 					);
 				}
 				return {
@@ -151,7 +153,7 @@ export class RemoteRepoApi
 						// do nothing
 					},
 				};
-			}
+			},
 		);
 		return {
 			dispose: () => {
