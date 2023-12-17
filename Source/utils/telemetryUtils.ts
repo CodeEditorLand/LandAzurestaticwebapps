@@ -9,7 +9,7 @@ export namespace telemetryUtils {
 	export async function runWithDurationTelemetry<T>(
 		context: IActionContext,
 		prefix: string,
-		callback: () => Promise<T>,
+		callback: () => Promise<T>
 	): Promise<T> {
 		const start = Date.now();
 		try {

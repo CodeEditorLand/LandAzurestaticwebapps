@@ -23,7 +23,7 @@ export function getActionIconPath(
 	data:
 		| ActionWorkflowStepData
 		| ActionsGetJobForWorkflowRunResponseData
-		| ActionsGetWorkflowRunResponseData,
+		| ActionsGetWorkflowRunResponseData
 ): TreeItemIconPath {
 	let id: string;
 	let colorId: string | undefined;
@@ -67,14 +67,14 @@ export function getActionIconPath(
 }
 
 export function getActionDescription(
-	data: ActionWorkflowStepData | ActionsGetJobForWorkflowRunResponseData,
+	data: ActionWorkflowStepData | ActionsGetJobForWorkflowRunResponseData
 ): string {
 	if (data.conclusion !== null) {
 		return localize(
 			"conclusionDescription",
 			"{0} {1}",
 			convertConclusionToVerb(ensureConclusion(data)),
-			dayjs(data.completed_at).fromNow(),
+			dayjs(data.completed_at).fromNow()
 		);
 	} else {
 		const nowStr: string = localize("now", "now");
@@ -82,7 +82,7 @@ export function getActionDescription(
 			"statusDescription",
 			"{0} {1}",
 			convertStatusToVerb(ensureStatus(data)),
-			!data.started_at ? nowStr : dayjs(data.started_at).fromNow(),
+			!data.started_at ? nowStr : dayjs(data.started_at).fromNow()
 		);
 	}
 }
@@ -97,8 +97,8 @@ export function ensureConclusion(data: {
 			localize(
 				"invalidConclusion",
 				'Invalid conclusion "{0}".',
-				data.conclusion,
-			),
+				data.conclusion
+			)
 		);
 	}
 }
@@ -123,7 +123,7 @@ export function ensureStatus(data: { status: string | null }): Status {
 		return <Status>data.status;
 	} else {
 		throw new RangeError(
-			localize("invalidStatus", 'Invalid status "{0}".', data.status),
+			localize("invalidStatus", 'Invalid status "{0}".', data.status)
 		);
 	}
 }

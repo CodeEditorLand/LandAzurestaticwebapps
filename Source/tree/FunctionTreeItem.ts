@@ -19,7 +19,7 @@ export class FunctionTreeItem extends AzExtTreeItem {
 
 	constructor(
 		parent: FunctionsTreeItem,
-		func: StaticSiteFunctionOverviewARMResource,
+		func: StaticSiteFunctionOverviewARMResource
 	) {
 		super(parent);
 		this.data = func;

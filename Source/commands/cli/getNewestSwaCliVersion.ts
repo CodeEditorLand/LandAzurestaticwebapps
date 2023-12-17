@@ -19,7 +19,7 @@ interface IPackageMetadata {
 }
 
 export async function getNewestSwaCliVersion(
-	context: IActionContext,
+	context: IActionContext
 ): Promise<string | undefined> {
 	try {
 		const response: AzExtPipelineResponse = await sendRequestWithTimeout(
@@ -29,7 +29,7 @@ export async function getNewestSwaCliVersion(
 				url: `https://registry.npmjs.org/${swaCliPackageName}`,
 			},
 			15000,
-			undefined,
+			undefined
 		);
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		const packageMetadata: IPackageMetadata = <IPackageMetadata>(
@@ -40,8 +40,8 @@ export async function getNewestSwaCliVersion(
 		throw new Error(
 			localize(
 				"noLatestTag",
-				"Failed to retrieve then latest version of the Azure Static Web Apps CLI.",
-			),
+				"Failed to retrieve then latest version of the Azure Static Web Apps CLI."
+			)
 		);
 	}
 }

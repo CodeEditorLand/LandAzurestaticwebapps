@@ -11,7 +11,7 @@ import { matchContextValue } from "../utils/contextUtils";
 
 export async function openInPortal(
 	_context: IActionContext,
-	treeItem?: AppSettingsTreeItem | FunctionsTreeItem,
+	treeItem?: AppSettingsTreeItem | FunctionsTreeItem
 ): Promise<void> {
 	const node = nonNullValue(treeItem);
 
@@ -22,7 +22,7 @@ export async function openInPortal(
 	) {
 		await openInPortalUtil(
 			node,
-			`${node.parent?.parent?.id}/configurations`,
+			`${node.parent?.parent?.id}/configurations`
 		);
 		return;
 	}

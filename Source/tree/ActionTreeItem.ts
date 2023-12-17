@@ -36,7 +36,7 @@ export class ActionTreeItem
 
 	constructor(
 		parent: ActionsTreeItem,
-		data: ActionsGetWorkflowRunResponseData,
+		data: ActionsGetWorkflowRunResponseData
 	) {
 		super(parent);
 		this.data = data;
@@ -70,7 +70,7 @@ export class ActionTreeItem
 
 	public async loadMoreChildrenImpl(
 		_clearCache: boolean,
-		context: IActionContext,
+		context: IActionContext
 	): Promise<AzExtTreeItem[]> {
 		const { owner, name } = getRepoFullname(this.parent.repositoryUrl);
 		const octokitClient: Octokit = await createOctokitClient(context);
@@ -85,7 +85,7 @@ export class ActionTreeItem
 			response.data.jobs,
 			"invalidJobTreeItem",
 			(job) => new JobTreeItem(this, job),
-			(job) => job.name,
+			(job) => job.name
 		);
 	}
 

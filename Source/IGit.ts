@@ -20,7 +20,7 @@ export interface IGit {
 	readonly onDidPublish?: Event<PublishEvent>;
 
 	registerPostCommitCommandsProvider?(
-		provider: PostCommitCommandsProvider,
+		provider: PostCommitCommandsProvider
 	): Disposable;
 
 	// only applies for local git

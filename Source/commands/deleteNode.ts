@@ -10,7 +10,7 @@ import { ext } from "../extensionVariables";
 export async function deleteNode(
 	context: IActionContext,
 	expectedContextValue: string | RegExp,
-	node?: AzExtTreeItem,
+	node?: AzExtTreeItem
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<AzExtTreeItem>(
@@ -18,7 +18,7 @@ export async function deleteNode(
 			{
 				filter: swaFilter,
 				expectedChildContextValue: expectedContextValue,
-			},
+			}
 		);
 	}
 

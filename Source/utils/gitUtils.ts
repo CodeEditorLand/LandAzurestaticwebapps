@@ -58,7 +58,7 @@ const isWeb: boolean = env.uiKind === UIKind.Web;
 
 export async function getGitWorkspaceState(
 	context: IActionContext & Partial<IStaticWebAppWizardContext>,
-	uri: Uri,
+	uri: Uri
 ): Promise<GitWorkspaceState> {
 	const gitWorkspaceState: GitWorkspaceState = {
 		repo: null,
@@ -87,10 +87,10 @@ export async function getGitWorkspaceState(
 		if (originUrl) {
 			gitWorkspaceState.remoteRepo = await tryGetReposGetResponseData(
 				context,
-				originUrl,
+				originUrl
 			);
 			gitWorkspaceState.hasAdminAccess = hasAdminAccessToRepo(
-				gitWorkspaceState.remoteRepo,
+				gitWorkspaceState.remoteRepo
 			);
 		}
 	}
@@ -102,20 +102,20 @@ export async function getGitWorkspaceState(
 export async function verifyGitWorkspaceForCreation(
 	context: IActionContext,
 	gitWorkspaceState: GitWorkspaceState,
-	uri: Uri,
+	uri: Uri
 ): Promise<VerifiedGitWorkspaceState> {
 	const gitFolderName: string = ".git";
 	if (
 		(await workspace.fs.readDirectory(uri)).filter(
-			(file) => file[0] !== gitFolderName,
+			(file) => file[0] !== gitFolderName
 		).length === 0
 	) {
 		// if the git repo is empty, git push will fail and create an empty GitHub repo so throw an error here
 		throw new Error(
 			localize(
 				"emptyWorkspace",
-				"Cannot create a Static Web App with an empty workspace.",
-			),
+				"Cannot create a Static Web App with an empty workspace."
+			)
 		);
 	}
 
@@ -125,12 +125,12 @@ export async function verifyGitWorkspaceForCreation(
 		if (isWeb) {
 			const remoteRepoRequired: string = localize(
 				"remoteRepoRequired",
-				"A GitHub repository is required to proceed. Open a remote repository?",
+				"A GitHub repository is required to proceed. Open a remote repository?"
 			);
 			await context.ui.showWarningMessage(
 				remoteRepoRequired,
 				{ modal: true, stepName: "openRemoteRepo" },
-				{ title: localize("open", "Open") },
+				{ title: localize("open", "Open") }
 			);
 			// if they're in web, remote repo is installed
 			await commands.executeCommand("remoteHub.openRepository");
@@ -139,13 +139,13 @@ export async function verifyGitWorkspaceForCreation(
 
 		const gitRequired: string = localize(
 			"gitRequired",
-			"A GitHub repository is required to proceed. Create a local git repository and GitHub remote to create a Static Web App.",
+			"A GitHub repository is required to proceed. Create a local git repository and GitHub remote to create a Static Web App."
 		);
 
 		await context.ui.showWarningMessage(
 			gitRequired,
 			{ modal: true, stepName: "initRepo" },
-			{ title: localize("create", "Create") },
+			{ title: localize("create", "Create") }
 		);
 		const gitApi: IGit = await getGitApi();
 		try {
@@ -160,8 +160,8 @@ export async function verifyGitWorkspaceForCreation(
 			throw new Error(
 				localize(
 					"gitInitFailed",
-					"Local git initialization failed.  Create a git repository manually and try to create again.",
-				),
+					"Local git initialization failed.  Create a git repository manually and try to create again."
+				)
 			);
 		}
 
@@ -170,14 +170,14 @@ export async function verifyGitWorkspaceForCreation(
 		if (!(await AzExtFsExtra.pathExists(gitignorePath))) {
 			await AzExtFsExtra.writeFile(
 				gitignorePath,
-				defaultGitignoreContents,
+				defaultGitignoreContents
 			);
 		}
 		await promptForCommit(
 			context,
 			repo,
 			localize("initCommit", "Initial commit"),
-			"initCommit",
+			"initCommit"
 		);
 	} else if (
 		!!gitWorkspaceState.remoteRepo &&
@@ -186,7 +186,7 @@ export async function verifyGitWorkspaceForCreation(
 		const adminAccess: string = localize(
 			"adminAccess",
 			'Admin access to the GitHub repository "{0}" is required. Would you like to create a fork?',
-			gitWorkspaceState.remoteRepo.name,
+			gitWorkspaceState.remoteRepo.name
 		);
 		const createForkItem: MessageItem = {
 			title: localize("createFork", "Create Fork"),
@@ -194,7 +194,7 @@ export async function verifyGitWorkspaceForCreation(
 		await context.ui.showWarningMessage(
 			adminAccess,
 			{ modal: true, stepName: "adminAccess" },
-			createForkItem,
+			createForkItem
 		);
 
 		const repoUrl: string = (
@@ -205,7 +205,7 @@ export async function verifyGitWorkspaceForCreation(
 		let forkSuccess: string = localize(
 			"forkSuccess",
 			'Successfully forked "{0}".',
-			gitWorkspaceState.remoteRepo.name,
+			gitWorkspaceState.remoteRepo.name
 		);
 		ext.outputChannel.appendLog(forkSuccess);
 
@@ -215,7 +215,7 @@ export async function verifyGitWorkspaceForCreation(
 		if (!isWeb) {
 			forkSuccess += localize(
 				"cloneNewRepo",
-				" Would you like to clone your new repository?",
+				" Would you like to clone your new repository?"
 			);
 			buttons.push(clone);
 		}
@@ -233,7 +233,7 @@ export async function verifyGitWorkspaceForCreation(
 			const { owner, name } = getRepoFullname(repoUrl);
 			await commands.executeCommand(
 				"vscode.openFolder",
-				Uri.parse(`vscode-vfs://github/${owner}/${name}`, true),
+				Uri.parse(`vscode-vfs://github/${owner}/${name}`, true)
 			);
 		}
 
@@ -241,21 +241,21 @@ export async function verifyGitWorkspaceForCreation(
 	} else if (gitWorkspaceState.dirty && gitWorkspaceState.repo) {
 		const commitChanges: string = localize(
 			"commitChanges",
-			"Commit all working changes to create a Static Web App.",
+			"Commit all working changes to create a Static Web App."
 		);
 		await context.ui.showWarningMessage(
 			commitChanges,
 			{ modal: true, stepName: "dirtyWorkspace" },
-			{ title: localize("commit", "Commit") },
+			{ title: localize("commit", "Commit") }
 		);
 		await promptForCommit(
 			context,
 			gitWorkspaceState.repo,
 			localize(
 				"commitMade",
-				"Commit made from VS Code Azure Static Web Apps",
+				"Commit made from VS Code Azure Static Web Apps"
 			),
-			"dirtyCommit",
+			"dirtyCommit"
 		);
 	}
 
@@ -284,7 +284,7 @@ export function getRepoFullname(gitUrl: string): {
 
 export async function remoteShortnameExists(
 	uri: Uri,
-	remoteName: string,
+	remoteName: string
 ): Promise<boolean> {
 	const gitApi: IGit = await getGitApi();
 	const repo = await gitApi.openRepository(uri);
@@ -305,11 +305,11 @@ async function promptForCommit(
 	context: IActionContext,
 	repo: Repository,
 	value?: string,
-	stepName?: string,
+	stepName?: string
 ): Promise<void> {
 	const commitPrompt: string = localize(
 		"commitPrompt",
-		"Enter a commit message.",
+		"Enter a commit message."
 	);
 	const commitOptions: CommitOptions = { all: true };
 
@@ -343,11 +343,11 @@ export async function tryGetLocalBranch(): Promise<string | undefined> {
 
 export async function warnIfNotOnDefaultBranch(
 	context: IActionContext,
-	gitState: VerifiedGitWorkspaceState,
+	gitState: VerifiedGitWorkspaceState
 ): Promise<void> {
 	const defaultBranch: string | undefined = await tryGetDefaultBranch(
 		context,
-		gitState,
+		gitState
 	);
 	context.telemetry.properties.defaultBranch = defaultBranch;
 	context.telemetry.properties.notOnDefault = "false";
@@ -364,11 +364,11 @@ export async function warnIfNotOnDefaultBranch(
 				"deployBranch",
 				'It is recommended to connect your SWA to the default branch "{0}".  Would you like to continue with branch "{1}"?',
 				defaultBranch,
-				repo.state.HEAD?.name,
+				repo.state.HEAD?.name
 			),
 			{ modal: true, stepName: "defaultBranch" },
 			checkoutButton,
-			{ title: localize("continue", "Continue") },
+			{ title: localize("continue", "Continue") }
 		);
 		if (result === checkoutButton) {
 			try {
@@ -399,7 +399,7 @@ export async function gitPull(repo: Repository): Promise<void> {
 
 async function tryGetDefaultBranch(
 	context: IActionContext,
-	gitState: VerifiedGitWorkspaceState,
+	gitState: VerifiedGitWorkspaceState
 ): Promise<string | undefined> {
 	let defaultBranches: string[];
 
@@ -414,14 +414,14 @@ async function tryGetDefaultBranch(
 		try {
 			// don't use handleGitError because we're handling the errors differently here
 			defaultBranches.unshift(
-				await gitState.repo.getConfig("init.defaultBranch"),
+				await gitState.repo.getConfig("init.defaultBranch")
 			);
 			context.telemetry.properties.defaultBranchSource = "localConfig";
 		} catch (err) {
 			// if no local config setting is found, try global
 			try {
 				defaultBranches.unshift(
-					await gitState.repo.getGlobalConfig("init.defaultBranch"),
+					await gitState.repo.getGlobalConfig("init.defaultBranch")
 				);
 				context.telemetry.properties.defaultBranchSource =
 					"globalConfig";
@@ -437,7 +437,7 @@ async function tryGetDefaultBranch(
 	for (let i = 0; i < defaultBranches.length; i++) {
 		if (
 			gitState.repo.state.refs.some(
-				(lBranch) => lBranch.name === defaultBranches[i],
+				(lBranch) => lBranch.name === defaultBranches[i]
 			)
 		) {
 			context.telemetry.properties.foundLocalBranch = "true";

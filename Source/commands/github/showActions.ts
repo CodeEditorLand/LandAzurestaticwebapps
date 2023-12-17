@@ -15,7 +15,7 @@ import { ActionsTreeItem } from "../../tree/ActionsTreeItem";
 
 export async function showActions(
 	context: IActionContext,
-	node?: ResolvedStaticWebApp | ActionsTreeItem,
+	node?: ResolvedStaticWebApp | ActionsTreeItem
 ): Promise<void> {
 	if (!node) {
 		node = (await ext.rgApi.pickAppResource<

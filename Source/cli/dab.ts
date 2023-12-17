@@ -15,18 +15,18 @@ import { RelativePattern } from "vscode";
  * @returns `string` path of the **directory** holding the db config file or `undefined` if no db config file is found.
  */
 export async function getFolderContainingDbConfigFile(
-	workspaceFolder: vscode.WorkspaceFolder,
+	workspaceFolder: vscode.WorkspaceFolder
 ): Promise<string | undefined> {
 	// Folder that holds the staticwebapp.database.config.json file must be at the root of the static web apps repository.
 	// See https://learn.microsoft.com/en-us/azure/static-web-apps/database-configuration#custom-configuration-folder
 	const include = new RelativePattern(
 		workspaceFolder,
-		`*/staticwebapp.database.config.json`,
+		`*/staticwebapp.database.config.json`
 	);
 	const results = await vscode.workspace.findFiles(
 		include,
 		"**/node_modules/**",
-		1,
+		1
 	);
 	// SWA CLI command wants the path to the directory containing the file, not the path of the actual file
 	return results[0] ? path.dirname(results[0]?.path) : undefined;

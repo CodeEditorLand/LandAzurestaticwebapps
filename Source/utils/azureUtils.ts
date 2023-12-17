@@ -10,12 +10,12 @@ import { localize } from "./localize";
 
 function parseResourceId(id: string): RegExpMatchArray {
 	const matches: RegExpMatchArray | null = id.match(
-		/\/subscriptions\/(.*)\/resourceGroups\/(.*)\/providers\/(.*)\/(.*)/,
+		/\/subscriptions\/(.*)\/resourceGroups\/(.*)\/providers\/(.*)\/(.*)/
 	);
 
 	if (matches === null || matches.length < 3) {
 		throw new Error(
-			localize("InvalidResourceId", "Invalid Azure Resource Id"),
+			localize("InvalidResourceId", "Invalid Azure Resource Id")
 		);
 	}
 
@@ -33,7 +33,7 @@ export async function pollAsyncOperation(
 	pollingOperation: () => Promise<boolean>,
 	pollIntervalInSeconds: number,
 	timeoutInSeconds: number,
-	id: string,
+	id: string
 ): Promise<boolean> {
 	const tokenSource: CancellationTokenSource = new CancellationTokenSource();
 	const token: CancellationToken = tokenSource.token;

@@ -18,7 +18,7 @@ export async function updateWorkspaceSetting<T = string>(
 	section: string,
 	value: T,
 	uri: Uri,
-	prefix: string = ext.prefix,
+	prefix: string = ext.prefix
 ): Promise<void> {
 	const projectConfiguration: WorkspaceConfiguration =
 		workspace.getConfiguration(prefix, uri);
@@ -31,7 +31,7 @@ export async function updateWorkspaceSetting<T = string>(
 export function getWorkspaceSetting<T>(
 	key: string,
 	uri?: Uri,
-	prefix: string = ext.prefix,
+	prefix: string = ext.prefix
 ): T | undefined {
 	const projectConfiguration: WorkspaceConfiguration =
 		workspace.getConfiguration(prefix, uri);
@@ -44,13 +44,13 @@ export function getWorkspaceSetting<T>(
 export async function updateGlobalSetting<T = string>(
 	section: string,
 	value: T,
-	prefix: string = ext.prefix,
+	prefix: string = ext.prefix
 ): Promise<void> {
 	const projectConfiguration: WorkspaceConfiguration =
 		workspace.getConfiguration(prefix);
 	await projectConfiguration.update(
 		section,
 		value,
-		ConfigurationTarget.Global,
+		ConfigurationTarget.Global
 	);
 }

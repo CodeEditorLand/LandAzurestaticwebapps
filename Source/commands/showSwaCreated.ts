@@ -16,7 +16,7 @@ import { showActions } from "./github/showActions";
 import { openYAMLConfigFile } from "./openYAMLConfigFile";
 
 export async function showSwaCreated(
-	swaNode: ResolvedStaticWebApp,
+	swaNode: ResolvedStaticWebApp
 ): Promise<void> {
 	return await callWithTelemetryAndErrorHandling(
 		"staticWebApps.showSwaCreated",
@@ -24,7 +24,7 @@ export async function showSwaCreated(
 			const createdSs: string = localize(
 				"createdSs",
 				'Successfully created new static web app "{0}".  GitHub Actions is building and deploying your app, it will be available once the deployment completes.',
-				swaNode.name,
+				swaNode.name
 			);
 			ext.outputChannel.appendLog(createdSs);
 
@@ -35,7 +35,7 @@ export async function showSwaCreated(
 				.showInformationMessage(
 					createdSs,
 					showActionsMsg,
-					viewEditWorkflow,
+					viewEditWorkflow
 				)
 				.then(async (result) => {
 					context.telemetry.properties.clicked = "canceled";
@@ -47,6 +47,6 @@ export async function showSwaCreated(
 						context.telemetry.properties.clicked = "openConfig";
 					}
 				});
-		},
+		}
 	);
 }

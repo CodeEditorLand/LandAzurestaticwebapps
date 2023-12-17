@@ -10,7 +10,7 @@ import { EnvironmentTreeItem } from "../../tree/EnvironmentTreeItem";
 
 export async function openGitHubRepo(
 	context: IActionContext,
-	node?: EnvironmentTreeItem,
+	node?: EnvironmentTreeItem
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<EnvironmentTreeItem>(context, {

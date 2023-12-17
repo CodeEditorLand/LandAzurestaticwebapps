@@ -103,7 +103,7 @@ export class EnvironmentTreeItem
 	public static async createEnvironmentTreeItem(
 		context: IActionContext,
 		parent: AzExtParentTreeItem,
-		env: StaticSiteBuildARMResource,
+		env: StaticSiteBuildARMResource
 	): Promise<EnvironmentTreeItem> {
 		const ti: EnvironmentTreeItem = new EnvironmentTreeItem(parent, env);
 		// initialize inWorkspace property
@@ -118,14 +118,14 @@ export class EnvironmentTreeItem
 				"statusTag",
 				"{0} ({1})",
 				this.branch,
-				this.data.status,
+				this.data.status
 			);
 		}
 
 		const linkedTag: string = localize(
 			"linkedTag",
 			"{0} (linked)",
-			this.branch,
+			this.branch
 		);
 		return this.inWorkspace ? linkedTag : this.branch;
 	}
@@ -136,7 +136,7 @@ export class EnvironmentTreeItem
 
 	public async loadMoreChildrenImpl(
 		_clearCache: boolean,
-		context: IActionContext,
+		context: IActionContext
 	): Promise<AzExtTreeItem[]> {
 		const children: AzExtTreeItem[] = [this.actionsTreeItem];
 		if (!this.functionsTreeItem || !this.appSettingsTreeItem) {
@@ -145,12 +145,12 @@ export class EnvironmentTreeItem
 				new GenericTreeItem(this, {
 					label: localize(
 						"noFunctions",
-						"Learn how to add an API with Azure Functions...",
+						"Learn how to add an API with Azure Functions..."
 					),
 					contextValue: "noFunctions",
 					commandId: "staticWebApps.showFunctionsDocumentation",
 					iconPath: new ThemeIcon("book"),
-				}),
+				})
 			);
 		} else {
 			context.telemetry.properties.hasFunctions = "true";
@@ -172,7 +172,7 @@ export class EnvironmentTreeItem
 		const deleting: string = localize(
 			"deleting",
 			'Deleting environment "{0}"...',
-			this.label,
+			this.label
 		);
 		await window.withProgress(
 			{ location: ProgressLocation.Notification, title: deleting },
@@ -183,16 +183,16 @@ export class EnvironmentTreeItem
 				await client.staticSites.beginDeleteStaticSiteBuildAndWait(
 					this.parent.resourceGroup,
 					this.parent.name,
-					this.buildId,
+					this.buildId
 				);
 				const deleteSucceeded: string = localize(
 					"deleteSucceeded",
 					'Successfully deleted environment "{0}".',
-					this.label,
+					this.label
 				);
 				void window.showInformationMessage(deleteSucceeded);
 				ext.outputChannel.appendLog(deleteSucceeded);
-			},
+			}
 		);
 	}
 
@@ -201,12 +201,12 @@ export class EnvironmentTreeItem
 	}
 
 	public pickTreeItemImpl(
-		expectedContextValues: (string | RegExp)[],
+		expectedContextValues: (string | RegExp)[]
 	): AzExtTreeItem | undefined {
 		const noApiError: string = localize(
 			"noAPI",
 			'No Functions API associated with "{0}"',
-			`${this.parent.label}/${this.label}`,
+			`${this.parent.label}/${this.label}`
 		);
 		for (const expectedContextValue of expectedContextValues) {
 			if (
@@ -266,7 +266,7 @@ export class EnvironmentTreeItem
 		this.data = await client.staticSites.getStaticSiteBuild(
 			this.parent.resourceGroup,
 			this.parent.name,
-			this.buildId,
+			this.buildId
 		);
 		this.localProjectPath = getSingleRootFsPath();
 
@@ -275,7 +275,7 @@ export class EnvironmentTreeItem
 			await client.staticSites.listStaticSiteBuildFunctionAppSettings(
 				this.parent.resourceGroup,
 				this.parent.name,
-				this.buildId,
+				this.buildId
 			);
 			this.appSettingsTreeItem = new AppSettingsTreeItem(
 				this,
@@ -283,7 +283,7 @@ export class EnvironmentTreeItem
 				ext.prefix,
 				{
 					contextValuesToAdd: ["staticWebApps"],
-				},
+				}
 			);
 			this.functionsTreeItem = new FunctionsTreeItem(this);
 		} catch {
@@ -304,7 +304,7 @@ export class EnvironmentTreeItem
 		this.gitHubConfigGroupTreeItems =
 			await WorkflowGroupTreeItem.createGitHubConfigGroupTreeItems(
 				context,
-				this,
+				this
 			);
 	}
 }

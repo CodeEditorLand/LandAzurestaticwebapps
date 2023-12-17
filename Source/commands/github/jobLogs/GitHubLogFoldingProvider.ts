@@ -16,7 +16,7 @@ export default class GitHubLogFoldingProvider implements FoldingRangeProvider {
 	public async provideFoldingRanges(
 		document: TextDocument,
 		_context: FoldingContext,
-		_token: CancellationToken,
+		_token: CancellationToken
 	): Promise<FoldingRange[]> {
 		return getGitHubLogFoldingRanges(document);
 	}

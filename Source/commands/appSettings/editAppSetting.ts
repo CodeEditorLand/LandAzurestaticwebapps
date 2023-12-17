@@ -10,7 +10,7 @@ import { ext } from "../../extensionVariables";
 
 export async function editAppSetting(
 	context: IActionContext,
-	node?: AppSettingTreeItem,
+	node?: AppSettingTreeItem
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<AppSettingTreeItem>(
@@ -18,9 +18,9 @@ export async function editAppSetting(
 			{
 				filter: swaFilter,
 				expectedChildContextValue: new RegExp(
-					AppSettingTreeItem.contextValue,
+					AppSettingTreeItem.contextValue
 				),
-			},
+			}
 		);
 	}
 

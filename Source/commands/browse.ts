@@ -11,7 +11,7 @@ import { ResolvedStaticWebAppTreeItem } from "../tree/StaticWebAppTreeItem";
 
 export async function browse(
 	context: IActionContext,
-	node?: ResolvedStaticWebAppTreeItem | EnvironmentTreeItem,
+	node?: ResolvedStaticWebAppTreeItem | EnvironmentTreeItem
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<EnvironmentTreeItem>(context, {

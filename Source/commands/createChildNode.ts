@@ -13,7 +13,7 @@ import { ext } from "../extensionVariables";
 export async function createChildNode(
 	context: IActionContext,
 	expectedContextValue: string | RegExp,
-	node?: AzExtParentTreeItem,
+	node?: AzExtParentTreeItem
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<AzExtParentTreeItem>(context, {

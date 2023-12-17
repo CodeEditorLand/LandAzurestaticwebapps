@@ -16,7 +16,7 @@ type BuildDeployStep = {
 
 export async function parseYamlFile(
 	context: IActionContext,
-	yamlFilePath: string,
+	yamlFilePath: string
 ): Promise<BuildConfigs | undefined> {
 	const contents: string = await AzExtFsExtra.readFile(yamlFilePath);
 	const buildDeployStep: BuildDeployStep | undefined =
@@ -37,7 +37,7 @@ export async function parseYamlFile(
 async function getBuildDeployStep(
 	context: IActionContext,
 	yamlFileContents: string,
-	yamlFileName: string,
+	yamlFileName: string
 ): Promise<BuildDeployStep | undefined> {
 	if (/Azure\/static-web-apps-deploy/.test(yamlFileContents)) {
 		// prettyErrors option gives range of error. See https://eemeli.org/yaml/v1/#options
@@ -57,7 +57,7 @@ async function getBuildDeployStep(
 						showYamlWarningMessage(
 							context,
 							yamlFileName,
-							"app_location",
+							"app_location"
 						);
 					}
 
@@ -73,7 +73,7 @@ async function getBuildDeployStep(
 
 export function validateLocationYaml(
 	value: string,
-	buildConfig: BuildConfig,
+	buildConfig: BuildConfig
 ): string | undefined {
 	const yamlString = `${buildConfig}: "${value}"`;
 	try {
@@ -86,7 +86,7 @@ export function validateLocationYaml(
 
 function stepIncludesBuildConfig(
 	step: BuildDeployStep,
-	buildConfig: BuildConfig,
+	buildConfig: BuildConfig
 ): boolean {
 	// eslint-disable-next-line no-prototype-builtins
 	return !!step.with?.hasOwnProperty(buildConfig);
@@ -95,14 +95,14 @@ function stepIncludesBuildConfig(
 function showYamlWarningMessage(
 	context: IActionContext,
 	yamlFileName: string,
-	buildConfig: BuildConfig,
+	buildConfig: BuildConfig
 ): void {
 	void context.ui.showWarningMessage(
 		localize(
 			"mustIncludeBuildConfig",
 			`"{0}" must include "{1}". See the [workflow file guide](https://aka.ms/AAbrcox).`,
 			yamlFileName,
-			buildConfig,
-		),
+			buildConfig
+		)
 	);
 }

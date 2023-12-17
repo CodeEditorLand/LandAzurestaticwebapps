@@ -26,7 +26,7 @@ export function registerSwaCliTaskEvents(): void {
 			if (!debugSession.parentSession && debugSession.workspaceFolder) {
 				stopSwaTaskIfRunning(debugSession.workspaceFolder);
 			}
-		},
+		}
 	);
 
 	registerEvent(
@@ -43,7 +43,7 @@ export function registerSwaCliTaskEvents(): void {
 					processId: e.processId,
 				});
 			}
-		},
+		}
 	);
 }
 

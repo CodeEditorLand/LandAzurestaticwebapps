@@ -22,7 +22,7 @@ export interface RefQuery {
 export interface RemoteRepository extends Repository {
 	getRefs?(
 		query: RefQuery,
-		cancellationToken?: CancellationToken,
+		cancellationToken?: CancellationToken
 	): Promise<Ref[]>;
 	add?(paths: string[]): Promise<void>;
 }

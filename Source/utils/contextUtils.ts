@@ -5,7 +5,7 @@
 
 export function matchContextValue(
 	expectedContextValue: RegExp | string,
-	matches: (string | RegExp)[],
+	matches: (string | RegExp)[]
 ): boolean {
 	if (expectedContextValue instanceof RegExp) {
 		return matches.some((match) => {

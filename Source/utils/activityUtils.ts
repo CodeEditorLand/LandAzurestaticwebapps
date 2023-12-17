@@ -14,7 +14,7 @@ export async function createActivityContext(): Promise<ExecuteActivityContext> {
 		suppressNotification: await getWorkspaceSetting(
 			"suppressActivityNotifications",
 			undefined,
-			"azureResourceGroups",
+			"azureResourceGroups"
 		),
 	};
 }

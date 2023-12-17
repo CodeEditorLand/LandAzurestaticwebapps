@@ -31,7 +31,7 @@ import { localize } from "./localize";
  */
 export function createQuickPickFromJsons<T>(
 	data: T[],
-	label: keyof T,
+	label: keyof T
 ): IAzureQuickPickItem<T>[] {
 	const quickPicks: IAzureQuickPickItem<T>[] = [];
 
@@ -56,7 +56,7 @@ export async function getGitHubAccessToken(): Promise<string> {
 			await authentication.getSession(
 				githubAuthProviderId,
 				githubScopes,
-				{ createIfNone: true },
+				{ createIfNone: true }
 			)
 		).accessToken;
 		// Workaround for VS Code returning a different token when connected to a CodeSpace in a browser
@@ -67,7 +67,7 @@ export async function getGitHubAccessToken(): Promise<string> {
 				await authentication.getSession(
 					githubAuthProviderId,
 					[...githubScopes, "x-SwaScope"],
-					{ createIfNone: true },
+					{ createIfNone: true }
 				)
 			).accessToken;
 		}
@@ -83,7 +83,7 @@ export async function getGitHubAccessToken(): Promise<string> {
 
 export async function tryGetReposGetResponseData(
 	context: IActionContext,
-	originUrl: string,
+	originUrl: string
 ): Promise<ReposGetResponseData | undefined> {
 	const { owner, name } = getRepoFullname(originUrl);
 	const client: Octokit = await createOctokitClient(context);
@@ -103,7 +103,7 @@ export function hasAdminAccessToRepo(repoData?: ReposGetResponseData): boolean {
 
 export async function tryGetRepoDataForCreation(
 	context: IActionContext,
-	localProjectPath?: Uri,
+	localProjectPath?: Uri
 ): Promise<ReposGetResponseData | undefined> {
 	const originUrl: string | undefined = await tryGetRemote(localProjectPath);
 	if (originUrl) {
@@ -118,7 +118,7 @@ export async function tryGetRepoDataForCreation(
 }
 
 export function isUser(
-	orgData: ListOrgsForUserData | OrgForAuthenticatedUserData | undefined,
+	orgData: ListOrgsForUserData | OrgForAuthenticatedUserData | undefined
 ): boolean {
 	// if there's no orgData, just assume that it's a user (but this shouldn't happen)
 	return !!orgData && "type" in orgData && orgData.type === "User";
@@ -126,7 +126,7 @@ export function isUser(
 
 export async function createFork(
 	context: IActionContext,
-	remoteRepo: ReposGetResponseData,
+	remoteRepo: ReposGetResponseData
 ): Promise<ReposCreateForkResponse> {
 	let createForkResponse: ReposCreateForkResponse | undefined;
 
@@ -135,7 +135,7 @@ export async function createFork(
 		const forking: string = localize(
 			"forking",
 			'Forking "{0}"...',
-			remoteRepo.name,
+			remoteRepo.name
 		);
 		ext.outputChannel.appendLog(forking);
 
@@ -146,7 +146,7 @@ export async function createFork(
 					owner: nonNullProp(remoteRepo, "owner").login,
 					repo: remoteRepo.name,
 				});
-			},
+			}
 		);
 	}
 
@@ -158,8 +158,8 @@ export async function createFork(
 				"forkFail",
 				"Could not automatically fork repository. Please fork [{0}]({1}) manually.",
 				remoteRepo.name,
-				remoteRepo.html_url,
-			),
+				remoteRepo.html_url
+			)
 		);
 	}
 }

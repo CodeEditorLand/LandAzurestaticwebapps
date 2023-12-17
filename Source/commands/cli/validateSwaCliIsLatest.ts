@@ -59,7 +59,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 						"outdatedSwaCli",
 						"Update the Azure Static Web Apps CLI ({0}) to the latest ({1}) for the best experience.",
 						installedVersion,
-						newestVersion,
+						newestVersion
 					);
 
 					const update: vscode.MessageItem = {
@@ -72,7 +72,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 							message,
 							update,
 							DialogResponses.learnMore,
-							DialogResponses.dontWarnAgain,
+							DialogResponses.dontWarnAgain
 						);
 						if (result === DialogResponses.learnMore) {
 							await openUrl(installSwaCliUrl);
@@ -81,13 +81,13 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 						} else if (result === DialogResponses.dontWarnAgain) {
 							await updateGlobalSetting(
 								showSwaCliWarningKey,
-								false,
+								false
 							);
 						}
 					} while (result === DialogResponses.learnMore);
 				}
 			}
-		},
+		}
 	);
 }
 

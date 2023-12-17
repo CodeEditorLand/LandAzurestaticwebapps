@@ -12,7 +12,7 @@ import { isResolvedStaticWebAppTreeItem } from "../../tree/StaticWebAppTreeItem"
 
 export async function cloneRepo(
 	context: IActionContext,
-	resource?: string | ResolvedStaticWebApp,
+	resource?: string | ResolvedStaticWebApp
 ): Promise<void> {
 	if (resource === undefined) {
 		resource = (await ext.rgApi.pickAppResource<

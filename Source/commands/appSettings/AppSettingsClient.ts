@@ -22,7 +22,7 @@ export class SwaAppSettingsClientProvider implements AppSettingsClientProvider {
 	}
 
 	public async createClient(
-		context: IActionContext,
+		context: IActionContext
 	): Promise<IAppSettingsClient> {
 		const websiteClient = await createWebSiteClient([context, this._node]);
 		return new SwaAppSettingsClient(this._node, websiteClient);
@@ -58,28 +58,28 @@ export class SwaAppSettingsClient implements IAppSettingsClient {
 			? await this._client.staticSites.listStaticSiteBuildFunctionAppSettings(
 					this._resourceGroup,
 					this._parentName,
-					this._prId,
-			  )
+					this._prId
+				)
 			: await this._client.staticSites.listStaticSiteFunctionAppSettings(
 					this._resourceGroup,
-					this._parentName,
-			  );
+					this._parentName
+				);
 	}
 
 	public async updateApplicationSettings(
-		appSettings: StaticSitesCreateOrUpdateStaticSiteFunctionAppSettingsResponse,
+		appSettings: StaticSitesCreateOrUpdateStaticSiteFunctionAppSettingsResponse
 	): Promise<StaticSitesCreateOrUpdateStaticSiteFunctionAppSettingsResponse> {
 		return this._isBuild
 			? await this._client.staticSites.createOrUpdateStaticSiteBuildFunctionAppSettings(
 					this._resourceGroup,
 					this._parentName,
 					this._prId,
-					appSettings,
-			  )
+					appSettings
+				)
 			: await this._client.staticSites.createOrUpdateStaticSiteFunctionAppSettings(
 					this._resourceGroup,
 					this._parentName,
-					appSettings,
-			  );
+					appSettings
+				);
 	}
 }

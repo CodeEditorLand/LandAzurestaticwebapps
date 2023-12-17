@@ -26,10 +26,10 @@ export class RepoNameStep extends AzureWizardPromptStep<IStaticWebAppWizardConte
 			await context.ui.showInputBox({
 				prompt: localize(
 					"newRepoPrompt",
-					"Enter the name of the new GitHub repository. Azure Static Web Apps automatically builds and deploys using GitHub Actions.",
+					"Enter the name of the new GitHub repository. Azure Static Web Apps automatically builds and deploys using GitHub Actions."
 				),
 				validateInput: async (
-					value: string,
+					value: string
 				): Promise<string | undefined> =>
 					await this.validateRepoName(context, value),
 				value,
@@ -44,7 +44,7 @@ export class RepoNameStep extends AzureWizardPromptStep<IStaticWebAppWizardConte
 
 	protected async isRepoAvailable(
 		context: IStaticWebAppWizardContext,
-		repo: string,
+		repo: string
 	): Promise<boolean> {
 		const client: Octokit = await createOctokitClient(context);
 		try {
@@ -67,7 +67,7 @@ export class RepoNameStep extends AzureWizardPromptStep<IStaticWebAppWizardConte
 
 	private async validateRepoName(
 		context: IStaticWebAppWizardContext,
-		name: string | undefined,
+		name: string | undefined
 	): Promise<string | undefined> {
 		name = name ? name.trim() : "";
 
@@ -75,18 +75,18 @@ export class RepoNameStep extends AzureWizardPromptStep<IStaticWebAppWizardConte
 			return localize(
 				"reserved",
 				'The repository "{0}" is reserved.',
-				name,
+				name
 			);
 		} else if (name.length < 1) {
 			return localize(
 				"invalidLength",
-				"The name must be between at least 1 character.",
+				"The name must be between at least 1 character."
 			);
 		} else if (!(await this.isRepoAvailable(context, name))) {
 			return localize(
 				"nameUnavailable",
 				'The repository "{0}" already exists on this account.',
-				name,
+				name
 			);
 		} else {
 			return undefined;

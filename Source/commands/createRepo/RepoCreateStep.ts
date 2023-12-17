@@ -27,24 +27,24 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 		progress: Progress<{
 			message?: string | undefined;
 			increment?: number | undefined;
-		}>,
+		}>
 	): Promise<void> {
 		const newRepoName: string = nonNullProp(context, "newRepoName");
 		const newRepoIsPrivate: boolean = nonNullProp(
 			context,
-			"newRepoIsPrivate",
+			"newRepoIsPrivate"
 		);
 		const creatingGitHubRepo: string = newRepoIsPrivate
 			? localize(
 					"creatingPrivateGitHubRepo",
 					'Creating new private GitHub repository "{0}"...',
-					newRepoName,
-			  )
+					newRepoName
+				)
 			: localize(
 					"creatingPublicGitHubRepo",
 					'Creating new public GitHub repository "{0}"...',
-					newRepoName,
-			  );
+					newRepoName
+				);
 		ext.outputChannel.appendLog(creatingGitHubRepo);
 		progress.report({ message: creatingGitHubRepo });
 
@@ -54,12 +54,12 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 				? await client.repos.createForAuthenticatedUser({
 						name: newRepoName,
 						private: newRepoIsPrivate,
-				  })
+					})
 				: await client.repos.createInOrg({
 						org: nonNullProp(context, "orgData").login,
 						name: newRepoName,
 						private: newRepoIsPrivate,
-				  })
+					})
 		).data;
 		context.repoHtmlUrl = gitHubRepoRes.html_url;
 
@@ -67,13 +67,13 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 			? localize(
 					"createdPrivateGitHubRepo",
 					'Created new private GitHub repository "{0}".',
-					newRepoName,
-			  )
+					newRepoName
+				)
 			: localize(
 					"createdPublicGitHubRepo",
 					'Created new public GitHub repository "{0}".',
-					newRepoName,
-			  );
+					newRepoName
+				);
 		ext.outputChannel.appendLog(createdGitHubRepo);
 		progress.report({ message: createdGitHubRepo });
 
@@ -87,7 +87,7 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 				"pushingBranch",
 				'Pushing local branch "{0}" to GitHub repository "{1}"...',
 				branch.name,
-				context.newRepoName,
+				context.newRepoName
 			);
 			ext.outputChannel.appendLog(pushingBranch);
 
@@ -98,7 +98,7 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 				"pushedBranch",
 				'Pushed local branch "{0}" to GitHub repository "{1}".',
 				branch.name,
-				context.newRepoName,
+				context.newRepoName
 			);
 			ext.outputChannel.appendLog(pushedBranch);
 			progress.report({ message: pushedBranch });
@@ -136,8 +136,8 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 				localize(
 					"cantGetBranch",
 					'Unable to get branch from repo "{0}".  Please try "Create Static Web App..." again.',
-					context.newRepoName,
-				),
+					context.newRepoName
+				)
 			);
 		}
 	}

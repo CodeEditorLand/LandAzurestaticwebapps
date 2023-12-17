@@ -7,7 +7,7 @@ import * as semver from "semver";
 import { cpUtils } from "../../utils/cpUtils";
 
 export async function getInstalledSwaCliVersion(
-	workingDirectory?: string,
+	workingDirectory?: string
 ): Promise<string | null> {
 	try {
 		// npx --global --no-install swa --version
@@ -21,7 +21,7 @@ export async function getInstalledSwaCliVersion(
 			"--global",
 			"--no-install",
 			"swa",
-			"--version",
+			"--version"
 		);
 		return semver.clean(output);
 	} catch (e) {

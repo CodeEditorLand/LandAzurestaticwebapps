@@ -14,8 +14,8 @@ export function createFoldingRanges(state: LogState): FoldingRange[] {
 			new FoldingRange(
 				state.startFoldingIndices[i] - state.firstIndex,
 				state.endFoldingIndices[i] - state.firstIndex,
-				FoldingRangeKind.Region,
-			),
+				FoldingRangeKind.Region
+			)
 		);
 	}
 

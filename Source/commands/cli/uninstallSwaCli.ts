@@ -17,16 +17,16 @@ export async function uninstallSwaCli(context: IActionContext): Promise<void> {
 			context,
 			localize(
 				"needNpmToUninstall",
-				"Node.JS and npm are required to uninstall the Azure Static Web Apps CLI",
-			),
+				"Node.JS and npm are required to uninstall the Azure Static Web Apps CLI"
+			)
 		)
 	) {
 		if ((await getInstalledSwaCliVersion()) === null) {
 			throw new Error(
 				localize(
 					"notInstalled",
-					"Cannot uninstall Azure Static Web Apps CLI because it is not installed with npm.",
-				),
+					"Cannot uninstall Azure Static Web Apps CLI because it is not installed with npm."
+				)
 			);
 		}
 
@@ -37,7 +37,7 @@ export async function uninstallSwaCli(context: IActionContext): Promise<void> {
 			"npm",
 			"uninstall",
 			"--global",
-			swaCliPackageName,
+			swaCliPackageName
 		);
 	}
 }

@@ -19,7 +19,7 @@ export class WorkflowTreeItem extends AzExtTreeItem {
 	public constructor(
 		parent: WorkflowGroupTreeItem,
 		buildConfig: BuildConfig,
-		buildConfigValue: string,
+		buildConfigValue: string
 	) {
 		super(parent);
 		this.buildConfig = buildConfig;

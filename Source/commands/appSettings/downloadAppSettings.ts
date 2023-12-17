@@ -16,7 +16,7 @@ import { AzureFunctionsExtensionApi } from "../../vscode-azurefunctions.api";
 
 export async function downloadAppSettings(
 	context: IActionContext,
-	node?: AppSettingsTreeItem,
+	node?: AppSettingsTreeItem
 ): Promise<void> {
 	const funcApi: AzureFunctionsExtensionApi = await getFunctionsApi(context);
 
@@ -26,9 +26,9 @@ export async function downloadAppSettings(
 			{
 				filter: swaFilter,
 				expectedChildContextValue: new RegExp(
-					AppSettingsTreeItem.contextValue,
+					AppSettingsTreeItem.contextValue
 				),
-			},
+			}
 		);
 	}
 
@@ -39,6 +39,6 @@ export async function downloadAppSettings(
 		localize("downloading", "Downloading..."),
 		async () => {
 			await funcApi.downloadAppSettings(client);
-		},
+		}
 	);
 }

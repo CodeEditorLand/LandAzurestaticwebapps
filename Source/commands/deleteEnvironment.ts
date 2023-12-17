@@ -11,7 +11,7 @@ import { localize } from "../utils/localize";
 
 export async function deleteEnvironment(
 	context: IActionContext,
-	node?: EnvironmentTreeItem,
+	node?: EnvironmentTreeItem
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<EnvironmentTreeItem>(
@@ -19,7 +19,7 @@ export async function deleteEnvironment(
 			{
 				filter: swaFilter,
 				expectedChildContextValue: EnvironmentTreeItem.contextValue,
-			},
+			}
 		);
 	}
 
@@ -28,20 +28,20 @@ export async function deleteEnvironment(
 		throw new Error(
 			localize(
 				"cantDeletePro",
-				"Cannot delete the production environment directly. Delete the static web app.",
-			),
+				"Cannot delete the production environment directly. Delete the static web app."
+			)
 		);
 	}
 
 	const confirmMessage: string = localize(
 		"deleteConfirmation",
 		'Are you sure you want to delete environment "{0}"?',
-		node.label,
+		node.label
 	);
 	await context.ui.showWarningMessage(
 		confirmMessage,
 		{ modal: true },
-		DialogResponses.deleteResponse,
+		DialogResponses.deleteResponse
 	);
 	await node.deleteTreeItem(context);
 }
