@@ -42,7 +42,7 @@ export type ResolvedStaticWebAppTreeItem =
 	ResolvedAppResourceTreeItem<ResolvedStaticWebApp>;
 
 export function isResolvedStaticWebAppTreeItem(
-	t: unknown
+	t: unknown,
 ): t is ResolvedStaticWebApp {
 	return (
 		(t as ResolvedStaticWebApp)?.data?.type?.toLowerCase() ===
@@ -51,11 +51,11 @@ export function isResolvedStaticWebAppTreeItem(
 }
 
 export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
-	public static contextValue: string = "azureStaticWebApp";
+	public static contextValue = "azureStaticWebApp";
 	public readonly data: StaticSiteARMResource;
 	public readonly childTypeLabel: string = localize(
 		"environment",
-		"Environment"
+		"Environment",
 	);
 
 	public name: string;
@@ -73,7 +73,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 	constructor(
 		context: IActionContext,
 		subscription: ISubscriptionContext,
-		ss: StaticSiteARMResource & AppResource
+		ss: StaticSiteARMResource & AppResource,
 	) {
 		this.data = ss;
 		this.name = nonNullProp(this.data, "name");
@@ -110,7 +110,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 
 	public async loadMoreChildrenImpl(
 		_clearCache: boolean,
-		context: IActionContext
+		context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		const client: WebSiteManagementClient = await createWebSiteClient([
 			context,
@@ -119,8 +119,8 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 		const envs = await uiUtils.listAllIterator(
 			client.staticSites.listStaticSiteBuilds(
 				this.resourceGroup,
-				this.name
-			)
+				this.name,
+			),
 		);
 		// extract to static utility on azextparenttreeitem
 		return await createTreeItemsWithErrorHandling(
@@ -131,10 +131,10 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 				return await EnvironmentTreeItem.createEnvironmentTreeItem(
 					context,
 					this as unknown as AzExtParentTreeItem,
-					env
+					env,
 				);
 			},
-			(env) => env.buildId
+			(env) => env.buildId,
 		);
 	}
 
@@ -150,7 +150,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 			title: localize(
 				"deleteSwa",
 				'Delete Static Web App "{0}"',
-				this.name
+				this.name,
 			),
 			promptSteps: [new ConfirmDeleteStep()],
 			executeSteps: [

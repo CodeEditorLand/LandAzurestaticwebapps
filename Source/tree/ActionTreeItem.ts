@@ -27,16 +27,15 @@ export class ActionTreeItem
 	extends AzExtParentTreeItem
 	implements IAzureResourceTreeItem
 {
-	public static contextValueCompleted: string = "azureStaticActionCompleted";
-	public static contextValueInProgress: string =
-		"azureStaticActionInProgress";
+	public static contextValueCompleted = "azureStaticActionCompleted";
+	public static contextValueInProgress = "azureStaticActionInProgress";
 	public parent!: ActionsTreeItem;
 	public childTypeLabel: string = localize("job", "job");
 	public data: ActionsGetWorkflowRunResponseData;
 
 	constructor(
 		parent: ActionsTreeItem,
-		data: ActionsGetWorkflowRunResponseData
+		data: ActionsGetWorkflowRunResponseData,
 	) {
 		super(parent);
 		this.data = data;
@@ -70,7 +69,7 @@ export class ActionTreeItem
 
 	public async loadMoreChildrenImpl(
 		_clearCache: boolean,
-		context: IActionContext
+		context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		const { owner, name } = getRepoFullname(this.parent.repositoryUrl);
 		const octokitClient: Octokit = await createOctokitClient(context);
@@ -85,7 +84,7 @@ export class ActionTreeItem
 			response.data.jobs,
 			"invalidJobTreeItem",
 			(job) => new JobTreeItem(this, job),
-			(job) => job.name
+			(job) => job.name,
 		);
 	}
 

@@ -5,9 +5,9 @@
 
 import {
 	DebugConfiguration,
-	workspace,
 	WorkspaceConfiguration,
 	WorkspaceFolder,
+	workspace,
 } from "vscode";
 
 const configurationsKey: string = "configurations";

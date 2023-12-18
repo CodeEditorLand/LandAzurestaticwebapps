@@ -3,16 +3,16 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { basename, join } from "path";
 import {
 	AzExtFsExtra,
 	AzExtParentTreeItem,
 	AzExtTreeItem,
 	GenericTreeItem,
 	IActionContext,
-	parseError,
 	TreeItemIconPath,
+	parseError,
 } from "@microsoft/vscode-azext-utils";
-import { basename, join } from "path";
 import { FileType, Range, ThemeIcon, workspace } from "vscode";
 import { URI, Utils } from "vscode-uri";
 // eslint-disable-next-line import/no-internal-modules
@@ -43,7 +43,7 @@ function getRangeFromError(error: YAMLSyntaxError): Range {
 			start.line - 1,
 			start.col - 1,
 			end.line - 1,
-			end.col - 1
+			end.col - 1,
 		);
 	}
 	return new Range(0, 0, 0, 0);
@@ -59,7 +59,7 @@ function getYamlErrorMessage(error: unknown): string {
 }
 
 export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
-	public static contextValue: string = "azureStaticWorkflowGroup";
+	public static contextValue = "azureStaticWorkflowGroup";
 	public contextValue: string = WorkflowGroupTreeItem.contextValue;
 	public parent!: EnvironmentTreeItem;
 	public yamlFilePath: string;
@@ -86,23 +86,23 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 
 	public static async createGitHubConfigGroupTreeItems(
 		context: IActionContext,
-		parent: EnvironmentTreeItem
+		parent: EnvironmentTreeItem,
 	): Promise<WorkflowGroupTreeItem[]> {
 		const treeItems: WorkflowGroupTreeItem[] = [];
 
 		if (parent.localProjectPath && parent.inWorkspace) {
 			const workflowsDir: URI = Utils.joinPath(
 				parent.localProjectPath,
-				".github/workflows"
+				".github/workflows",
 			);
 			const yamlFiles: string[] = (await AzExtFsExtra.pathExists(
-				workflowsDir
+				workflowsDir,
 			))
 				? (await workspace.fs.readDirectory(workflowsDir))
 						.filter(
 							(file) =>
 								file[1] === FileType.File &&
-								/\.(yml|yaml)$/i.test(file[0])
+								/\.(yml|yaml)$/i.test(file[0]),
 						)
 						.map((file) => file[0])
 				: [];
@@ -113,7 +113,7 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 			for (const yamlFile of yamlFiles) {
 				const ti = new WorkflowGroupTreeItem(
 					parent,
-					join(workflowsDir.fsPath, yamlFile)
+					join(workflowsDir.fsPath, yamlFile),
 				);
 				await ti.refreshImpl(context);
 				treeItems.push(ti);
@@ -162,7 +162,7 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 			);
 			value !== undefined &&
 				treeItems.push(
-					new WorkflowTreeItem(this, <BuildConfig>buildConfig, value)
+					new WorkflowTreeItem(this, <BuildConfig>buildConfig, value),
 				);
 		}
 

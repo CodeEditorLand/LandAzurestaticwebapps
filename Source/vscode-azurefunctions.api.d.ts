@@ -12,7 +12,7 @@ export interface AzureFunctionsExtensionApi {
 	downloadAppSettings(client: IAppSettingsClient): Promise<void>;
 	uploadAppSettings(
 		client: IAppSettingsClient,
-		exclude?: (RegExp | string)[]
+		exclude?: (RegExp | string)[],
 	): Promise<void>;
 }
 
@@ -29,7 +29,7 @@ export interface IAppSettingsClient {
 	fullName: string;
 	listApplicationSettings(): Promise<IStringDictionary>;
 	updateApplicationSettings(
-		appSettings: IStringDictionary
+		appSettings: IStringDictionary,
 	): Promise<IStringDictionary>;
 }
 

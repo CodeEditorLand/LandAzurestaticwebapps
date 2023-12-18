@@ -20,7 +20,7 @@ import { ActionTreeItem } from "./ActionTreeItem";
 import { EnvironmentTreeItem } from "./EnvironmentTreeItem";
 
 export class ActionsTreeItem extends AzExtParentTreeItem {
-	public static contextValue: string = "azureStaticActions";
+	public static contextValue = "azureStaticActions";
 	public readonly contextValue: string = ActionsTreeItem.contextValue;
 	public readonly childTypeLabel: string = localize("action", "action");
 	public parent!: EnvironmentTreeItem;
@@ -47,7 +47,7 @@ export class ActionsTreeItem extends AzExtParentTreeItem {
 
 	public async loadMoreChildrenImpl(
 		_clearCache: boolean,
-		context: IActionContext
+		context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		const { owner, name } = getRepoFullname(this.repositoryUrl);
 		const branch: string = this.parent.branch;
@@ -59,20 +59,20 @@ export class ActionsTreeItem extends AzExtParentTreeItem {
 				repo: name,
 			});
 		const runs = response.data.workflow_runs.filter(
-			(run) => run.head_branch === branch
+			(run) => run.head_branch === branch,
 		);
 
 		return await this.createTreeItemsWithErrorHandling(
 			runs,
 			"invalidActionTreeItem",
 			(act) => new ActionTreeItem(this, act),
-			(act) => act.head_commit?.message
+			(act) => act.head_commit?.message,
 		);
 	}
 
 	public compareChildrenImpl(
 		_ti1: ActionTreeItem,
-		_ti2: ActionTreeItem
+		_ti2: ActionTreeItem,
 	): number {
 		// the GitHub API returns the actions in ascending creation order so we can just return 0 to maintain that order
 		return 0;

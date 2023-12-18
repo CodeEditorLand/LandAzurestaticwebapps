@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import * as path from "path";
 import {
 	AzExtFsExtra,
-	callWithTelemetryAndErrorHandling,
 	IActionContext,
+	callWithTelemetryAndErrorHandling,
 } from "@microsoft/vscode-azext-utils";
-import * as path from "path";
-import { Task, TaskProvider, workspace, WorkspaceFolder } from "vscode";
+import { Task, TaskProvider, WorkspaceFolder, workspace } from "vscode";
 import { buildPresets } from "../buildPresets/buildPresets";
 import { tryGetApiLocations } from "../commands/createStaticWebApp/tryGetApiLocations";
 import { funcAddress } from "../constants";
@@ -36,7 +36,7 @@ export class SwaTaskProvider implements TaskProvider {
 						[]) {
 						const workspaceTasks =
 							await this.provideTasksForWorkspaceFolder(
-								workspaceFolder
+								workspaceFolder,
 							);
 						tasks.push(...workspaceTasks);
 					}
@@ -44,13 +44,13 @@ export class SwaTaskProvider implements TaskProvider {
 						workspace.workspaceFolders?.length ?? 0;
 					context.telemetry.measurements.detectedCount = tasks.length;
 					return tasks;
-				}
+				},
 			)) ?? []
 		);
 	}
 
 	async provideTasksForWorkspaceFolder(
-		workspaceFolder: WorkspaceFolder
+		workspaceFolder: WorkspaceFolder,
 	): Promise<Task[]> {
 		return (
 			(await callWithTelemetryAndErrorHandling<Task[]>(
@@ -62,7 +62,7 @@ export class SwaTaskProvider implements TaskProvider {
 							await this.getTasksFromSwaConfig(workspaceFolder);
 						const detectorTasks = await this.getTasksFromDetector(
 							context,
-							workspaceFolder
+							workspaceFolder,
 						);
 						tasks.push(...configTasks, ...detectorTasks);
 						context.telemetry.measurements.configCount =
@@ -71,25 +71,25 @@ export class SwaTaskProvider implements TaskProvider {
 							detectorTasks.length;
 					}
 					return tasks;
-				}
+				},
 			)) ?? []
 		);
 	}
 
 	private async getTasksFromDetector(
 		context: IActionContext,
-		workspaceFolder: WorkspaceFolder
+		workspaceFolder: WorkspaceFolder,
 	): Promise<Task[]> {
 		const tasks: Task[] = [];
 
 		const apiLocations = await tryGetApiLocations(
 			context,
 			workspaceFolder,
-			true
+			true,
 		);
 		const appFolders = await detectAppFoldersInWorkspace(
 			context,
-			workspaceFolder
+			workspaceFolder,
 		);
 		const dbConfigDirPath =
 			await getFolderContainingDbConfigFile(workspaceFolder);
@@ -97,8 +97,8 @@ export class SwaTaskProvider implements TaskProvider {
 		appFolders.forEach((appFolder) => {
 			const buildPreset = buildPresets.find((preset) =>
 				appFolder.frameworks.find(
-					(info) => info.framework === preset.displayName
-				)
+					(info) => info.framework === preset.displayName,
+				),
 			);
 
 			if (buildPreset) {
@@ -113,14 +113,14 @@ export class SwaTaskProvider implements TaskProvider {
 								: {}),
 							appLocation: path.relative(
 								workspaceFolder.uri.fsPath,
-								appFolder.uri.fsPath
+								appFolder.uri.fsPath,
 							),
 							run: buildPreset.startCommand ?? "npm start",
 							...(dbConfigDirPath
 								? { dataApiLocation: dbConfigDirPath }
 								: {}),
-						}
-					)
+						},
+					),
 				);
 			}
 		});
@@ -129,12 +129,12 @@ export class SwaTaskProvider implements TaskProvider {
 	}
 
 	private async getTasksFromSwaConfig(
-		workspaceFolder: WorkspaceFolder
+		workspaceFolder: WorkspaceFolder,
 	): Promise<Task[]> {
 		const tasks: Task[] = [];
 
 		const swaCliConfigFile = await tryGetStaticWebAppsCliConfig(
-			workspaceFolder?.uri
+			workspaceFolder?.uri,
 		);
 		if (swaCliConfigFile && swaCliConfigFile.configurations) {
 			Object.keys(swaCliConfigFile.configurations).forEach(
@@ -142,10 +142,10 @@ export class SwaTaskProvider implements TaskProvider {
 					tasks.push(
 						this.createSwaConfigTask(
 							workspaceFolder,
-							configurationName
-						)
+							configurationName,
+						),
 					);
-				}
+				},
 			);
 
 			// if only one configuration present, it can be started with 'swa start'
@@ -159,7 +159,7 @@ export class SwaTaskProvider implements TaskProvider {
 
 	private createSwaConfigTask(
 		workspaceFolder: WorkspaceFolder,
-		configurationName?: string
+		configurationName?: string,
 	): Task {
 		const args: string[] = ["start"];
 		if (configurationName) {
@@ -169,7 +169,7 @@ export class SwaTaskProvider implements TaskProvider {
 		return new SwaTask(
 			workspaceFolder,
 			args.join(" "),
-			new SwaShellExecution(args)
+			new SwaShellExecution(args),
 		);
 	}
 
@@ -183,12 +183,12 @@ export class SwaTaskProvider implements TaskProvider {
 			| "run"
 			| "appLocation"
 			| "dataApiLocation"
-		>
+		>,
 	): Task {
 		const addArg = <T extends Record<string, string>>(
 			object: T,
 			property: keyof T,
-			name?: string
+			name?: string,
 		): string[] => {
 			const args: string[] = [];
 			if (object[property]) {
@@ -217,7 +217,7 @@ export class SwaTaskProvider implements TaskProvider {
 				env: {
 					BROWSER: "none",
 				},
-			})
+			}),
 		);
 	}
 }

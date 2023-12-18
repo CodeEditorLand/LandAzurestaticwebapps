@@ -13,7 +13,7 @@ export class StepTreeItem
 	extends AzExtTreeItem
 	implements IAzureResourceTreeItem
 {
-	public static contextValue: string = "azureStaticStep";
+	public static contextValue = "azureStaticStep";
 	public readonly contextValue: string = StepTreeItem.contextValue;
 	public parent!: JobTreeItem;
 	public data: ActionWorkflowStepData;

@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { basename } from "path";
 import {
 	IActionContext,
 	IAzureQuickPickItem,
 	openUrl,
 } from "@microsoft/vscode-azext-utils";
-import { basename } from "path";
 import { Position, Range, TextDocument, Uri, window, workspace } from "vscode";
 import { CST, Document, parseDocument } from "yaml";
 import { Pair, Scalar, YAMLMap, YAMLSeq } from "yaml/types";
@@ -32,7 +32,7 @@ export async function openYAMLConfigFile(
 	context: IActionContext,
 	node?: YamlTreeItem,
 	_nodes?: YamlTreeItem[],
-	buildConfigToSelect?: BuildConfig | unknown
+	buildConfigToSelect?: BuildConfig | unknown,
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<EnvironmentTreeItem>(context, {
@@ -62,10 +62,10 @@ export async function openYAMLConfigFile(
 		} else {
 			const placeHolder: string = localize(
 				"selectGitHubConfig",
-				"Select the GitHub workflow file to open."
+				"Select the GitHub workflow file to open.",
 			);
 			yamlFileUri = Uri.file(
-				(await context.ui.showQuickPick(picks, { placeHolder })).data
+				(await context.ui.showQuickPick(picks, { placeHolder })).data,
 			);
 		}
 	} else {
@@ -81,7 +81,7 @@ export async function openYAMLConfigFile(
 			yamlFileUri = localYamlFiles[0];
 		} else {
 			return await openUrl(
-				`${node.repositoryUrl}/edit/${node.branch}/${ymlFileName}`
+				`${node.repositoryUrl}/edit/${node.branch}/${ymlFileName}`,
 			);
 		}
 	}
@@ -92,7 +92,7 @@ export async function openYAMLConfigFile(
 		context,
 		configDocument,
 		buildConfigToSelect as BuildConfig,
-		node instanceof WorkflowGroupTreeItem ? node : undefined
+		node instanceof WorkflowGroupTreeItem ? node : undefined,
 	);
 	await window.showTextDocument(configDocument, { selection });
 }
@@ -101,7 +101,7 @@ export async function tryGetSelection(
 	context: IActionContext,
 	configDocument: TextDocument,
 	buildConfigToSelect?: BuildConfig,
-	node?: WorkflowGroupTreeItem
+	node?: WorkflowGroupTreeItem,
 ): Promise<Range | undefined> {
 	if (node?.errorRange) {
 		return node.errorRange;
@@ -122,8 +122,8 @@ export async function tryGetSelection(
 				"foundMultipleBuildConfigs",
 				'Multiple "{0}" workflow files were found in "{1}".',
 				buildConfigToSelect,
-				basename(configDocument.uri.fsPath)
-			)
+				basename(configDocument.uri.fsPath),
+			),
 		);
 		return undefined;
 	}
@@ -158,7 +158,7 @@ export async function tryGetSelection(
 						range.end.col -= cstNode.comment.length + 1;
 
 						const lineText: string = configDocument.lineAt(
-							range.start.line
+							range.start.line,
 						).text;
 
 						// Don't include the comment character
@@ -174,14 +174,14 @@ export async function tryGetSelection(
 
 					const startPosition: Position = new Position(
 						range.start.line,
-						range.start.col
+						range.start.col,
 					);
 					const endPosition: Position = new Position(
 						range.end.line,
-						range.end.col
+						range.end.col,
 					);
 					return configDocument.validateRange(
-						new Range(startPosition, endPosition)
+						new Range(startPosition, endPosition),
 					);
 				}
 			} else if ("items" in yamlNode) {

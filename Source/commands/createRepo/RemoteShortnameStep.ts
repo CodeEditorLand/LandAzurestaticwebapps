@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { basename } from "path";
 import {
 	AzureWizardPromptStep,
 	nonNullProp,
 	parseError,
 } from "@microsoft/vscode-azext-utils";
-import { basename } from "path";
 import { Uri } from "vscode";
 import { cpUtils } from "../../utils/cpUtils";
 import { remoteShortnameExists } from "../../utils/gitUtils";
@@ -20,12 +20,12 @@ export class RemoteShortnameStep extends AzureWizardPromptStep<IStaticWebAppWiza
 		const prompt: string = context.originExists
 			? localize(
 					"enterRemote",
-					'Remote "origin" already exists in the local repository. Enter a unique shortname for the new remote'
-				)
+					'Remote "origin" already exists in the local repository. Enter a unique shortname for the new remote',
+			  )
 			: localize(
 					"enterRemote",
-					"Enter a unique shortname for the remote Git repository"
-				);
+					"Enter a unique shortname for the remote Git repository",
+			  );
 		context.newRemoteShortname = await context.ui.showInputBox({
 			prompt,
 			value: context.originExists ? undefined : "origin",
@@ -33,7 +33,7 @@ export class RemoteShortnameStep extends AzureWizardPromptStep<IStaticWebAppWiza
 				if (value.length === 0) {
 					return localize(
 						"invalidLength",
-						"The name must be at least 1 character."
+						"The name must be at least 1 character.",
 					);
 				} else {
 					// remotes have same naming rules as branches
@@ -45,18 +45,18 @@ export class RemoteShortnameStep extends AzureWizardPromptStep<IStaticWebAppWiza
 							"git",
 							"check-ref-format",
 							"--branch",
-							cpUtils.wrapArgInQuotes(value)
+							cpUtils.wrapArgInQuotes(value),
 						);
 					} catch (err) {
 						if (
 							/is not a valid branch name/g.test(
-								parseError(err).message
+								parseError(err).message,
 							)
 						) {
 							return localize(
 								"notValid",
 								'"{0}" is not a valid remote shortname.',
-								value
+								value,
 							);
 						}
 						// ignore other errors, we may not be able to access git so we shouldn't block users here
@@ -69,7 +69,7 @@ export class RemoteShortnameStep extends AzureWizardPromptStep<IStaticWebAppWiza
 							"remoteExists",
 							'Remote shortname "{0}" already exists in "{1}".',
 							value,
-							basename(uri.fsPath)
+							basename(uri.fsPath),
 						);
 					}
 				}

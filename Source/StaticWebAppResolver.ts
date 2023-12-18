@@ -1,8 +1,8 @@
 import { StaticSiteARMResource } from "@azure/arm-appservice";
 import {
-	callWithTelemetryAndErrorHandling,
 	IActionContext,
 	ISubscriptionContext,
+	callWithTelemetryAndErrorHandling,
 	nonNullProp,
 } from "@microsoft/vscode-azext-utils";
 import {
@@ -28,7 +28,7 @@ export class StaticWebAppResolver implements AppResourceResolver {
 	// possibly pass down the full tree item, but for now try to get away with just the AppResource
 	public async resolveResource(
 		subContext: ISubscriptionContext,
-		resource: AppResource
+		resource: AppResource,
 	): Promise<ResolvedStaticWebApp | null> {
 		return (
 			(await callWithTelemetryAndErrorHandling(
@@ -41,7 +41,7 @@ export class StaticWebAppResolver implements AppResourceResolver {
 						});
 						const swa = await client.staticSites.getStaticSite(
 							getResourceGroupFromId(nonNullProp(resource, "id")),
-							nonNullProp(resource, "name")
+							nonNullProp(resource, "name"),
 						);
 
 						return new StaticWebAppTreeItem(context, subContext, {
@@ -52,7 +52,7 @@ export class StaticWebAppResolver implements AppResourceResolver {
 						console.error({ ...context, ...subContext });
 						throw e;
 					}
-				}
+				},
 			)) ?? null
 		);
 	}

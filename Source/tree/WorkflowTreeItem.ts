@@ -8,7 +8,7 @@ import { ThemeIcon } from "vscode";
 import { BuildConfig, WorkflowGroupTreeItem } from "./WorkflowGroupTreeItem";
 
 export class WorkflowTreeItem extends AzExtTreeItem {
-	public static contextValue: string = "azureStaticWorkflow";
+	public static contextValue = "azureStaticWorkflow";
 	public contextValue: string = WorkflowTreeItem.contextValue;
 
 	public commandArgs: unknown[];
@@ -19,7 +19,7 @@ export class WorkflowTreeItem extends AzExtTreeItem {
 	public constructor(
 		parent: WorkflowGroupTreeItem,
 		buildConfig: BuildConfig,
-		buildConfigValue: string
+		buildConfigValue: string,
 	) {
 		super(parent);
 		this.buildConfig = buildConfig;

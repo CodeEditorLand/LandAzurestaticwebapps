@@ -22,7 +22,7 @@ export interface RefQuery {
 export interface RemoteRepository extends Repository {
 	getRefs?(
 		query: RefQuery,
-		cancellationToken?: CancellationToken
+		cancellationToken?: CancellationToken,
 	): Promise<Ref[]>;
 	add?(paths: string[]): Promise<void>;
 }
@@ -72,7 +72,7 @@ export enum HeadType {
 	Commit = 3,
 }
 
-export const enum PullRequestState {
+export enum PullRequestState {
 	/** A pull request that is still open. */
 	Open = 0,
 	/** A pull request that has been closed without being merged. */

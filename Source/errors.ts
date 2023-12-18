@@ -10,7 +10,7 @@ import { localize } from "./utils/localize";
 export class NoWorkspaceError extends Error {
 	public message: string = localize(
 		"noWorkspaceError",
-		"You must have a workspace open to perform this operation."
+		"You must have a workspace open to perform this operation.",
 	);
 }
 
@@ -50,25 +50,25 @@ export class GitError extends Error {
 			case GitErrorCodes.DirtyWorkTree:
 				this.message = localize(
 					"clean repo",
-					"Please clean your repository working tree before checkout."
+					"Please clean your repository working tree before checkout.",
 				);
 				break;
 			case GitErrorCodes.PushRejected:
 				this.message = localize(
 					"cant push",
-					"Can't push refs to remote. Try running 'Pull' first to integrate your changes."
+					"Can't push refs to remote. Try running 'Pull' first to integrate your changes.",
 				);
 				break;
 			case GitErrorCodes.Conflict:
 				this.message = localize(
 					"merge conflicts",
-					"There are merge conflicts. Resolve them before committing."
+					"There are merge conflicts. Resolve them before committing.",
 				);
 				break;
 			case GitErrorCodes.StashConflict:
 				this.message = localize(
 					"stash merge conflicts",
-					"There were merge conflicts while applying the stash."
+					"There were merge conflicts while applying the stash.",
 				);
 				break;
 			case GitErrorCodes.AuthenticationFailed:
@@ -81,18 +81,18 @@ export class GitError extends Error {
 					? localize(
 							"auth failed specific",
 							"Failed to authenticate to git remote:\n\n{0}",
-							match[1]
-						)
+							match[1],
+					  )
 					: localize(
 							"auth failed",
-							"Failed to authenticate to git remote."
-						);
+							"Failed to authenticate to git remote.",
+					  );
 				break;
 			case GitErrorCodes.NoUserNameConfigured:
 			case GitErrorCodes.NoUserEmailConfigured:
 				this.message = localize(
 					"missing user info",
-					"Make sure you configure your 'user.name' and 'user.email' in git."
+					"Make sure you configure your 'user.name' and 'user.email' in git.",
 				);
 				break;
 			default:

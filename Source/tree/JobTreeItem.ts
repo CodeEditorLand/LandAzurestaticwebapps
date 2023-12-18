@@ -23,7 +23,7 @@ export class JobTreeItem
 	extends AzExtParentTreeItem
 	implements IAzureResourceTreeItem
 {
-	public static contextValue: string = "azureStaticJob";
+	public static contextValue = "azureStaticJob";
 	public readonly contextValue: string = JobTreeItem.contextValue;
 	public parent!: ActionTreeItem;
 	public childTypeLabel: string = localize("step", "step");
@@ -31,7 +31,7 @@ export class JobTreeItem
 
 	constructor(
 		parent: ActionTreeItem,
-		data: ActionsGetJobForWorkflowRunResponseData
+		data: ActionsGetJobForWorkflowRunResponseData,
 	) {
 		super(parent);
 		this.data = data;
@@ -63,13 +63,13 @@ export class JobTreeItem
 
 	public async loadMoreChildrenImpl(
 		_clearCache: boolean,
-		_context: IActionContext
+		_context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		return await this.createTreeItemsWithErrorHandling(
 			this.data.steps || [],
 			"invalidStepTreeItem",
 			(step) => new StepTreeItem(this, step),
-			(step) => step.name
+			(step) => step.name,
 		);
 	}
 
@@ -79,7 +79,7 @@ export class JobTreeItem
 
 	public async refreshImpl(context: IActionContext): Promise<void> {
 		const { owner, name } = getRepoFullname(
-			this.parent.parent.repositoryUrl
+			this.parent.parent.repositoryUrl,
 		);
 		const octokitClient: Octokit = await createOctokitClient(context);
 		this.data = <ActionsGetJobForWorkflowRunResponseData>(
@@ -97,7 +97,7 @@ export class JobTreeItem
 
 	public async getRawJobLog(context: IActionContext): Promise<string> {
 		const { owner, name } = getRepoFullname(
-			this.parent.parent.repositoryUrl
+			this.parent.parent.repositoryUrl,
 		);
 		const octokitClient: Octokit = await createOctokitClient(context);
 		return <string>(

@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
-	callWithTelemetryAndErrorHandling,
 	DialogResponses,
 	IActionContext,
+	callWithTelemetryAndErrorHandling,
 	openUrl,
 } from "@microsoft/vscode-azext-utils";
 import * as semver from "semver";
@@ -20,11 +20,11 @@ import { hasNpm } from "./validateSwaCliIsLatest";
 export async function validateSwaCliInstalled(
 	context: IActionContext,
 	message: string,
-	minVersion?: string
+	minVersion?: string,
 ): Promise<boolean> {
 	let input: MessageItem | undefined;
-	let installed: boolean = false;
-	let hasMinVersion: boolean = false;
+	let installed = false;
+	let hasMinVersion = false;
 	const install: MessageItem = { title: localize("install", "Install") };
 	const update: MessageItem = { title: localize("update", "Update") };
 
@@ -57,7 +57,7 @@ export async function validateSwaCliInstalled(
 				input = await innerContext.ui.showWarningMessage(
 					message,
 					{ modal: true },
-					...items
+					...items,
 				);
 
 				innerContext.telemetry.properties.dialogResult = input.title;
@@ -69,7 +69,7 @@ export async function validateSwaCliInstalled(
 					await openUrl(installSwaCliUrl);
 				}
 			}
-		}
+		},
 	);
 
 	// validate that SWA CLI was installed only if user confirmed
@@ -77,11 +77,11 @@ export async function validateSwaCliInstalled(
 		await context.ui.showWarningMessage(
 			localize(
 				"failedInstallSwaCli",
-				"The Azure Static Web Apps CLI installation has failed and will have to be installed manually."
+				"The Azure Static Web Apps CLI installation has failed and will have to be installed manually.",
 			),
 			{
 				learnMoreLink: installSwaCliUrl,
-			}
+			},
 		);
 	}
 

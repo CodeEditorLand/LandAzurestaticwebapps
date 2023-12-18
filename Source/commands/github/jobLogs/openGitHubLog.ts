@@ -3,21 +3,21 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IActionContext, parseError } from "@microsoft/vscode-azext-utils";
 import { EOL } from "os";
+import { IActionContext, parseError } from "@microsoft/vscode-azext-utils";
 import { FoldingRange } from "vscode";
 import { swaFilter } from "../../../constants";
 import { ext } from "../../../extensionVariables";
 import { JobTreeItem } from "../../../tree/JobTreeItem";
 import { StepTreeItem } from "../../../tree/StepTreeItem";
 import { localize } from "../../../utils/localize";
-import { createFoldingRanges } from "./createFoldingRanges";
 import { openGitHubLogContent } from "./GitHubLogContentProvider";
+import { createFoldingRanges } from "./createFoldingRanges";
 import { LogState, parseGitHubLog } from "./parseGitHubLog";
 
 export async function openGitHubLog(
 	context: IActionContext,
-	node?: StepTreeItem
+	node?: StepTreeItem,
 ): Promise<void> {
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<StepTreeItem>(context, {
@@ -37,7 +37,7 @@ export async function openGitHubLog(
 		const logState: LogState = parseGitHubLog(
 			rawLogs,
 			new Date(node.data.started_at ?? ""),
-			new Date(node.data.completed_at ?? "")
+			new Date(node.data.completed_at ?? ""),
 		);
 		content = logState.filteredJobsLog.length
 			? logState.filteredJobsLog.join(EOL)
@@ -50,7 +50,7 @@ export async function openGitHubLog(
 
 		content = localize(
 			"expiredLogs",
-			"The logs for this run have expired and are no longer available."
+			"The logs for this run have expired and are no longer available.",
 		);
 	}
 

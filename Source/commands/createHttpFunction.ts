@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IActionContext } from "@microsoft/vscode-azext-utils";
 import * as path from "path";
+import { IActionContext } from "@microsoft/vscode-azext-utils";
 import { workspace } from "vscode";
 import { apiSubpathSetting, defaultApiLocation } from "../constants";
 import { getFunctionsApi } from "../getExtensionApi";
@@ -17,12 +17,12 @@ import {
 } from "./createStaticWebApp/tryGetApiLocations";
 
 export async function createHttpFunction(
-	context: IActionContext
+	context: IActionContext,
 ): Promise<void> {
 	if (!workspace.workspaceFolders || workspace.workspaceFolders.length <= 0) {
 		const noWorkspaceError: string = localize(
 			"noWorkspace",
-			"This action cannot be completed because there is no workspace opened.  Please open a workspace."
+			"This action cannot be completed because there is no workspace opened.  Please open a workspace.",
 		);
 		context.errorHandling.suppressReportIssue = true;
 		throw new Error(noWorkspaceError);
@@ -30,18 +30,18 @@ export async function createHttpFunction(
 
 	const detectedApiLocations = await tryGetApiLocations(
 		context,
-		workspace.workspaceFolders[0].uri.fsPath
+		workspace.workspaceFolders[0].uri.fsPath,
 	);
 
 	const apiLocation: string = detectedApiLocations?.length
 		? await promptForApiFolder(context, detectedApiLocations)
 		: getWorkspaceSetting(
 				apiSubpathSetting,
-				workspace.workspaceFolders[0].uri
-			) || defaultApiLocation;
+				workspace.workspaceFolders[0].uri,
+		  ) || defaultApiLocation;
 	const folderPath: string = path.join(
 		workspace.workspaceFolders[0].uri.fsPath,
-		apiLocation
+		apiLocation,
 	);
 
 	const funcApi: AzureFunctionsExtensionApi = await getFunctionsApi(context);

@@ -3,8 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-"use strict";
-
 //@ts-check
 
 // See https://github.com/Microsoft/vscode-azuretools/wiki/webpack for guidance
@@ -13,9 +11,9 @@ const process = require("process");
 const dev = require("@microsoft/vscode-azext-dev");
 const webpack = require("webpack");
 
-let DEBUG_WEBPACK = !/^(false|0)?$/i.test(process.env.DEBUG_WEBPACK || "");
+const DEBUG_WEBPACK = !/^(false|0)?$/i.test(process.env.DEBUG_WEBPACK || "");
 
-let nodeConfig = dev.getDefaultWebpackConfig({
+const nodeConfig = dev.getDefaultWebpackConfig({
 	projectRoot: __dirname,
 	verbosity: DEBUG_WEBPACK ? "debug" : "normal",
 	externals: {
@@ -31,7 +29,7 @@ let nodeConfig = dev.getDefaultWebpackConfig({
 	suppressCleanDistFolder: true,
 });
 
-let webConfig = dev.getDefaultWebpackConfig({
+const webConfig = dev.getDefaultWebpackConfig({
 	projectRoot: __dirname,
 	verbosity: DEBUG_WEBPACK ? "debug" : "normal",
 	externals: {

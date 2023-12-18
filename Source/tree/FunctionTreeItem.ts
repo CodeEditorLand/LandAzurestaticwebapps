@@ -6,20 +6,20 @@
 import { StaticSiteFunctionOverviewARMResource } from "@azure/arm-appservice";
 import {
 	AzExtTreeItem,
-	nonNullProp,
 	TreeItemIconPath,
+	nonNullProp,
 } from "@microsoft/vscode-azext-utils";
 import { treeUtils } from "../utils/treeUtils";
 import { FunctionsTreeItem } from "./FunctionsTreeItem";
 
 export class FunctionTreeItem extends AzExtTreeItem {
-	public static contextValue: string = "azureStaticFunction";
+	public static contextValue = "azureStaticFunction";
 	public readonly contextValue: string = FunctionTreeItem.contextValue;
 	public data: StaticSiteFunctionOverviewARMResource;
 
 	constructor(
 		parent: FunctionsTreeItem,
-		func: StaticSiteFunctionOverviewARMResource
+		func: StaticSiteFunctionOverviewARMResource,
 	) {
 		super(parent);
 		this.data = func;

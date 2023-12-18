@@ -11,15 +11,15 @@ import { localize } from "../../utils/localize";
 import { verifyHasNpm } from "./verifyHasNpm";
 
 export async function installOrUpdateSwaCli(
-	context: IActionContext
+	context: IActionContext,
 ): Promise<void> {
 	if (
 		await verifyHasNpm(
 			context,
 			localize(
 				"needNpmToInstall",
-				"Node.JS and npm are required to install the Azure Static Web Apps CLI"
-			)
+				"Node.JS and npm are required to install the Azure Static Web Apps CLI",
+			),
 		)
 	) {
 		ext.outputChannel.show();
@@ -29,7 +29,7 @@ export async function installOrUpdateSwaCli(
 			"npm",
 			"install",
 			"--global",
-			`${swaCliPackageName}@latest`
+			`${swaCliPackageName}@latest`,
 		);
 	}
 }

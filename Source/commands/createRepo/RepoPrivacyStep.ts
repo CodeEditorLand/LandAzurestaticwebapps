@@ -17,7 +17,7 @@ export class RepoPrivacyStep extends AzureWizardPromptStep<IStaticWebAppWizardCo
 				label: localize("public", "Public"),
 				description: localize(
 					"publicDesc",
-					"Anyone on the internet can see this repository. You choose who can commit"
+					"Anyone on the internet can see this repository. You choose who can commit",
 				),
 				data: false,
 			},
@@ -25,14 +25,14 @@ export class RepoPrivacyStep extends AzureWizardPromptStep<IStaticWebAppWizardCo
 				label: localize("private", "Private"),
 				description: localize(
 					"privateDesc",
-					"You choose who can see and commit to this repository"
+					"You choose who can see and commit to this repository",
 				),
 				data: true,
 			},
 		];
 		const placeHolder: string = localize(
 			"selectPrivacy",
-			"Select the privacy of your repository"
+			"Select the privacy of your repository",
 		);
 		context.newRepoIsPrivate = (
 			await context.ui.showQuickPick(picks, { placeHolder })
