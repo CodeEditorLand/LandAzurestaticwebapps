@@ -21,7 +21,7 @@ export async function getFolderContainingDbConfigFile(
 	// See https://learn.microsoft.com/en-us/azure/static-web-apps/database-configuration#custom-configuration-folder
 	const include = new RelativePattern(
 		workspaceFolder,
-		`*/staticwebapp.database.config.json`,
+		"*/staticwebapp.database.config.json",
 	);
 	const results = await vscode.workspace.findFiles(
 		include,

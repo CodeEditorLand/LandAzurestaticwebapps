@@ -16,8 +16,8 @@ export namespace telemetryUtils {
 			return await callback();
 		} finally {
 			const end = Date.now();
-			const durationKey = prefix + "Duration";
-			const countKey = prefix + "Count";
+			const durationKey = `${prefix}Duration`;
+			const countKey = `${prefix}Count`;
 			const duration = (end - start) / 1000;
 
 			context.telemetry.measurements[durationKey] =

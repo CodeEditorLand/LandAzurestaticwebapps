@@ -136,7 +136,7 @@ export class SwaTaskProvider implements TaskProvider {
 		const swaCliConfigFile = await tryGetStaticWebAppsCliConfig(
 			workspaceFolder?.uri,
 		);
-		if (swaCliConfigFile && swaCliConfigFile.configurations) {
+		if (swaCliConfigFile?.configurations) {
 			Object.keys(swaCliConfigFile.configurations).forEach(
 				(configurationName: string) => {
 					tasks.push(

@@ -29,37 +29,44 @@ export function getActionIconPath(
 	let colorId: string | undefined;
 	if (data.conclusion !== null) {
 		switch (ensureConclusion(data)) {
-			case Conclusion.Cancelled:
+			case Conclusion.Cancelled: {
 				id = "circle-slash";
 				colorId = "testing.iconUnset";
 				break;
-			case Conclusion.Failure:
+			}
+			case Conclusion.Failure: {
 				id = "error";
 				colorId = "testing.iconFailed";
 				break;
-			case Conclusion.Skipped:
+			}
+			case Conclusion.Skipped: {
 				id = "debug-step-over";
 				colorId = "testing.iconSkipped";
 				break;
-			case Conclusion.Success:
+			}
+			case Conclusion.Success: {
 				id = "pass";
 				colorId = "testing.iconPassed";
 				break;
+			}
 		}
 	} else {
 		switch (ensureStatus(data)) {
-			case Status.Queued:
+			case Status.Queued: {
 				id = "clock";
 				colorId = "testing.iconQueued";
 				break;
-			case Status.InProgress:
+			}
+			case Status.InProgress: {
 				id = "play-circle";
 				colorId = "testing.iconUnset";
 				break;
-			case Status.Completed:
+			}
+			case Status.Completed: {
 				id = "pass";
 				colorId = "testing.iconPassed";
 				break;
+			}
 		}
 	}
 

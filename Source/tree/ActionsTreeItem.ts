@@ -25,10 +25,6 @@ export class ActionsTreeItem extends AzExtParentTreeItem {
 	public readonly childTypeLabel: string = localize("action", "action");
 	public parent!: EnvironmentTreeItem;
 
-	constructor(parent: EnvironmentTreeItem) {
-		super(parent);
-	}
-
 	public get id(): string {
 		return "actionsList";
 	}

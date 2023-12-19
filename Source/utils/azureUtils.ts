@@ -47,7 +47,7 @@ export async function pollAsyncOperation(
 	try {
 		while (!pollingComplete && Date.now() < maxTime) {
 			if (token.isCancellationRequested) {
-				throw new UserCancelledError(`pollAsyncOperation`);
+				throw new UserCancelledError("pollAsyncOperation");
 			}
 
 			pollingComplete = await pollingOperation();

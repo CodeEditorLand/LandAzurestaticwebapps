@@ -146,7 +146,7 @@ export async function tryGetSelection(
 					?.cstNode;
 				const range = cstNode?.rangeAsLinePos;
 
-				if (range && range.end) {
+				if (range?.end) {
 					// Range isn't zero-indexed by default
 					range.start.line--;
 					range.start.col--;

@@ -37,7 +37,7 @@ export function parseGitHubLog(
 			completedAt,
 		);
 
-		if (!currentTimestamp && !state.withinGroup) {
+		if (!(currentTimestamp || state.withinGroup)) {
 			continue;
 		}
 

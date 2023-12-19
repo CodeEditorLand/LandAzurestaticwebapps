@@ -139,7 +139,10 @@ export class EnvironmentTreeItem
 		context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		const children: AzExtTreeItem[] = [this.actionsTreeItem];
-		if (!this.functionsTreeItem || !this.appSettingsTreeItem) {
+		if (this.functionsTreeItem && this.appSettingsTreeItem) {
+			context.telemetry.properties.hasFunctions = "true";
+			children.push(this.appSettingsTreeItem, this.functionsTreeItem);
+		} else {
 			context.telemetry.properties.hasFunctions = "false";
 			children.push(
 				new GenericTreeItem(this, {
@@ -152,9 +155,6 @@ export class EnvironmentTreeItem
 					iconPath: new ThemeIcon("book"),
 				}),
 			);
-		} else {
-			context.telemetry.properties.hasFunctions = "true";
-			children.push(this.appSettingsTreeItem, this.functionsTreeItem);
 		}
 
 		if (this.inWorkspace) {

@@ -146,9 +146,9 @@ export async function showNoWorkspacePrompt(
 		title: localize(openExistingProject, "Open local project"),
 	};
 
-	const isVirtualWorkspace =
-		workspace.workspaceFolders &&
-		workspace.workspaceFolders.every((f) => f.uri.scheme !== "file");
+	const isVirtualWorkspace = workspace.workspaceFolders?.every(
+		(f) => f.uri.scheme !== "file",
+	);
 	if (!isVirtualWorkspace) {
 		buttons.push(cloneProjectMsg, openExistingProjectMsg);
 	}
