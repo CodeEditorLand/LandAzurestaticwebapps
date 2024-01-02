@@ -8,12 +8,12 @@
  */
 
 export interface IBuildPreset {
-	id: string;
-	displayName: string;
-	appLocation: string;
-	apiLocation: string;
-	outputLocation: string;
-	port: number;
-	startCommand?: string;
-	group: "framework" | "ssg";
+    id: string;
+    displayName: string;
+    appLocation: string;
+    apiLocation: string;
+    outputLocation: string;
+    port: number;
+    startCommand?: string;
+    group: 'framework' | 'ssg'
 }

@@ -90,13 +90,133 @@ jobs:
                   name: .-Node-${{ matrix.node-version }}-Target
                   path: ./Target
 
-            - run: pnpm run prepublishOnly
+            - run: pnpm run test
+              working-directory: .
+
+            - uses: actions/setup-node@v4.0.1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "pnpm"
+                  cache-dependency-path: ./test/testProject/angular-basic/pnpm-lock.yaml
+
+            - run: pnpm install
+              working-directory: ./test/testProject/angular-basic
+
+            - run: pnpm run build
               working-directory: .
 
             - uses: actions/upload-artifact@v4.0.0
               with:
-                  name: .-Node-${{ matrix.node-version }}-Target
-                  path: ./Target
+                  name: .-test-testProject-angular-basic-Node-${{ matrix.node-version }}-Target
+                  path: ./test/testProject/angular-basic/Target
 
             - run: pnpm run test
+              working-directory: ./test/testProject/angular-basic
+
+            - uses: actions/setup-node@v4.0.1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "pnpm"
+                  cache-dependency-path: ./test/testProject/nextjs-starter/pnpm-lock.yaml
+
+            - run: pnpm install
+              working-directory: ./test/testProject/nextjs-starter
+
+            - run: pnpm run build
               working-directory: .
+
+            - uses: actions/upload-artifact@v4.0.0
+              with:
+                  name: .-test-testProject-nextjs-starter-Node-${{ matrix.node-version }}-Target
+                  path: ./test/testProject/nextjs-starter/Target
+
+            - uses: actions/setup-node@v4.0.1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "pnpm"
+                  cache-dependency-path: ./test/testProject/nuxtjs-starter/pnpm-lock.yaml
+
+            - run: pnpm install
+              working-directory: ./test/testProject/nuxtjs-starter
+
+            - run: pnpm run build
+              working-directory: .
+
+            - uses: actions/upload-artifact@v4.0.0
+              with:
+                  name: .-test-testProject-nuxtjs-starter-Node-${{ matrix.node-version }}-Target
+                  path: ./test/testProject/nuxtjs-starter/Target
+
+            - uses: actions/setup-node@v4.0.1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "pnpm"
+                  cache-dependency-path: ./test/testProject/react-basic-dab/pnpm-lock.yaml
+
+            - run: pnpm install
+              working-directory: ./test/testProject/react-basic-dab
+
+            - run: pnpm run build
+              working-directory: .
+
+            - uses: actions/upload-artifact@v4.0.0
+              with:
+                  name: .-test-testProject-react-basic-dab-Node-${{ matrix.node-version }}-Target
+                  path: ./test/testProject/react-basic-dab/Target
+
+            - run: pnpm run test
+              working-directory: ./test/testProject/react-basic-dab
+
+            - uses: actions/setup-node@v4.0.1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "pnpm"
+                  cache-dependency-path: ./test/testProject/react-basic/pnpm-lock.yaml
+
+            - run: pnpm install
+              working-directory: ./test/testProject/react-basic
+
+            - run: pnpm run build
+              working-directory: .
+
+            - uses: actions/upload-artifact@v4.0.0
+              with:
+                  name: .-test-testProject-react-basic-Node-${{ matrix.node-version }}-Target
+                  path: ./test/testProject/react-basic/Target
+
+            - run: pnpm run test
+              working-directory: ./test/testProject/react-basic
+
+            - uses: actions/setup-node@v4.0.1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "pnpm"
+                  cache-dependency-path: ./test/testProject/svelte-basic/pnpm-lock.yaml
+
+            - run: pnpm install
+              working-directory: ./test/testProject/svelte-basic
+
+            - run: pnpm run build
+              working-directory: .
+
+            - uses: actions/upload-artifact@v4.0.0
+              with:
+                  name: .-test-testProject-svelte-basic-Node-${{ matrix.node-version }}-Target
+                  path: ./test/testProject/svelte-basic/Target
+
+            - uses: actions/setup-node@v4.0.1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "pnpm"
+                  cache-dependency-path: ./test/testProject/vue-basic/pnpm-lock.yaml
+
+            - run: pnpm install
+              working-directory: ./test/testProject/vue-basic
+
+            - run: pnpm run build
+              working-directory: .
+
+            - uses: actions/upload-artifact@v4.0.0
+              with:
+                  name: .-test-testProject-vue-basic-Node-${{ matrix.node-version }}-Target
+                  path: ./test/testProject/vue-basic/Target
