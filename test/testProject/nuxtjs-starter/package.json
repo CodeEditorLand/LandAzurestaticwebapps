@@ -1,18 +1,38 @@
 {
-  "name": "nuxtjs-static-website",
-  "version": "1.0.0",
-  "description": "My divine Nuxt.js project",
-  "author": "Christian Nwamba",
-  "private": true,
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt generate",
-    "start": "nuxt start",
-    "generate": "nuxt build"
-  },
-  "dependencies": {
-    "isomorphic-unfetch": "^3.1.0",
-    "nuxt": "^2.15.7"
-  },
-  "devDependencies": {}
+	"name": "nuxtjs-static-website",
+	"version": "0.0.1",
+	"private": false,
+	"description": "My divine Nuxt.js project",
+	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
+	"bugs": {
+		"url": "https://github.com/CodeEditorLand/Foundation/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
+	},
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "Playform",
+		"email": "Hello@Playform.Cloud",
+		"url": "https://playform.cloud"
+	},
+	"type": "module",
+	"scripts": {
+		"build": "nuxt generate",
+		"dev": "nuxt",
+		"generate": "nuxt build",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"start": "nuxt start"
+	},
+	"dependencies": {
+		"isomorphic-unfetch": "^3.1.0",
+		"nuxt": "^2.15.7"
+	},
+	"devDependencies": {
+		"typescript-esbuild": "latest"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }

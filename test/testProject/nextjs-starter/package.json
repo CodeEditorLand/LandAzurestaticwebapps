@@ -1,19 +1,39 @@
 {
-  "name": "nextjs-static-website",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build && next export",
-    "start": "next start"
-  },
-  "dependencies": {
-    "isomorphic-unfetch": "^3.0.0",
-    "next": "^10.0.7",
-    "react": "^17.0.2",
-    "react-dom": "16.13.1"
-  },
-  "devDependencies": {
-    "serve": "^11.3.2"
-  }
+	"name": "nextjs-static-website",
+	"version": "0.0.1",
+	"private": false,
+	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
+	"bugs": {
+		"url": "https://github.com/CodeEditorLand/Foundation/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
+	},
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "Playform",
+		"email": "Hello@Playform.Cloud",
+		"url": "https://playform.cloud"
+	},
+	"type": "module",
+	"scripts": {
+		"build": "next build && next export",
+		"dev": "next dev",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"start": "next start"
+	},
+	"dependencies": {
+		"isomorphic-unfetch": "^3.0.0",
+		"next": "^10.0.7",
+		"react": "^17.0.2",
+		"react-dom": "16.13.1"
+	},
+	"devDependencies": {
+		"serve": "^11.3.2",
+		"typescript-esbuild": "latest"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }
