@@ -35,7 +35,7 @@
 		"@vue/cli-plugin-eslint": "~4.2.0",
 		"@vue/cli-service": "~4.2.0",
 		"babel-eslint": "^10.0.3",
-		"typescript-esbuild": "latest",
+		"typescript-esbuild": "0.4.5",
 		"vue-template-compiler": "^2.6.11"
 	},
 	"publishConfig": {
