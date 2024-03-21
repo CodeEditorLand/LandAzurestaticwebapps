@@ -1,27 +1,11 @@
 {
-	"name": "svelte-app",
-	"version": "0.0.1",
-	"private": false,
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
-	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
 	"author": {
-		"name": "Playform",
 		"email": "Hello@Playform.Cloud",
+		"name": "Playform",
 		"url": "https://playform.cloud"
 	},
-	"type": "module",
-	"scripts": {
-		"build": "rollup -c",
-		"dev": "rollup -c -w",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"start": "sirv public"
+	"bugs": {
+		"url": "https://github.com/CodeEditorLand/Foundation/issues"
 	},
 	"dependencies": {
 		"sirv-cli": "^0.4.4"
@@ -34,9 +18,25 @@
 		"rollup-plugin-svelte": "^5.0.3",
 		"rollup-plugin-terser": "^7.0.2",
 		"svelte": "^3.0.0",
-		"typescript-esbuild": "0.4.5"
+		"typescript-esbuild": ""
 	},
+	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
+	"license": "SEE LICENSE IN LICENSE",
+	"name": "svelte-app",
+	"private": false,
 	"publishConfig": {
 		"access": "public"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
+	},
+	"scripts": {
+		"build": "rollup -c",
+		"dev": "rollup -c -w",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"start": "sirv public"
+	},
+	"type": "module",
+	"version": "0.0.1"
 }

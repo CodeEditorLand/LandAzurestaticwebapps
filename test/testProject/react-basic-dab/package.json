@@ -1,27 +1,8 @@
 {
-	"name": "hello",
-	"version": "0.0.1",
-	"private": false,
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
-	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
 	"author": {
-		"name": "Playform",
 		"email": "Hello@Playform.Cloud",
+		"name": "Playform",
 		"url": "https://playform.cloud"
-	},
-	"type": "module",
-	"scripts": {
-		"build": "react-scripts build",
-		"eject": "react-scripts eject",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"start": "react-scripts start"
 	},
 	"browserslist": {
 		"development": [
@@ -35,6 +16,9 @@
 			"not op_mini all"
 		]
 	},
+	"bugs": {
+		"url": "https://github.com/CodeEditorLand/Foundation/issues"
+	},
 	"dependencies": {
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.3.2",
@@ -44,9 +28,25 @@
 		"react-scripts": "3.4.0"
 	},
 	"devDependencies": {
-		"typescript-esbuild": "0.4.5"
+		"typescript-esbuild": ""
 	},
+	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
+	"license": "SEE LICENSE IN LICENSE",
+	"name": "hello",
+	"private": false,
 	"publishConfig": {
 		"access": "public"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
+	},
+	"scripts": {
+		"build": "react-scripts build",
+		"eject": "react-scripts eject",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"start": "react-scripts start"
+	},
+	"type": "module",
+	"version": "0.0.1"
 }
