@@ -450,7 +450,7 @@
 		"workspaceContains:**/swa-cli.config.json"
 	],
 	"dependencies": {
-		"@octokit/rest": "20.1.0",
+		"@octokit/rest": "20.1.1",
 		"buffer": "6.0.3",
 		"dayjs": "1.11.11",
 		"git-url-parse": "14.0.0",
@@ -463,7 +463,7 @@
 		"@playform/document": "0.0.6",
 		"@types/fs-extra": "11.0.4",
 		"@types/git-url-parse": "9.0.3",
-		"@types/node": "20.12.7",
+		"@types/node": "20.12.10",
 		"@types/semver": "7.5.8",
 		"fs-extra": "11.2.0",
 		"glob": "10.3.12",
