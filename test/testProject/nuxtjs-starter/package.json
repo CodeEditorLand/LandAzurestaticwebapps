@@ -11,8 +11,8 @@
     "generate": "nuxt build"
   },
   "dependencies": {
-    "isomorphic-unfetch": "^4.0.2",
-    "nuxt": "^3.12.2"
+    "isomorphic-unfetch": "4.0.2",
+    "nuxt": "3.12.2"
   },
   "devDependencies": {}
 }
