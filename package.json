@@ -428,21 +428,21 @@
 		"workspaceContains:**/swa-cli.config.json"
 	],
 	"dependencies": {
-		"@octokit/rest": "21.0.1",
+		"@octokit/rest": "18.5.2",
 		"buffer": "6.0.3",
-		"dayjs": "2.0.0-alpha.4",
-		"git-url-parse": "14.1.0",
-		"semver": "7.6.3",
-		"yaml": "2.4.5"
+		"dayjs": "1.11.0",
+		"git-url-parse": "13.1.0",
+		"semver": "7.3.5",
+		"yaml": "1.10.2"
 	},
 	"devDependencies": {
-		"@octokit/types": "13.5.0",
-		"@types/fs-extra": "11.0.4",
-		"@types/git-url-parse": "9.0.3",
-		"@types/node": "20.14.11",
-		"@types/semver": "7.5.8",
-		"fs-extra": "11.2.0",
-		"glob": "11.0.0",
+		"@octokit/types": "6.13.0",
+		"@types/fs-extra": "8.1.1",
+		"@types/git-url-parse": "9.0.0",
+		"@types/node": "16.18.36",
+		"@types/semver": "7.3.8",
+		"fs-extra": "8.1.0",
+		"glob": "7.1.6",
 		"process": "0.11.10"
 	},
 	"extensionDependencies": [
