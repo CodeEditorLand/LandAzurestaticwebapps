@@ -424,7 +424,7 @@
 	"dependencies": {
 		"@octokit/rest": "21.0.2",
 		"buffer": "6.0.3",
-		"dayjs": "2.0.0-alpha.4",
+		"dayjs": "1.11.13",
 		"git-url-parse": "15.0.0",
 		"semver": "7.6.3",
 		"yaml": "2.5.0"
