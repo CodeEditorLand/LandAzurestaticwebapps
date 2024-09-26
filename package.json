@@ -436,10 +436,10 @@
 		"yaml": "2.5.1"
 	},
 	"devDependencies": {
-		"@octokit/types": "13.5.0",
+		"@octokit/types": "13.5.1",
 		"@types/fs-extra": "11.0.4",
 		"@types/git-url-parse": "9.0.3",
-		"@types/node": "22.6.0",
+		"@types/node": "22.7.2",
 		"@types/semver": "7.5.8",
 		"fs-extra": "11.2.0",
 		"glob": "11.0.0",
