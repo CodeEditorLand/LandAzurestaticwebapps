@@ -431,7 +431,7 @@
 	},
 	"description": "%staticWebApps.description%",
 	"devDependencies": {
-		"@octokit/types": "13.6.0",
+		"@octokit/types": "13.6.1",
 		"@types/fs-extra": "11.0.4",
 		"@types/git-url-parse": "9.0.3",
 		"@types/node": "22.7.4",
