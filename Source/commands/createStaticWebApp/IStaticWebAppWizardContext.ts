@@ -3,47 +3,58 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { SkuDescription, StaticSiteARMResource, WebSiteManagementClient } from '@azure/arm-appservice';
-import { IResourceGroupWizardContext } from '@microsoft/vscode-azext-azureutils';
-import { ExecuteActivityContext } from '@microsoft/vscode-azext-utils';
-import { Uri } from 'vscode';
-import { IBuildPreset } from '../../buildPresets/IBuildPreset';
-import { Repository } from '../../git';
-import { BranchData, ListOrgsForUserData, OrgForAuthenticatedUserData } from '../../gitHubTypings';
+import {
+	SkuDescription,
+	StaticSiteARMResource,
+	WebSiteManagementClient,
+} from "@azure/arm-appservice";
+import { IResourceGroupWizardContext } from "@microsoft/vscode-azext-azureutils";
+import { ExecuteActivityContext } from "@microsoft/vscode-azext-utils";
+import { Uri } from "vscode";
 
-export interface IStaticWebAppWizardContext extends IResourceGroupWizardContext, ExecuteActivityContext {
-    advancedCreation?: boolean;
-    accessToken: string;
-    client: WebSiteManagementClient;
+import { IBuildPreset } from "../../buildPresets/IBuildPreset";
+import { Repository } from "../../git";
+import {
+	BranchData,
+	ListOrgsForUserData,
+	OrgForAuthenticatedUserData,
+} from "../../gitHubTypings";
 
-    orgData?: OrgForAuthenticatedUserData | ListOrgsForUserData;
-    branchData?: Partial<BranchData>;
-    repoHtmlUrl?: string;
+export interface IStaticWebAppWizardContext
+	extends IResourceGroupWizardContext,
+		ExecuteActivityContext {
+	advancedCreation?: boolean;
+	accessToken: string;
+	client: WebSiteManagementClient;
 
-    repo?: Repository;
-    uri?: Uri;
+	orgData?: OrgForAuthenticatedUserData | ListOrgsForUserData;
+	branchData?: Partial<BranchData>;
+	repoHtmlUrl?: string;
 
-    // Function projects detected via host.json at SWA create time
-    detectedApiLocations?: string[];
+	repo?: Repository;
+	uri?: Uri;
 
-    newStaticWebAppName?: string;
+	// Function projects detected via host.json at SWA create time
+	detectedApiLocations?: string[];
 
-    newRepoName?: string;
-    newRepoIsPrivate?: boolean;
-    newRemoteShortname?: string;
+	newStaticWebAppName?: string;
 
-    originExists?: boolean;
+	newRepoName?: string;
+	newRepoIsPrivate?: boolean;
+	newRemoteShortname?: string;
 
-    // prefill the input boxes with preset build values;
-    // projects are too flexible for us to force users to use these values
-    buildPreset?: IBuildPreset;
+	originExists?: boolean;
 
-    appLocation?: string;
-    apiLocation?: string;
-    outputLocation?: string;
+	// prefill the input boxes with preset build values;
+	// projects are too flexible for us to force users to use these values
+	buildPreset?: IBuildPreset;
 
-    sku?: SkuDescription;
+	appLocation?: string;
+	apiLocation?: string;
+	outputLocation?: string;
 
-    // created when the wizard is done executing
-    staticWebApp?: StaticSiteARMResource;
+	sku?: SkuDescription;
+
+	// created when the wizard is done executing
+	staticWebApp?: StaticSiteARMResource;
 }
