@@ -84,14 +84,12 @@ export class JobTreeItem
 		);
 		const octokitClient: Octokit = await createOctokitClient(context);
 		this.data = <ActionsGetJobForWorkflowRunResponseData>(
-			(
-				await octokitClient.actions.getJobForWorkflowRun({
-					job_id: this.data.id,
-					owner: owner,
-					repo: name,
-				})
-			).data
-		);
+			await octokitClient.actions.getJobForWorkflowRun({
+				job_id: this.data.id,
+				owner: owner,
+				repo: name,
+			})
+		).data;
 	}
 
 	public compareChildrenImpl(ti1: StepTreeItem, ti2: StepTreeItem): number {
@@ -104,15 +102,13 @@ export class JobTreeItem
 		);
 		const octokitClient: Octokit = await createOctokitClient(context);
 		return <string>(
-			(
-				await octokitClient.actions.downloadJobLogsForWorkflowRun({
-					owner,
-					repo: name,
-					job_id: this.data.id,
-					mediaType: { format: "json" },
-				})
-			).data
-		);
+			await octokitClient.actions.downloadJobLogsForWorkflowRun({
+				owner,
+				repo: name,
+				job_id: this.data.id,
+				mediaType: { format: "json" },
+			})
+		).data;
 	}
 
 	public isAncestorOfImpl(_contextValue: string | RegExp): boolean {

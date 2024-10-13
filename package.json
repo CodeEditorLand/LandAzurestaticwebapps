@@ -427,7 +427,7 @@
 		"dayjs": "1.11.13",
 		"git-url-parse": "15.0.0",
 		"semver": "7.6.3",
-		"yaml": "2.5.1"
+		"yaml": "2.6.0"
 	},
 	"description": "%staticWebApps.description%",
 	"devDependencies": {
