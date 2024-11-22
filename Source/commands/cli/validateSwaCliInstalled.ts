@@ -24,9 +24,13 @@ export async function validateSwaCliInstalled(
 	minVersion?: string,
 ): Promise<boolean> {
 	let input: MessageItem | undefined;
+
 	let installed: boolean = false;
+
 	let hasMinVersion: boolean = false;
+
 	const install: MessageItem = { title: localize("install", "Install") };
+
 	const update: MessageItem = { title: localize("update", "Update") };
 
 	await callWithTelemetryAndErrorHandling(
@@ -36,6 +40,7 @@ export async function validateSwaCliInstalled(
 
 			const installedVersion: string | null =
 				await getInstalledSwaCliVersion();
+
 			if (installedVersion) {
 				installed = true;
 				// Ensure minimum version if provided.
@@ -47,7 +52,9 @@ export async function validateSwaCliInstalled(
 
 			if (!installed) {
 				const items: MessageItem[] = [];
+
 				const isNpmInstalled = await hasNpm();
+
 				if (isNpmInstalled) {
 					items.push(installed ? update : install);
 				} else {

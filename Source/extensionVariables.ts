@@ -18,11 +18,18 @@ import { RemoteRepoApi } from "./RemoteRepoApi";
  */
 export namespace ext {
 	export let context: ExtensionContext;
+
 	export let outputChannel: IAzExtOutputChannel;
+
 	export let ignoreBundle: boolean | undefined;
+
 	export const prefix: string = "staticWebApps";
+
 	export let experimentationService: IExperimentationServiceAdapter;
+
 	export let rgApi: AzureHostExtensionApi;
+
 	export let remoteRepoApi: RemoteRepoApi;
+
 	export let vscodeGitApi: GitAPI;
 }

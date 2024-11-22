@@ -20,6 +20,7 @@ export class OutputLocationStep extends AzureWizardPromptStep<IStaticWebAppWizar
 	public async prompt(context: IStaticWebAppWizardContext): Promise<void> {
 		const defaultValue: string =
 			context.buildPreset?.outputLocation ?? "build";
+
 		const workspaceSetting: string | undefined = getWorkspaceSetting(
 			outputSubpathSetting,
 			context.uri,

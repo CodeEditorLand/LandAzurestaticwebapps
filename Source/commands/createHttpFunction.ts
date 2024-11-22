@@ -26,6 +26,7 @@ export async function createHttpFunction(
 			"This action cannot be completed because there is no workspace opened.  Please open a workspace.",
 		);
 		context.errorHandling.suppressReportIssue = true;
+
 		throw new Error(noWorkspaceError);
 	}
 
@@ -40,6 +41,7 @@ export async function createHttpFunction(
 				apiSubpathSetting,
 				workspace.workspaceFolders[0].uri,
 			) || defaultApiLocation;
+
 	const folderPath: string = path.join(
 		workspace.workspaceFolders[0].uri.fsPath,
 		apiLocation,

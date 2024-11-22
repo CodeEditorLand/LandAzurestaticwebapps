@@ -22,6 +22,7 @@ export async function createSwaConfigFile(
 			configFileName,
 		),
 	);
+
 	const configFilePath: URI = Utils.joinPath(destPath, configFileName);
 
 	if (await AzExtFsExtra.pathExists(configFilePath)) {
@@ -30,6 +31,7 @@ export async function createSwaConfigFile(
 			'Static Web App configuration file "{0}" already exists.',
 			configFilePath.fsPath,
 		);
+
 		const overwrite: MessageItem = {
 			title: localize("overwrite", "Overwrite"),
 		};

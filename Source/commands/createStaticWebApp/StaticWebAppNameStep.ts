@@ -87,6 +87,7 @@ export class StaticWebAppNameStep extends AzureNameStep<IStaticWebAppWizardConte
 		name: string | undefined,
 	): Promise<string | undefined> {
 		name = name ? name.trim() : "";
+
 		if (
 			name.length < staticWebAppNamingRules.minLength ||
 			name.length > staticWebAppNamingRules.maxLength
@@ -134,6 +135,7 @@ export class StaticWebAppNameStep extends AzureNameStep<IStaticWebAppWizardConte
 		// Static Web app names must be unique to the current resource group.
 		try {
 			await context.client.staticSites.getStaticSite(rgName, name);
+
 			return false;
 		} catch (error) {
 			// if an error is thrown, it means the SWA name is available

@@ -24,6 +24,7 @@ export function registerSwaCliTaskEvents(): void {
 		async (context: IActionContext, debugSession: vscode.DebugSession) => {
 			context.errorHandling.suppressDisplay = true;
 			context.telemetry.suppressIfSuccessful = true;
+
 			if (!debugSession.parentSession && debugSession.workspaceFolder) {
 				stopSwaTaskIfRunning(debugSession.workspaceFolder);
 			}
@@ -36,6 +37,7 @@ export function registerSwaCliTaskEvents(): void {
 		async (context: IActionContext, e: vscode.TaskProcessStartEvent) => {
 			context.errorHandling.suppressDisplay = true;
 			context.telemetry.suppressIfSuccessful = true;
+
 			if (
 				e.execution.task.scope !== undefined &&
 				isSwaCliTask(e.execution.task)
@@ -59,6 +61,7 @@ function isSwaCliTask(task: vscode.Task): boolean {
 function stopSwaTaskIfRunning(workspaceFolder: vscode.WorkspaceFolder): void {
 	const runningFuncTask: IRunningSwaTask | undefined =
 		runningSwaTaskMap.get(workspaceFolder);
+
 	if (runningFuncTask !== undefined) {
 		// Use `process.kill` because `TaskExecution.terminate` closes the terminal pane and erases all output
 		process.kill(runningFuncTask.processId);

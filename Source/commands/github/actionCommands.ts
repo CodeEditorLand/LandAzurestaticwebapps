@@ -32,6 +32,7 @@ export async function rerunAction(
 		"noCompleted",
 		"No completed actions found.",
 	);
+
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<ActionTreeItem>(
 			{ ...context, suppressCreatePick: true, noItemFoundErrorMessage },
@@ -50,6 +51,7 @@ export async function rerunAction(
 	ext.outputChannel.appendLog(rerunRunning);
 
 	const client: Octokit = await createOctokitClient(context);
+
 	const owner = nonNullProp(node.data.repository, "owner");
 	await client.actions.reRunWorkflow({
 		owner: owner.login,
@@ -68,6 +70,7 @@ export async function cancelAction(
 		"noInProgress",
 		"No in-progress actions found.",
 	);
+
 	if (!node) {
 		node = await ext.rgApi.pickAppResource<ActionTreeItem>(
 			{ ...context, suppressCreatePick: true, noItemFoundErrorMessage },
@@ -87,6 +90,7 @@ export async function cancelAction(
 	ext.outputChannel.appendLog(cancelRunning);
 
 	const client: Octokit = await createOctokitClient(context);
+
 	const owner = nonNullProp(node.data.repository, "owner");
 	await client.actions.cancelWorkflowRun({
 		owner: owner.login,
@@ -103,8 +107,11 @@ export async function checkActionStatus(
 	initialCreate: boolean = false,
 ): Promise<Conclusion> {
 	const startTime: number = Date.now();
+
 	const client: Octokit = await createOctokitClient(context);
+
 	let workflowRun: ActionsGetWorkflowRunResponseData | undefined;
+
 	const owner = nonNullProp(node.data.repository, "owner");
 
 	const pollingOperation: () => Promise<boolean> = async () => {
@@ -115,6 +122,7 @@ export async function checkActionStatus(
 				run_id: node.data.id,
 			})
 		).data;
+
 		if (ensureStatus(workflowRun) === Status.Completed) {
 			if (!initialCreate) {
 				const actionCompleted: string = localize(
@@ -133,6 +141,7 @@ export async function checkActionStatus(
 			);
 			context.telemetry.properties.conclusion =
 				workflowRun.conclusion || "";
+
 			return true;
 		}
 

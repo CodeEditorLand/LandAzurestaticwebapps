@@ -93,6 +93,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 			this.repositoryUrl = this.data.repositoryUrl;
 		} else {
 			context.errorHandling.suppressDisplay = true;
+
 			throw new Error(onlyGitHubSupported);
 		}
 
@@ -102,6 +103,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 
 	public get description(): string | undefined {
 		const { owner, name } = getRepoFullname(this.repositoryUrl);
+
 		return `${owner}/${name}`;
 	}
 
@@ -117,6 +119,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 			context,
 			this._subscription,
 		]);
+
 		const envs = await uiUtils.listAllIterator(
 			client.staticSites.listStaticSiteBuilds(
 				this.resourceGroup,
@@ -174,6 +177,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 		}
 
 		// return super.compareChildrenImpl(ti1, ti2);
+
 		return ti1.label.localeCompare(ti2.label);
 	}
 

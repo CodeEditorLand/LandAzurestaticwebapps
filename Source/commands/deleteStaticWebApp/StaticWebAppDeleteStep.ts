@@ -41,6 +41,7 @@ export class StaticWebAppDeleteStep extends AzureWizardExecuteStep<IDeleteWizard
 
 		const resourceClient: ResourceManagementClient =
 			await createResourceClient([context, context.subscription]);
+
 		const resources: GenericResourceExpanded[] =
 			await uiUtils.listAllIterator(
 				resourceClient.resources.listByResourceGroup(
@@ -56,6 +57,7 @@ export class StaticWebAppDeleteStep extends AzureWizardExecuteStep<IDeleteWizard
 			swaNode.resourceGroup,
 			swaNode.name,
 		);
+
 		const deleteSucceeded: string = localize(
 			"deleteSucceeded",
 			'Successfully deleted static web app "{0}".',

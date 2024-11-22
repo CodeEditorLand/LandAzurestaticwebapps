@@ -28,7 +28,9 @@ export class StaticWebAppCreateStep extends AzureWizardExecuteStep<IStaticWebApp
 		}>,
 	): Promise<void> {
 		const newName: string = nonNullProp(context, "newStaticWebAppName");
+
 		const branchData = nonNullProp(context, "branchData");
+
 		const siteEnvelope: StaticSiteARMResource = {
 			repositoryUrl: context.repoHtmlUrl,
 			branch: branchData.name,

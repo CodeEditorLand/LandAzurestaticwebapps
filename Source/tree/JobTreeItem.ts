@@ -82,6 +82,7 @@ export class JobTreeItem
 		const { owner, name } = getRepoFullname(
 			this.parent.parent.repositoryUrl,
 		);
+
 		const octokitClient: Octokit = await createOctokitClient(context);
 		this.data = <ActionsGetJobForWorkflowRunResponseData>(
 			await octokitClient.actions.getJobForWorkflowRun({
@@ -100,7 +101,9 @@ export class JobTreeItem
 		const { owner, name } = getRepoFullname(
 			this.parent.parent.repositoryUrl,
 		);
+
 		const octokitClient: Octokit = await createOctokitClient(context);
+
 		return <string>(
 			await octokitClient.actions.downloadJobLogsForWorkflowRun({
 				owner,

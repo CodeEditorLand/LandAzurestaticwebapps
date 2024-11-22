@@ -19,6 +19,7 @@ export async function createTreeItemsWithErrorHandling<TSource>(
 	) => string | undefined | Promise<string | undefined>,
 ): Promise<AzExtTreeItem[]> {
 	const treeItems: AzExtTreeItem[] = [];
+
 	let lastUnknownItemError: unknown;
 	sourceArray ||= [];
 	await Promise.all(
@@ -26,6 +27,7 @@ export async function createTreeItemsWithErrorHandling<TSource>(
 			try {
 				const item: AzExtTreeItem | undefined =
 					await createTreeItem(source);
+
 				if (item) {
 					// Verify at least the following properties can be accessed without an error
 					item.contextValue;
@@ -38,6 +40,7 @@ export async function createTreeItemsWithErrorHandling<TSource>(
 				}
 			} catch (error) {
 				let name: string | undefined;
+
 				try {
 					name = await getLabelOnError(source);
 				} catch {

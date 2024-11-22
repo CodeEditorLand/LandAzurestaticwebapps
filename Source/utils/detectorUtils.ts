@@ -23,8 +23,10 @@ export async function detectAppFoldersInWorkspace(
 	subfolders.push(workspaceFolder.uri);
 
 	const detector = new NodeDetector();
+
 	for (const subfolder of subfolders) {
 		const subResult = await detector.detect(subfolder);
+
 		if (subResult) {
 			results.push({ uri: subfolder, ...subResult });
 		}

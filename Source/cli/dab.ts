@@ -23,6 +23,7 @@ export async function getFolderContainingDbConfigFile(
 		workspaceFolder,
 		`*/staticwebapp.database.config.json`,
 	);
+
 	const results = await vscode.workspace.findFiles(
 		include,
 		"**/node_modules/**",

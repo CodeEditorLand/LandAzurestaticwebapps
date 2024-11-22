@@ -26,6 +26,7 @@ export async function setGitWorkspaceContexts(
 		context,
 		folder.uri,
 	);
+
 	const verifiedWorkspace: VerifiedGitWorkspaceState =
 		await verifyGitWorkspaceForCreation(
 			context,
@@ -39,6 +40,7 @@ export async function setGitWorkspaceContexts(
 
 	if (gitWorkspaceState.remoteRepo) {
 		context.repoHtmlUrl = gitWorkspaceState.remoteRepo.html_url;
+
 		if (!gitWorkspaceState.repo?.state.HEAD?.upstream) {
 			// current branch does not exist on remote, ask to push
 			await context.ui.showWarningMessage(

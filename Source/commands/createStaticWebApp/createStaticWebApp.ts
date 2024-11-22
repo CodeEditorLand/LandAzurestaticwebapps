@@ -100,6 +100,7 @@ export async function createStaticWebApp(
 	};
 
 	isVerifyingWorkspace = true;
+
 	try {
 		if (!isSubscription(node)) {
 			node =
@@ -111,6 +112,7 @@ export async function createStaticWebApp(
 
 		await window.withProgress(progressOptions, async () => {
 			const folder = await tryGetWorkspaceFolder(context);
+
 			if (folder) {
 				await telemetryUtils.runWithDurationTelemetry(
 					context,
@@ -135,15 +137,20 @@ export async function createStaticWebApp(
 						).toString();
 
 						const subfolderDetectorResults: DetectorResults[] = [];
+
 						const subWithSrcFolder: string[] = [];
+
 						const subfolders = await getSubFolders(
 							context,
 							folder.uri,
 						);
+
 						for (const subfolder of subfolders) {
 							const subResult = await detector.detect(subfolder);
+
 							if (subResult) {
 								subfolderDetectorResults.push(subResult);
+
 								if (
 									await AzExtFsExtra.pathExists(
 										Uri.joinPath(
@@ -187,6 +194,7 @@ export async function createStaticWebApp(
 		context,
 		node.subscription,
 	]);
+
 	const wizardContext: IStaticWebAppWizardContext = {
 		accessToken: await getGitHubAccessToken(),
 		client,
@@ -196,9 +204,11 @@ export async function createStaticWebApp(
 	};
 
 	const title: string = localize("createStaticApp", "Create Static Web App");
+
 	const promptSteps: AzureWizardPromptStep<
 		IStaticWebAppWizardContext & ExecuteActivityContext
 	>[] = [];
+
 	const executeSteps: AzureWizardExecuteStep<IStaticWebAppWizardContext>[] =
 		[];
 
@@ -210,6 +220,7 @@ export async function createStaticWebApp(
 	}
 
 	promptSteps.push(new StaticWebAppNameStep(), new SkuListStep());
+
 	const hasRemote: boolean = !!wizardContext.repoHtmlUrl;
 
 	// if the local project doesn't have a GitHub remote, we will create it for them
@@ -291,6 +302,7 @@ export async function createStaticWebApp(
 	await wizard.execute();
 
 	await ext.rgApi.appResourceTree.refresh(context);
+
 	const swa: StaticSiteARMResource = nonNullProp(
 		wizardContext,
 		"staticWebApp",
@@ -305,10 +317,12 @@ export async function createStaticWebApp(
 	};
 
 	const resolver = new StaticWebAppResolver();
+
 	const resolvedSwa = await resolver.resolveResource(
 		node.subscription,
 		appResource,
 	);
+
 	if (resolvedSwa) {
 		await showSwaCreated(resolvedSwa);
 	}

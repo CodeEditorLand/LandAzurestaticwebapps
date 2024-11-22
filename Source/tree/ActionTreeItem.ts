@@ -74,7 +74,9 @@ export class ActionTreeItem
 		context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		const { owner, name } = getRepoFullname(this.parent.repositoryUrl);
+
 		const octokitClient: Octokit = await createOctokitClient(context);
+
 		const response: OctokitResponse<ActionsListJobsForWorkflowRunResponseData> =
 			await octokitClient.actions.listJobsForWorkflowRun({
 				owner: owner,
@@ -96,7 +98,9 @@ export class ActionTreeItem
 
 	public async refreshImpl(context: IActionContext): Promise<void> {
 		const { owner, name } = getRepoFullname(this.parent.repositoryUrl);
+
 		const octokitClient: Octokit = await createOctokitClient(context);
+
 		const response: OctokitResponse<ActionsGetWorkflowRunResponseData> =
 			await octokitClient.actions.getWorkflowRun({
 				owner: owner,

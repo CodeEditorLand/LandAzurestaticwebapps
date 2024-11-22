@@ -49,6 +49,7 @@ export class FunctionsTreeItem extends AzExtParentTreeItem {
 			context,
 			this,
 		]);
+
 		const functions = this.parent.isProduction
 			? await uiUtils.listAllIterator(
 					client.staticSites.listStaticSiteFunctions(

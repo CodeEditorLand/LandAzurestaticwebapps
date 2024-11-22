@@ -78,15 +78,18 @@ export async function selectWorkspaceItem(
 ): Promise<Uri> {
 	const folders: readonly WorkspaceFolder[] =
 		workspace.workspaceFolders || [];
+
 	const folderPicks: IAzureQuickPickItem<Uri | undefined>[] =
 		await Promise.all(
 			folders.map(async (f: WorkspaceFolder) => {
 				let subpath: string | undefined;
+
 				if (getSubPath) {
 					subpath = await getSubPath(f);
 				}
 
 				const uri: Uri = subpath ? Uri.joinPath(f.uri, subpath) : f.uri;
+
 				return {
 					label: path.basename(uri.fsPath),
 					description: uri.fsPath,
@@ -100,6 +103,7 @@ export async function selectWorkspaceItem(
 		description: "",
 		data: undefined,
 	});
+
 	const folder: IAzureQuickPickItem<Uri | undefined> =
 		await context.ui.showQuickPick(folderPicks, { placeHolder });
 
@@ -112,6 +116,7 @@ export async function tryGetWorkspaceFolder(
 	context: IActionContext,
 ): Promise<WorkspaceFolder | undefined> {
 	context.telemetry.properties.noWorkspaceResult = "canceled";
+
 	if (
 		!workspace.workspaceFolders ||
 		workspace.workspaceFolders.length === 0
@@ -119,14 +124,17 @@ export async function tryGetWorkspaceFolder(
 		return;
 	} else if (workspace.workspaceFolders.length === 1) {
 		context.telemetry.properties.noWorkspaceResult = "singleRootProject";
+
 		return workspace.workspaceFolders[0];
 	} else {
 		const selectAppFolder: string = "selectAppFolder";
+
 		const folder = await selectWorkspaceFolder(
 			context,
 			localize(selectAppFolder, "Select folder with your app"),
 		);
 		context.telemetry.properties.noWorkspaceResult = "multiRootProject";
+
 		return workspace.getWorkspaceFolder(folder);
 	}
 }
@@ -135,14 +143,18 @@ export async function showNoWorkspacePrompt(
 	context: IActionContext,
 ): Promise<void> {
 	const noWorkspaceWarning: string = "noWorkspaceWarning";
+
 	const message: string = localize(
 		noWorkspaceWarning,
 		"You must have a git project open to create a Static Web App.",
 	);
+
 	const buttons: MessageItem[] = [];
+
 	const cloneProjectMsg: MessageItem = {
 		title: localize("cloneProject", "Clone project from GitHub"),
 	};
+
 	const openExistingProjectMsg: MessageItem = {
 		title: localize(openExistingProject, "Open local project"),
 	};
@@ -150,6 +162,7 @@ export async function showNoWorkspacePrompt(
 	const isVirtualWorkspace =
 		workspace.workspaceFolders &&
 		workspace.workspaceFolders.every((f) => f.uri.scheme !== "file");
+
 	if (!isVirtualWorkspace) {
 		buttons.push(cloneProjectMsg, openExistingProjectMsg);
 	}
@@ -163,6 +176,7 @@ export async function showNoWorkspacePrompt(
 		{ modal: true, stepName: noWorkspaceWarning },
 		...buttons,
 	);
+
 	if (result === cloneProjectMsg) {
 		await cloneRepo(context, "");
 		context.telemetry.properties.noWorkspaceResult = "cloneProject";
@@ -173,6 +187,7 @@ export async function showNoWorkspacePrompt(
 		await commands.executeCommand("remoteHub.openRepository");
 	}
 	context.errorHandling.suppressDisplay = true;
+
 	throw new NoWorkspaceError();
 }
 
@@ -193,12 +208,15 @@ export async function getSubFolders(
 	uri: Uri,
 ): Promise<Uri[]> {
 	const files = await workspace.fs.readDirectory(uri);
+
 	const subfolders: Uri[] = [];
+
 	for (const file of files) {
 		if (file[1] === FileType.Directory) {
 			subfolders.push(Uri.joinPath(uri, file[0]));
 		}
 	}
 	context.telemetry.properties.subfolders = subfolders.length.toString();
+
 	return subfolders;
 }

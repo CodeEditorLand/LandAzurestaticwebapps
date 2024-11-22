@@ -18,6 +18,7 @@ import { createOctokitClient } from "../github/createOctokitClient";
 export class RepoNameStep extends AzureWizardPromptStep<IStaticWebAppWizardContext> {
 	public async prompt(context: IStaticWebAppWizardContext): Promise<void> {
 		const name: string | undefined = context.newStaticWebAppName;
+
 		const value: string | undefined =
 			(await this.validateRepoName(context, name)) === undefined
 				? name
@@ -48,6 +49,7 @@ export class RepoNameStep extends AzureWizardPromptStep<IStaticWebAppWizardConte
 		repo: string,
 	): Promise<boolean> {
 		const client: Octokit = await createOctokitClient(context);
+
 		try {
 			await client.repos.get({
 				owner: nonNullProp(context, "orgData").login,

@@ -25,6 +25,7 @@ export async function openInPortal(
 			node,
 			`${node.parent?.parent?.id}/configurations`,
 		);
+
 		return;
 	}
 
@@ -34,6 +35,7 @@ export async function openInPortal(
 		])
 	) {
 		await openInPortalUtil(node, `${node.parent?.parent?.id}/${node.id}`);
+
 		return;
 	}
 }

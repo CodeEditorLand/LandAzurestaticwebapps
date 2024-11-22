@@ -32,6 +32,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 			context.telemetry.properties.isActivationEvent = "true";
 
 			const showSwaCliWarningKey: string = "showStaticWebAppsCliWarning";
+
 			const showSwaCliWarning: boolean =
 				!!getWorkspaceSetting<boolean>(showSwaCliWarningKey);
 
@@ -43,6 +44,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 			if (showSwaCliWarning) {
 				const installedVersion: string | null =
 					await getInstalledSwaCliVersion();
+
 				if (!installedVersion) {
 					return;
 				}
@@ -50,12 +52,14 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 
 				const newestVersion: string | undefined =
 					await getNewestSwaCliVersion(context);
+
 				if (!newestVersion) {
 					return;
 				}
 
 				if (semver.gt(newestVersion, installedVersion)) {
 					context.telemetry.properties.outOfDateSwaCli = "true";
+
 					const message: string = localize(
 						"outdatedSwaCli",
 						"Update the Azure Static Web Apps CLI ({0}) to the latest ({1}) for the best experience.",
@@ -66,6 +70,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 					const update: vscode.MessageItem = {
 						title: localize("update", "Update"),
 					};
+
 					let result: vscode.MessageItem;
 
 					do {
@@ -75,6 +80,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 							DialogResponses.learnMore,
 							DialogResponses.dontWarnAgain,
 						);
+
 						if (result === DialogResponses.learnMore) {
 							await openUrl(installSwaCliUrl);
 						} else if (result === update) {
@@ -95,6 +101,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 export async function hasNpm(): Promise<boolean> {
 	try {
 		await cpUtils.executeCommand(undefined, undefined, "npm", "--version");
+
 		return true;
 	} catch (e) {
 		return false;

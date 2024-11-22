@@ -24,6 +24,7 @@ export async function getInstalledSwaCliVersion(
 			"swa",
 			"--version",
 		);
+
 		return semver.clean(output);
 	} catch (e) {
 		return null;

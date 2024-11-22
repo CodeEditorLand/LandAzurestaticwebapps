@@ -17,6 +17,7 @@ export async function createOctokitClient(
 	context: IActionContext & Partial<IStaticWebAppWizardContext>,
 ): Promise<Octokit> {
 	const token: string = context.accessToken || (await getGitHubAccessToken());
+
 	return new Octokit({
 		userAgent: appendExtensionUserAgent(),
 		auth: token,

@@ -27,6 +27,7 @@ export async function getFunctionsApi(
 	installMessage?: string,
 ): Promise<AzureFunctionsExtensionApi> {
 	const funcExtensionId: string = "ms-azuretools.vscode-azurefunctions";
+
 	const funcExtension: apiUtils.AzureExtensionApiProvider | undefined =
 		await apiUtils.getExtensionExports(funcExtensionId);
 
@@ -42,6 +43,7 @@ export async function getFunctionsApi(
 			),
 		{ title: "Install", stepName: "installFunctions" },
 	);
+
 	const commandToRun: string = "extension.open";
 	void commands.executeCommand(commandToRun, funcExtensionId);
 
@@ -56,6 +58,7 @@ export async function getGitApi(): Promise<IGit> {
 			if (!ext.vscodeGitApi) {
 				const gitExtension: GitExtension | undefined =
 					await apiUtils.getExtensionExports("vscode.git");
+
 				if (gitExtension) {
 					const api = gitExtension.getAPI(1);
 					ext.vscodeGitApi = api;
@@ -95,6 +98,7 @@ export async function getApiExport<T>(
 ): Promise<T | undefined> {
 	const extension: Extension<T> | undefined =
 		extensions.getExtension(extensionId);
+
 	if (extension) {
 		if (!extension.isActive) {
 			await extension.activate();
@@ -111,6 +115,7 @@ export async function getResourceGroupsApi(): Promise<AzureHostExtensionApi> {
 		await getApiExport<apiUtils.AzureExtensionApiProvider>(
 			"ms-azuretools.vscode-azureresourcegroups",
 		);
+
 	if (rgApiProvider) {
 		return rgApiProvider.getApi<AzureHostExtensionApi>("0.0.1");
 	} else {

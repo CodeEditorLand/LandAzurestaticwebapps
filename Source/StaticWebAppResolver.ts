@@ -20,6 +20,7 @@ export interface ResolvedStaticWebApp extends ResolvedAppResourceBase {
 	name: string;
 	repositoryUrl: string;
 	branch: string;
+
 	defaultHostname: string;
 	data: StaticSiteARMResource;
 	browse: () => Promise<void>;
@@ -40,6 +41,7 @@ export class StaticWebAppResolver implements AppResourceResolver {
 							...context,
 							...subContext,
 						});
+
 						const swa = await client.staticSites.getStaticSite(
 							getResourceGroupFromId(nonNullProp(resource, "id")),
 							nonNullProp(resource, "name"),
@@ -51,6 +53,7 @@ export class StaticWebAppResolver implements AppResourceResolver {
 						});
 					} catch (e) {
 						console.error({ ...context, ...subContext });
+
 						throw e;
 					}
 				},

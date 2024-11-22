@@ -20,6 +20,7 @@ export function parseGitHubLog(
 	completedAt: Date,
 ): LogState {
 	const linesArray = rawLogs.split("\r\n");
+
 	const state: LogState = {
 		withinGroup: false,
 		overlappingEntries: false,
@@ -31,6 +32,7 @@ export function parseGitHubLog(
 
 	for (let i = 0; i < linesArray.length; i++) {
 		const entry = linesArray[i];
+
 		const currentTimestamp: Date | undefined = isValidTimestamp(
 			entry,
 			startedAt,
@@ -47,6 +49,7 @@ export function parseGitHubLog(
 
 		pushFoldingIndex(entry, i, state);
 		isWithinGroup(entry, state, !!currentTimestamp);
+
 		if (shouldPushStep(state, !!currentTimestamp)) {
 			if (state.firstIndex === 0) {
 				state.firstIndex = i;
@@ -76,6 +79,7 @@ function isValidTimestamp(
 	completedAt: Date,
 ): Date | undefined {
 	const timestampRegExp = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{7}Z/;
+
 	const timestamp = timestampRegExp.exec(entry);
 
 	// if the timestamp is invalid, try the next entry
@@ -128,6 +132,7 @@ function isOverlappingStep(entry: string, state: LogState): boolean {
 				state.filteredJobsLog.length = 0;
 				state.firstIndex = 0;
 				state.overlappingEntries = true;
+
 				return true;
 			}
 		}
@@ -148,5 +153,6 @@ function cleanLogDecorators(entry: string): string {
 	const commandRegExp: RegExp = /#{0,2}\[.*\]/;
 	// eslint-disable-next-line no-control-regex
 	const terminalColorRegExp: RegExp = /\[\d*m/gm;
+
 	return entry.replace(commandRegExp, "").replace(terminalColorRegExp, "");
 }

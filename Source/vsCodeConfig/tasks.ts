@@ -16,6 +16,7 @@ import {
 import { shell, swa, swaWatchProblemMatcher } from "../constants";
 
 const tasksKey: string = "tasks";
+
 const versionKey: string = "version";
 
 export function getTasks(folder: WorkspaceFolder): ITask[] {

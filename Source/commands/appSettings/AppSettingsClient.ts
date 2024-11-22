@@ -18,6 +18,7 @@ import { createWebSiteClient } from "../../utils/azureClients";
 
 export class SwaAppSettingsClientProvider implements AppSettingsClientProvider {
 	private _node: EnvironmentTreeItem;
+
 	constructor(node: EnvironmentTreeItem) {
 		this._node = node;
 	}
@@ -26,6 +27,7 @@ export class SwaAppSettingsClientProvider implements AppSettingsClientProvider {
 		context: IActionContext,
 	): Promise<IAppSettingsClient> {
 		const websiteClient = await createWebSiteClient([context, this._node]);
+
 		return new SwaAppSettingsClient(this._node, websiteClient);
 	}
 }

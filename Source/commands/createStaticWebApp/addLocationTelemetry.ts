@@ -19,6 +19,7 @@ export function addLocationTelemetry(
 	).toString();
 
 	let telemValue: string;
+
 	if (value === undefined) {
 		// no telemetry to add yet
 		return;

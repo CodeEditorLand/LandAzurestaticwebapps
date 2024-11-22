@@ -65,6 +65,7 @@ export class RemoteShortnameStep extends AzureWizardPromptStep<IStaticWebAppWiza
 					}
 
 					const uri: Uri = nonNullProp(context, "uri");
+
 					if (await remoteShortnameExists(uri, value)) {
 						return localize(
 							"remoteExists",

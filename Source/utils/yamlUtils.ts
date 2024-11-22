@@ -20,6 +20,7 @@ export async function parseYamlFile(
 	yamlFilePath: string,
 ): Promise<BuildConfigs | undefined> {
 	const contents: string = await AzExtFsExtra.readFile(yamlFilePath);
+
 	const buildDeployStep: BuildDeployStep | undefined =
 		await getBuildDeployStep(context, contents, basename(yamlFilePath));
 
@@ -77,8 +78,10 @@ export function validateLocationYaml(
 	buildConfig: BuildConfig,
 ): string | undefined {
 	const yamlString = `${buildConfig}: "${value}"`;
+
 	try {
 		parse(yamlString);
+
 		return;
 	} catch (e) {
 		return `Invalid YAML syntax: ${yamlString}`;

@@ -73,7 +73,9 @@ export async function openYAMLConfigFile(
 		const defaultHostname: string = isResolvedStaticWebAppTreeItem(node)
 			? node.defaultHostname
 			: node.parent.defaultHostname;
+
 		const ymlFileName: string = `.github/workflows/azure-static-web-apps-${defaultHostname.split(".")[0]}.yml`;
+
 		const localYamlFiles: Uri[] = await workspace.findFiles(ymlFileName);
 
 		if (localYamlFiles.length === 1) {
@@ -87,6 +89,7 @@ export async function openYAMLConfigFile(
 
 	const configDocument: TextDocument =
 		await workspace.openTextDocument(yamlFileUri);
+
 	const selection: Range | undefined = await tryGetSelection(
 		context,
 		configDocument,
@@ -111,7 +114,9 @@ export async function tryGetSelection(
 	}
 
 	const configDocumentText: string = configDocument.getText();
+
 	const buildConfigRegex: RegExp = new RegExp(`${buildConfigToSelect}:`, "g");
+
 	const buildConfigMatches: RegExpMatchArray | null =
 		configDocumentText.match(buildConfigRegex);
 
@@ -124,15 +129,19 @@ export async function tryGetSelection(
 				basename(configDocument.uri.fsPath),
 			),
 		);
+
 		return undefined;
 	}
 
 	try {
 		type YamlNode = YAMLMap | YAMLSeq | Pair | Scalar | undefined | null;
+
 		const yamlNodes: YamlNode[] = [];
+
 		const parsedYaml: Document.Parsed = parseDocument(configDocumentText, {
 			keepCstNodes: true,
 		});
+
 		let yamlNode: YamlNode = parsedYaml.contents;
 
 		while (yamlNode) {
@@ -143,6 +152,7 @@ export async function tryGetSelection(
 			) {
 				const cstNode: CST.Node | undefined = (<Scalar>yamlNode.value)
 					?.cstNode;
+
 				const range = cstNode?.rangeAsLinePos;
 
 				if (range && range.end) {
@@ -175,10 +185,12 @@ export async function tryGetSelection(
 						range.start.line,
 						range.start.col,
 					);
+
 					const endPosition: Position = new Position(
 						range.end.line,
 						range.end.col,
 					);
+
 					return configDocument.validateRange(
 						new Range(startPosition, endPosition),
 					);

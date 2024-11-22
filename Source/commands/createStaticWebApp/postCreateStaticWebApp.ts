@@ -43,6 +43,7 @@ export async function postCreateStaticWebApp(
 				swaNode.data.id ?? "",
 				context,
 			);
+
 			if (!realSwaNode) {
 				return;
 			}
@@ -54,23 +55,29 @@ export async function postCreateStaticWebApp(
 					ti.label === productionEnvironmentName
 				);
 			});
+
 			if (productionEnv) {
 				const octokitClient: Octokit =
 					await createOctokitClient(context);
+
 				const { owner, name } = getRepoFullname(
 					productionEnv.repositoryUrl,
 				);
+
 				let deployActionNode: ActionTreeItem | undefined;
+
 				const maxTime: number = Date.now() + 30 * 1000; // it can take a little for the action to queue in GitHub, wait for 30 seconds
 
 				while (!deployActionNode) {
 					try {
 						await productionEnv.actionsTreeItem.refresh(context);
+
 						const actionTreeItems: ActionTreeItem[] = <
 							ActionTreeItem[]
 						>await productionEnv.actionsTreeItem.loadAllChildren(
 							context,
 						);
+
 						const filteredTreeItems: ActionTreeItem[] =
 							actionTreeItems.filter((ti) => {
 								return ti.data.status !== Status.Completed;
@@ -125,8 +132,10 @@ export async function postCreateStaticWebApp(
 
 				// only output a message if it completed or failed
 				const success: boolean = conclusion === Conclusion.Success;
+
 				if (success || conclusion === Conclusion.Failure) {
 					await productionEnv.refresh(context);
+
 					const deploymentMsg: string = success
 						? localize(
 								"deploymentCompleted",
@@ -139,9 +148,11 @@ export async function postCreateStaticWebApp(
 								swaNode.name,
 							);
 					ext.outputChannel.appendLog(deploymentMsg);
+
 					const browseWebsite: MessageItem = {
 						title: localize("browseWebsite", "Browse Website"),
 					};
+
 					const msgItem: MessageItem = success
 						? browseWebsite
 						: showActionsMsg;

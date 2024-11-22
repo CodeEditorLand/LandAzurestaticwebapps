@@ -51,6 +51,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 					const swaCliConfigFile = await tryGetStaticWebAppsCliConfig(
 						folder.uri,
 					);
+
 					if (swaCliConfigFile) {
 						context.telemetry.measurements.configsCount =
 							Object.entries(
@@ -74,6 +75,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 						folder,
 					);
 					context.telemetry.measurements.appCount = appFolders.length;
+
 					const foundPresets: IBuildPreset[] = [];
 					appFolders.forEach((appFolder) => {
 						const buildPreset = buildPresets.find((preset) =>
@@ -99,6 +101,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 					context.telemetry.properties.buildPresets = foundPresets
 						.map((preset) => preset.id)
 						.join(", ");
+
 					return result;
 				},
 			)) ?? []
@@ -132,6 +135,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 							"You must have the Azure Static Web Apps CLI installed to debug your static web app.",
 						),
 					);
+
 					if (!hasSwaCli) {
 						return undefined;
 					}
@@ -155,8 +159,10 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 							this.parseDebugConfigurationName(
 								debugConfiguration,
 							);
+
 						const swaCliConfigFile =
 							await tryGetStaticWebAppsCliConfig(folder.uri);
+
 						if (swaCliConfigFile) {
 							context.telemetry.properties.hasSwaCliConfigFile =
 								"true";
@@ -164,6 +170,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 
 						const config =
 							swaCliConfigFile?.configurations?.[configName];
+
 						if (config && config.apiLocation !== funcAddress) {
 							const fixMi: MessageItem = {
 								title: localize("fix", "Fix"),
@@ -228,6 +235,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 		folder: WorkspaceFolder,
 	): Promise<void> {
 		let funcConfig = this.getFuncDebugConfig(folder);
+
 		if (!funcConfig) {
 			await commands.executeCommand(
 				"azureFunctions.initProjectForVSCode",
@@ -245,6 +253,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 		folder: WorkspaceFolder,
 	): DebugConfiguration | undefined {
 		const debugConfigurations = getDebugConfigs(folder);
+
 		return debugConfigurations.find((debugConfig) =>
 			debugConfig.name.match(
 				new RegExp(/^Attach to (.+) Functions$/, "i"),

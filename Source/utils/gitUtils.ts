@@ -67,7 +67,9 @@ export async function getGitWorkspaceState(
 		remoteRepo: undefined,
 		hasAdminAccess: false,
 	};
+
 	const gitApi: IGit = await getGitApi();
+
 	let repo: Repository | null = null;
 
 	try {
@@ -106,6 +108,7 @@ export async function verifyGitWorkspaceForCreation(
 	uri: Uri,
 ): Promise<VerifiedGitWorkspaceState> {
 	const gitFolderName: string = ".git";
+
 	if (
 		(await workspace.fs.readDirectory(uri)).filter(
 			(file) => file[0] !== gitFolderName,
@@ -135,6 +138,7 @@ export async function verifyGitWorkspaceForCreation(
 			);
 			// if they're in web, remote repo is installed
 			await commands.executeCommand("remoteHub.openRepository");
+
 			throw new UserCancelledError("openedRemoteRepo");
 		}
 
@@ -148,7 +152,9 @@ export async function verifyGitWorkspaceForCreation(
 			{ modal: true, stepName: "initRepo" },
 			{ title: localize("create", "Create") },
 		);
+
 		const gitApi: IGit = await getGitApi();
+
 		try {
 			if (gitApi.init) {
 				repo = await gitApi.init(uri);
@@ -168,6 +174,7 @@ export async function verifyGitWorkspaceForCreation(
 
 		// create a generic .gitignore for user if we do not detect one
 		const gitignorePath: Uri = Utils.joinPath(uri, gitignoreFileName);
+
 		if (!(await AzExtFsExtra.pathExists(gitignorePath))) {
 			await AzExtFsExtra.writeFile(
 				gitignorePath,
@@ -189,6 +196,7 @@ export async function verifyGitWorkspaceForCreation(
 			'Admin access to the GitHub repository "{0}" is required. Would you like to create a fork?',
 			gitWorkspaceState.remoteRepo.name,
 		);
+
 		const createForkItem: MessageItem = {
 			title: localize("createFork", "Create Fork"),
 		};
@@ -203,6 +211,7 @@ export async function verifyGitWorkspaceForCreation(
 		).data.html_url;
 
 		let cancelStep: string = "cloneFork";
+
 		let forkSuccess: string = localize(
 			"forkSuccess",
 			'Successfully forked "{0}".',
@@ -211,6 +220,7 @@ export async function verifyGitWorkspaceForCreation(
 		ext.outputChannel.appendLog(forkSuccess);
 
 		const buttons: MessageItem[] = [];
+
 		const clone: MessageItem = { title: localize("clone", "Clone Repo") };
 
 		if (!isWeb) {
@@ -227,6 +237,7 @@ export async function verifyGitWorkspaceForCreation(
 
 		const result: MessageItem | undefined =
 			await window.showInformationMessage(forkSuccess, ...buttons);
+
 		if (result === clone) {
 			void cloneRepo(context, repoUrl);
 			cancelStep = "afterCloneFork";
@@ -261,6 +272,7 @@ export async function verifyGitWorkspaceForCreation(
 	}
 
 	const verifiedRepo: Repository = nonNullValue(repo ?? undefined);
+
 	return { ...gitWorkspaceState, dirty: false, repo: verifiedRepo };
 }
 
@@ -270,7 +282,9 @@ export async function tryGetRemote(uri?: Uri): Promise<string | undefined> {
 	}
 
 	const gitApi: IGit = await getGitApi();
+
 	const repo = await gitApi.openRepository(uri);
+
 	return repo?.state.remotes.find((remote) => remote.name === "origin")
 		?.fetchUrl;
 }
@@ -280,6 +294,7 @@ export function getRepoFullname(gitUrl: string): {
 	name: string;
 } {
 	const parsedUrl: gitUrlParse.GitUrl = gitUrlParse(gitUrl);
+
 	return { owner: parsedUrl.owner, name: parsedUrl.name };
 }
 
@@ -288,7 +303,9 @@ export async function remoteShortnameExists(
 	remoteName: string,
 ): Promise<boolean> {
 	const gitApi: IGit = await getGitApi();
+
 	const repo = await gitApi.openRepository(uri);
+
 	let remoteExists: boolean = false;
 
 	try {
@@ -312,6 +329,7 @@ async function promptForCommit(
 		"commitPrompt",
 		"Enter a commit message.",
 	);
+
 	const commitOptions: CommitOptions = { all: true };
 
 	const commitMsg: string = await context.ui.showInputBox({
@@ -320,6 +338,7 @@ async function promptForCommit(
 		value,
 		stepName,
 	});
+
 	try {
 		await repo.commit(commitMsg, commitOptions);
 	} catch (err) {
@@ -330,10 +349,13 @@ async function promptForCommit(
 export async function tryGetLocalBranch(): Promise<string | undefined> {
 	try {
 		const localProjectPath: Uri | undefined = getSingleRootFsPath();
+
 		if (localProjectPath) {
 			// only try to get branch if there's only a single workspace opened
 			const gitApi: IGit = await getGitApi();
+
 			const repo = await gitApi.openRepository(localProjectPath);
+
 			return repo?.state.HEAD?.name;
 		}
 	} catch (error) {
@@ -352,6 +374,7 @@ export async function warnIfNotOnDefaultBranch(
 	);
 	context.telemetry.properties.defaultBranch = defaultBranch;
 	context.telemetry.properties.notOnDefault = "false";
+
 	const { repo } = gitState;
 
 	if (defaultBranch && repo.state.HEAD?.name !== defaultBranch) {
@@ -360,6 +383,7 @@ export async function warnIfNotOnDefaultBranch(
 		const checkoutButton: MessageItem = {
 			title: localize("checkout", 'Checkout "{0}"', defaultBranch),
 		};
+
 		const result: MessageItem = await context.ui.showWarningMessage(
 			localize(
 				"deployBranch",
@@ -371,6 +395,7 @@ export async function warnIfNotOnDefaultBranch(
 			checkoutButton,
 			{ title: localize("continue", "Continue") },
 		);
+
 		if (result === checkoutButton) {
 			try {
 				await repo.checkout(defaultBranch);
@@ -409,6 +434,7 @@ async function tryGetDefaultBranch(
 		context.telemetry.properties.defaultBranchSource = "remoteConfig";
 	} else {
 		context.telemetry.properties.defaultBranchSource = "defaultConfig";
+
 		defaultBranches = ["main", "master"];
 		// currently git still uses master as the default branch but will be updated to main so handle both cases
 		// https://about.gitlab.com/blog/2021/03/10/new-git-default-branch-name/#:~:text=Every%20Git%20repository%20has%20an,Bitkeeper%2C%20a%20predecessor%20to%20Git.

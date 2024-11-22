@@ -24,6 +24,7 @@ export async function cloneRepo(
 	}
 
 	let repoUrl: string;
+
 	if (isResolvedStaticWebAppTreeItem(resource)) {
 		repoUrl = resource.repositoryUrl;
 	} else {

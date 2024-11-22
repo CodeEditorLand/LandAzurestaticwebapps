@@ -87,7 +87,9 @@ export async function tryGetReposGetResponseData(
 	originUrl: string,
 ): Promise<ReposGetResponseData | undefined> {
 	const { owner, name } = getRepoFullname(originUrl);
+
 	const client: Octokit = await createOctokitClient(context);
+
 	try {
 		return (await client.repos.get({ owner, repo: name })).data;
 	} catch (error) {
@@ -107,9 +109,11 @@ export async function tryGetRepoDataForCreation(
 	localProjectPath?: Uri,
 ): Promise<ReposGetResponseData | undefined> {
 	const originUrl: string | undefined = await tryGetRemote(localProjectPath);
+
 	if (originUrl) {
 		const repoData: ReposGetResponseData | undefined =
 			await tryGetReposGetResponseData(context, originUrl);
+
 		if (hasAdminAccessToRepo(repoData)) {
 			return repoData;
 		}
@@ -133,6 +137,7 @@ export async function createFork(
 
 	if (remoteRepo.owner?.login) {
 		const client: Octokit = await createOctokitClient(context);
+
 		const forking: string = localize(
 			"forking",
 			'Forking "{0}"...',

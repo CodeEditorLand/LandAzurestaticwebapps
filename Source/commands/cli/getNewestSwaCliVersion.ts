@@ -36,6 +36,7 @@ export async function getNewestSwaCliVersion(
 		const packageMetadata: IPackageMetadata = <IPackageMetadata>(
 			response.parsedBody
 		);
+
 		return packageMetadata["dist-tags"].latest;
 	} catch (error) {
 		throw new Error(

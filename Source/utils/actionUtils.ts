@@ -27,24 +27,33 @@ export function getActionIconPath(
 		| ActionsGetWorkflowRunResponseData,
 ): TreeItemIconPath {
 	let id: string;
+
 	let colorId: string | undefined;
+
 	if (data.conclusion !== null) {
 		switch (ensureConclusion(data)) {
 			case Conclusion.Cancelled:
 				id = "circle-slash";
 				colorId = "testing.iconUnset";
+
 				break;
+
 			case Conclusion.Failure:
 				id = "error";
 				colorId = "testing.iconFailed";
+
 				break;
+
 			case Conclusion.Skipped:
 				id = "debug-step-over";
 				colorId = "testing.iconSkipped";
+
 				break;
+
 			case Conclusion.Success:
 				id = "pass";
 				colorId = "testing.iconPassed";
+
 				break;
 		}
 	} else {
@@ -52,14 +61,19 @@ export function getActionIconPath(
 			case Status.Queued:
 				id = "clock";
 				colorId = "testing.iconQueued";
+
 				break;
+
 			case Status.InProgress:
 				id = "play-circle";
 				colorId = "testing.iconUnset";
+
 				break;
+
 			case Status.Completed:
 				id = "pass";
 				colorId = "testing.iconPassed";
+
 				break;
 		}
 	}
@@ -79,6 +93,7 @@ export function getActionDescription(
 		);
 	} else {
 		const nowStr: string = localize("now", "now");
+
 		return localize(
 			"statusDescription",
 			"{0} {1}",
@@ -108,12 +123,16 @@ function convertConclusionToVerb(conclusion: Conclusion): string {
 	switch (conclusion) {
 		case Conclusion.Success:
 			return localize("succeeded", "succeeded");
+
 		case Conclusion.Cancelled:
 			return localize("cancelled", "cancelled");
+
 		case Conclusion.Failure:
 			return localize("failed", "failed");
+
 		case Conclusion.Skipped:
 			return localize("skipped", "skipped");
+
 		default:
 			return "";
 	}
@@ -133,10 +152,13 @@ function convertStatusToVerb(status: Status): string {
 	switch (status) {
 		case Status.InProgress:
 			return localize("started", "started");
+
 		case Status.Queued:
 			return localize("queued", "queued");
+
 		case Status.Completed:
 			return localize("completed", "completed");
+
 		default:
 			return "";
 	}

@@ -30,10 +30,12 @@ export async function tryGetApiLocations(
 		"tryGetProject",
 		async () => {
 			context.telemetry.properties.shallow = shallow ? "true" : "false";
+
 			const folderPath =
 				typeof workspaceFolder === "string"
 					? workspaceFolder
 					: workspaceFolder.uri.fsPath;
+
 			if (await AzExtFsExtra.pathExists(folderPath)) {
 				if (await isFunctionProject(folderPath)) {
 					return [folderPath];
@@ -44,6 +46,7 @@ export async function tryGetApiLocations(
 							`*/${hostFileName}`,
 						),
 					);
+
 					if (hostJsonUris.length !== 1 && !shallow) {
 						// NOTE: If we found a single project at the root or one level down, we will use that without searching any further.
 						// This will reduce false positives in the case of compiled languages like C# where a 'host.json' file is often copied to a build/publish directory a few levels down
@@ -61,6 +64,7 @@ export async function tryGetApiLocations(
 					const projectPaths = hostJsonUris.map((uri) =>
 						path.relative(folderPath, path.dirname(uri.fsPath)),
 					);
+
 					return projectPaths;
 				}
 			}

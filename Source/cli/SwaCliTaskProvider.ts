@@ -33,6 +33,7 @@ export class SwaTaskProvider implements TaskProvider {
 				"staticWebApps.provideTasks",
 				async (context: IActionContext): Promise<Task[]> => {
 					const tasks: Task[] = [];
+
 					for await (const workspaceFolder of workspace.workspaceFolders ??
 						[]) {
 						const workspaceTasks =
@@ -44,6 +45,7 @@ export class SwaTaskProvider implements TaskProvider {
 					context.telemetry.measurements.workspaceFolderCount =
 						workspace.workspaceFolders?.length ?? 0;
 					context.telemetry.measurements.detectedCount = tasks.length;
+
 					return tasks;
 				},
 			)) ?? []
@@ -58,9 +60,11 @@ export class SwaTaskProvider implements TaskProvider {
 				"staticWebApps.provideTasksForWorkspaceFolder",
 				async (context: IActionContext): Promise<Task[]> => {
 					const tasks: Task[] = [];
+
 					if (await AzExtFsExtra.pathExists(workspaceFolder.uri)) {
 						const configTasks =
 							await this.getTasksFromSwaConfig(workspaceFolder);
+
 						const detectorTasks = await this.getTasksFromDetector(
 							context,
 							workspaceFolder,
@@ -88,10 +92,12 @@ export class SwaTaskProvider implements TaskProvider {
 			workspaceFolder,
 			true,
 		);
+
 		const appFolders = await detectAppFoldersInWorkspace(
 			context,
 			workspaceFolder,
 		);
+
 		const dbConfigDirPath =
 			await getFolderContainingDbConfigFile(workspaceFolder);
 
@@ -137,6 +143,7 @@ export class SwaTaskProvider implements TaskProvider {
 		const swaCliConfigFile = await tryGetStaticWebAppsCliConfig(
 			workspaceFolder?.uri,
 		);
+
 		if (swaCliConfigFile && swaCliConfigFile.configurations) {
 			Object.keys(swaCliConfigFile.configurations).forEach(
 				(configurationName: string) => {
@@ -163,6 +170,7 @@ export class SwaTaskProvider implements TaskProvider {
 		configurationName?: string,
 	): Task {
 		const args: string[] = ["start"];
+
 		if (configurationName) {
 			args.push(configurationName);
 		}
@@ -192,6 +200,7 @@ export class SwaTaskProvider implements TaskProvider {
 			name?: string,
 		): string[] => {
 			const args: string[] = [];
+
 			if (object[property]) {
 				args.push(`--${name ?? property.toString()}`);
 				args.push(object[property] as string);

@@ -31,10 +31,12 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 		}>,
 	): Promise<void> {
 		const newRepoName: string = nonNullProp(context, "newRepoName");
+
 		const newRepoIsPrivate: boolean = nonNullProp(
 			context,
 			"newRepoIsPrivate",
 		);
+
 		const creatingGitHubRepo: string = newRepoIsPrivate
 			? localize(
 					"creatingPrivateGitHubRepo",
@@ -50,6 +52,7 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 		progress.report({ message: creatingGitHubRepo });
 
 		const client: Octokit = await createOctokitClient(context);
+
 		const gitHubRepoRes = (
 			isUser(context.orgData)
 				? await client.repos.createForAuthenticatedUser({
@@ -79,11 +82,14 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 		progress.report({ message: createdGitHubRepo });
 
 		const repo: Repository = nonNullProp(context, "repo");
+
 		const remoteName: string = nonNullProp(context, "newRemoteShortname");
 
 		try {
 			await repo.addRemote(remoteName, gitHubRepoRes.clone_url);
+
 			const branch: Branch = await repo.getBranch("HEAD");
+
 			const pushingBranch: string = localize(
 				"pushingBranch",
 				'Pushing local branch "{0}" to GitHub repository "{1}"...',
@@ -106,6 +112,7 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 
 			// getBranch will return undefined sometimes, most likely a timing issue so try to retrieve it for a minute
 			const maxTimeout = Date.now() + 60 * 1000;
+
 			let numOfTries: number = 0;
 
 			while (true) {
@@ -118,9 +125,11 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 						branch: nonNullProp(branch, "name"),
 					})
 				).data;
+
 				if (context.branchData || Date.now() > maxTimeout) {
 					context.telemetry.properties.getBranchAttempts =
 						String(numOfTries);
+
 					break;
 				}
 
@@ -133,6 +142,7 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 		if (!context.branchData) {
 			// the repo should exist on next create so if the user tries again, it should automatically select the repo
 			context.telemetry.properties.getBranchAttempts = "timeout";
+
 			throw new Error(
 				localize(
 					"cantGetBranch",

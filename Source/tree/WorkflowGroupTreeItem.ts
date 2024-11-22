@@ -53,6 +53,7 @@ function getRangeFromError(error: YAMLSyntaxError): Range {
 function getYamlErrorMessage(error: unknown): string {
 	if (error instanceof YAMLSyntaxError) {
 		const range = getRangeFromError(error);
+
 		return `Error: Invalid YAML between lines ${range.start.line} and ${range.end.line}`;
 	} else {
 		return parseError(error).message;
@@ -96,6 +97,7 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 				parent.localProjectPath,
 				".github/workflows",
 			);
+
 			const yamlFiles: string[] = (await AzExtFsExtra.pathExists(
 				workflowsDir,
 			))
@@ -152,6 +154,7 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 				commandId: "staticWebApps.openYAMLConfigFile",
 			});
 			errorTreeItem.commandArgs = [this];
+
 			return [errorTreeItem];
 		}
 

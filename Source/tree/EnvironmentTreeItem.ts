@@ -91,6 +91,7 @@ export class EnvironmentTreeItem
 		// split the : because branch names cannot contain colons
 		if (!this.isProduction) {
 			const colon: string = ":";
+
 			if (this.branch.includes(colon)) {
 				this.branch = this.branch.split(colon)[1];
 			}
@@ -109,6 +110,7 @@ export class EnvironmentTreeItem
 		const ti: EnvironmentTreeItem = new EnvironmentTreeItem(parent, env);
 		// initialize inWorkspace property
 		await ti.refreshImpl(context);
+
 		return ti;
 	}
 
@@ -128,6 +130,7 @@ export class EnvironmentTreeItem
 			"{0} (linked)",
 			this.branch,
 		);
+
 		return this.inWorkspace ? linkedTag : this.branch;
 	}
 
@@ -140,6 +143,7 @@ export class EnvironmentTreeItem
 		context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		const children: AzExtTreeItem[] = [this.actionsTreeItem];
+
 		if (!this.functionsTreeItem || !this.appSettingsTreeItem) {
 			context.telemetry.properties.hasFunctions = "false";
 			children.push(
@@ -179,6 +183,7 @@ export class EnvironmentTreeItem
 			{ location: ProgressLocation.Notification, title: deleting },
 			async (): Promise<void> => {
 				ext.outputChannel.appendLog(deleting);
+
 				const client: WebSiteManagementClient =
 					await createWebSiteClient([context, this]);
 				await client.staticSites.beginDeleteStaticSiteBuildAndWait(
@@ -186,6 +191,7 @@ export class EnvironmentTreeItem
 					this.parent.name,
 					this.buildId,
 				);
+
 				const deleteSucceeded: string = localize(
 					"deleteSucceeded",
 					'Successfully deleted environment "{0}".',
@@ -209,6 +215,7 @@ export class EnvironmentTreeItem
 			'No Functions API associated with "{0}"',
 			`${this.parent.label}/${this.label}`,
 		);
+
 		for (const expectedContextValue of expectedContextValues) {
 			if (
 				matchContextValue(expectedContextValue, [
@@ -241,6 +248,7 @@ export class EnvironmentTreeItem
 				JobTreeItem.contextValue,
 				StepTreeItem.contextValue,
 			];
+
 			if (matchContextValue(expectedContextValue, actionsContextValues)) {
 				return this.actionsTreeItem;
 			}
@@ -272,6 +280,7 @@ export class EnvironmentTreeItem
 		this.localProjectPath = getSingleRootFsPath();
 
 		this.actionsTreeItem = new ActionsTreeItem(this);
+
 		try {
 			await client.staticSites.listStaticSiteBuildFunctionAppSettings(
 				this.parent.resourceGroup,
@@ -296,6 +305,7 @@ export class EnvironmentTreeItem
 		const remote: string | undefined = (
 			await tryGetRepoDataForCreation(context, this.localProjectPath)
 		)?.html_url;
+
 		const branch: string | undefined = remote
 			? await tryGetLocalBranch()
 			: undefined;

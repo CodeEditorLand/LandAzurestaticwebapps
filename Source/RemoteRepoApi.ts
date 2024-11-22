@@ -77,6 +77,7 @@ export class RemoteRepoApi
 		this._onDidPublish.event;
 
 	private _disposables: vscode.Disposable[];
+
 	constructor() {
 		this._disposables = [];
 	}
@@ -110,6 +111,7 @@ export class RemoteRepoApi
 				this._onDidOpenRepository.fire(e);
 			}),
 		);
+
 		if (provider.onDidChangeState) {
 			this._disposables.push(
 				provider.onDidChangeState((e) =>
@@ -131,6 +133,7 @@ export class RemoteRepoApi
 		return {
 			dispose: () => {
 				const repos = provider?.repositories;
+
 				if (repos && repos.length > 0) {
 					repos.forEach((r) => this._onDidCloseRepository.fire(r));
 				}
@@ -156,6 +159,7 @@ export class RemoteRepoApi
 				};
 			},
 		);
+
 		return {
 			dispose: () => {
 				for (const disposable of disposables) {

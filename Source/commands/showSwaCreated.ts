@@ -40,6 +40,7 @@ export async function showSwaCreated(
 				)
 				.then(async (result) => {
 					context.telemetry.properties.clicked = "canceled";
+
 					if (result === showActionsMsg) {
 						await showActions(context, swaNode);
 						context.telemetry.properties.clicked = "showActions";

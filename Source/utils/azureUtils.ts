@@ -37,14 +37,19 @@ export async function pollAsyncOperation(
 	id: string,
 ): Promise<boolean> {
 	const tokenSource: CancellationTokenSource = new CancellationTokenSource();
+
 	const token: CancellationToken = tokenSource.token;
+
 	if (activeAsyncTokens[id]) {
 		activeAsyncTokens[id]?.cancel();
 	}
 
 	activeAsyncTokens[id] = tokenSource;
+
 	const maxTime: number = Date.now() + timeoutInSeconds * 1000;
+
 	let pollingComplete: boolean = false;
+
 	try {
 		while (!pollingComplete && Date.now() < maxTime) {
 			if (token.isCancellationRequested) {
@@ -52,6 +57,7 @@ export async function pollAsyncOperation(
 			}
 
 			pollingComplete = await pollingOperation();
+
 			if (!pollingComplete) {
 				await delay(pollIntervalInSeconds * 1000);
 			}

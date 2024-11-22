@@ -26,6 +26,7 @@ export class GitHubOrgListStep extends AzureWizardPromptStep<IStaticWebAppWizard
 			"chooseOrg",
 			"Choose organization to create repository.",
 		);
+
 		let orgData:
 			| OrgForAuthenticatedUserData
 			| ListOrgsForUserData
@@ -66,12 +67,14 @@ export class GitHubOrgListStep extends AzureWizardPromptStep<IStaticWebAppWizard
 				context,
 				octokitClient,
 			);
+
 		let quickPickItems: IAzureQuickPickItem<
 			ListOrgsForUserData | OrgForAuthenticatedUserData
 		>[] = createQuickPickFromJsons<OrgForAuthenticatedUserData>(
 			[userData],
 			"login",
 		);
+
 		const orgRes: OctokitResponse<ListOrgsForUserData[]> =
 			await octokitClient.orgs.listForAuthenticatedUser();
 		quickPickItems = quickPickItems.concat(
@@ -88,6 +91,7 @@ export class GitHubOrgListStep extends AzureWizardPromptStep<IStaticWebAppWizard
 		octokitClient?: Octokit,
 	): Promise<OrgForAuthenticatedUserData> {
 		octokitClient = octokitClient || (await createOctokitClient(context));
+
 		const userRes: OctokitResponse<OrgForAuthenticatedUserData> =
 			await octokitClient.users.getAuthenticated();
 

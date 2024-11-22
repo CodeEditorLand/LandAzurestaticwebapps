@@ -17,6 +17,7 @@ export class ApiLocationStep extends AzureWizardPromptStep<IStaticWebAppWizardCo
 	public async prompt(context: IStaticWebAppWizardContext): Promise<void> {
 		const defaultValue: string =
 			context.buildPreset?.apiLocation ?? defaultApiLocation;
+
 		const workspaceSetting: string | undefined = getWorkspaceSetting(
 			apiSubpathSetting,
 			context.uri,

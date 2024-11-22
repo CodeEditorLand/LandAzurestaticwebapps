@@ -31,6 +31,7 @@ export class RepoPrivacyStep extends AzureWizardPromptStep<IStaticWebAppWizardCo
 				data: true,
 			},
 		];
+
 		const placeHolder: string = localize(
 			"selectPrivacy",
 			"Select the privacy of your repository",

@@ -26,6 +26,7 @@ export async function deleteEnvironment(
 
 	if (node.isProduction) {
 		context.errorHandling.suppressReportIssue = true;
+
 		throw new Error(
 			localize(
 				"cantDeletePro",

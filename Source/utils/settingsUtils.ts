@@ -36,6 +36,7 @@ export function getWorkspaceSetting<T>(
 ): T | undefined {
 	const projectConfiguration: WorkspaceConfiguration =
 		workspace.getConfiguration(prefix, uri);
+
 	return projectConfiguration.get<T>(key);
 }
 

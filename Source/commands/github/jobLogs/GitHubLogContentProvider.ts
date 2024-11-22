@@ -39,6 +39,7 @@ export function getGitHubLogFoldingRanges(
 	document: TextDocument,
 ): FoldingRange[] {
 	const contentProvider = getContentProvider();
+
 	return contentProvider.getGitHubLogFoldingRanges(document.uri);
 }
 
@@ -48,6 +49,7 @@ export async function openGitHubLogContent(
 	foldingRanges: FoldingRange[],
 ): Promise<GitHubLogContent> {
 	const contentProvider = getContentProvider();
+
 	return await contentProvider.openGitHubLogContent(
 		node,
 		content,
@@ -92,7 +94,9 @@ class GitHubLogContentProvider implements TextDocumentContentProvider {
 				? node.id
 				: `${node.parent.id}_${node.id}`
 		).replace(removeSpecialCharRegExp, "_");
+
 		const fileName = node.label.replace(removeSpecialCharRegExp, "_");
+
 		const uri: Uri = Uri.parse(`${contentScheme}:///${id}/${fileName}.log`);
 
 		const gitHubLogContent: GitHubLogContent = new GitHubLogContent(
@@ -115,12 +119,14 @@ class GitHubLogContentProvider implements TextDocumentContentProvider {
 			this._contentMap.get(uri.toString()),
 			"GitHubLogContentProvider._contentMap.get",
 		);
+
 		return gitHubLogContent.content;
 	}
 
 	public getGitHubLogFoldingRanges(uri: Uri): FoldingRange[] {
 		const gitHubLogContent: GitHubLogContent | undefined =
 			this._contentMap.get(uri.toString());
+
 		return gitHubLogContent?.foldingRanges || [];
 	}
 }

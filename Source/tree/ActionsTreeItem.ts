@@ -51,14 +51,17 @@ export class ActionsTreeItem extends AzExtParentTreeItem {
 		context: IActionContext,
 	): Promise<AzExtTreeItem[]> {
 		const { owner, name } = getRepoFullname(this.repositoryUrl);
+
 		const branch: string = this.parent.branch;
 
 		const octokitClient: Octokit = await createOctokitClient(context);
+
 		const response: OctokitResponse<ActionsListWorkflowRunsForRepoResponseData> =
 			await octokitClient.actions.listWorkflowRunsForRepo({
 				owner: owner,
 				repo: name,
 			});
+
 		const runs = response.data.workflow_runs.filter(
 			(run) => run.head_branch === branch,
 		);

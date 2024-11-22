@@ -36,6 +36,7 @@ export class BuildPresetListStep extends AzureWizardPromptStep<IStaticWebAppWiza
 			data: undefined,
 			group: localize("other", "Other"),
 		});
+
 		const pick: IAzureQuickPickItem<IBuildPreset | undefined> =
 			await context.ui.showQuickPick(picks, {
 				placeHolder,

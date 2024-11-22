@@ -9,6 +9,7 @@ import { LogState } from "./parseGitHubLog";
 
 export function createFoldingRanges(state: LogState): FoldingRange[] {
 	const foldingRanges: FoldingRange[] = [];
+
 	for (let i = 0; i < state.startFoldingIndices.length; i++) {
 		// subtract the first index from the folding range to account for starting midway in a log file
 		foldingRanges.push(

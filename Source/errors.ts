@@ -47,31 +47,40 @@ type GitErrorType = Error & {
 export class GitError extends Error {
 	constructor(err: GitErrorType) {
 		super();
+
 		switch (err.gitErrorCode) {
 			case GitErrorCodes.DirtyWorkTree:
 				this.message = localize(
 					"clean repo",
 					"Please clean your repository working tree before checkout.",
 				);
+
 				break;
+
 			case GitErrorCodes.PushRejected:
 				this.message = localize(
 					"cant push",
 					"Can't push refs to remote. Try running 'Pull' first to integrate your changes.",
 				);
+
 				break;
+
 			case GitErrorCodes.Conflict:
 				this.message = localize(
 					"merge conflicts",
 					"There are merge conflicts. Resolve them before committing.",
 				);
+
 				break;
+
 			case GitErrorCodes.StashConflict:
 				this.message = localize(
 					"stash merge conflicts",
 					"There were merge conflicts while applying the stash.",
 				);
+
 				break;
+
 			case GitErrorCodes.AuthenticationFailed:
 				// eslint-disable-next-line no-case-declarations
 				const regex = /Authentication failed for '(.*)'/i;
@@ -88,14 +97,18 @@ export class GitError extends Error {
 							"auth failed",
 							"Failed to authenticate to git remote.",
 						);
+
 				break;
+
 			case GitErrorCodes.NoUserNameConfigured:
 			case GitErrorCodes.NoUserEmailConfigured:
 				this.message = localize(
 					"missing user info",
 					"Make sure you configure your 'user.name' and 'user.email' in git.",
 				);
+
 				break;
+
 			default:
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, no-case-declarations
 				const hint = (err.stderr || err.message || String(err))

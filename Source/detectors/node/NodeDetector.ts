@@ -44,11 +44,17 @@ export type DetectorResults = {
 export class NodeDetector {
 	public async detect(uri: Uri): Promise<DetectorResults | undefined> {
 		let isNodeApp = false;
+
 		let hasLernaJsonFile = false;
+
 		let hasLageConfigJSFile = false;
+
 		let hasYarnrcYmlFile = false;
+
 		let isYarnLockFileValidYamlFormat = false;
+
 		const appDirectory = "";
+
 		let lernaNpmClient = "";
 
 		isNodeApp =
@@ -65,6 +71,7 @@ export class NodeDetector {
 		hasYarnrcYmlFile = await AzExtFsExtra.pathExists(
 			Uri.joinPath(uri, NodeConstants.YarnrcYmlName),
 		);
+
 		const yarnLockUri: Uri = Uri.joinPath(
 			uri,
 			NodeConstants.YarnLockFileName,
@@ -89,11 +96,13 @@ export class NodeDetector {
 		// Copying the logic currently running in Kudu:
 		if (!isNodeApp) {
 			let mightBeNode = false;
+
 			for (const nodeFile of NodeConstants.TypicalNodeDetectionFiles) {
 				if (
 					await AzExtFsExtra.pathExists(Uri.joinPath(uri, nodeFile))
 				) {
 					mightBeNode = true;
+
 					break;
 				}
 			}
@@ -122,6 +131,7 @@ export class NodeDetector {
 		}
 
 		const version = await this.getVersionFromPackageJson(uri);
+
 		const detectedFrameworkInfos = await this.detectFrameworkInfos(uri);
 
 		return {
@@ -141,6 +151,7 @@ export class NodeDetector {
 		try {
 			const yamlFile = await AzExtFsExtra.readFile(yamlFileUri);
 			parse(yamlFile);
+
 			return true;
 		} catch (err) {
 			return false;
@@ -151,6 +162,7 @@ export class NodeDetector {
 		uri: Uri,
 	): Promise<string | undefined> {
 		const packageJson = await this.getPackageJsonObject(uri);
+
 		return packageJson?.engines?.node;
 	}
 
@@ -167,16 +179,19 @@ export class NodeDetector {
 			);
 		} catch (err) {
 			console.error(parseError(err).message);
+
 			return undefined;
 		}
 	}
 
 	private async detectFrameworkInfos(uri: Uri): Promise<FrameworkInfo[]> {
 		const detectedFrameworkResult: FrameworkInfo[] = [];
+
 		const packageJson = await this.getPackageJsonObject(uri);
 
 		if (packageJson?.devDependencies !== undefined) {
 			const devDependencies = packageJson.devDependencies;
+
 			for (const framework of Object.keys(
 				NodeConstants.DevDependencyFrameworkKeyWordToName,
 			)) {
@@ -194,6 +209,7 @@ export class NodeDetector {
 
 		if (packageJson?.dependencies !== undefined) {
 			const dependencies = packageJson.dependencies;
+
 			for (const framework of Object.keys(
 				NodeConstants.DependencyFrameworkKeyWordToName,
 			)) {
@@ -225,6 +241,7 @@ export class NodeDetector {
 
 	private async getLearnJsonNpmClient(uri: Uri) {
 		let npmClientName: string = "";
+
 		if (
 			!(await AzExtFsExtra.pathExists(
 				Uri.joinPath(uri, NodeConstants.LernaJsonFileName),
@@ -241,6 +258,7 @@ export class NodeDetector {
 					),
 				)
 			);
+
 			if (learnJson?.npmClient) {
 				npmClientName = learnJson.npmClient;
 			} else {

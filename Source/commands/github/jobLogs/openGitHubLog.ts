@@ -28,6 +28,7 @@ export async function openGitHubLog(
 	}
 
 	let content: string;
+
 	let foldingRanges: FoldingRange[] = [];
 
 	try {
@@ -35,6 +36,7 @@ export async function openGitHubLog(
 			node instanceof JobTreeItem
 				? await node.getRawJobLog(context)
 				: await node.parent.getRawJobLog(context);
+
 		const logState: LogState = parseGitHubLog(
 			rawLogs,
 			new Date(node.data.started_at ?? ""),

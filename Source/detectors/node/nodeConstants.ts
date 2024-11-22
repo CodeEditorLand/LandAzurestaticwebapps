@@ -8,25 +8,45 @@
 
 export namespace NodeConstants {
 	export const PlatformName = "nodejs";
+
 	export const NpmToolName = "npm";
+
 	export const YarnToolName = "yarn";
+
 	export const PackageJsonFileName = "package.json";
+
 	export const PackageLockJsonFileName = "package-lock.json";
+
 	export const YarnLockFileName = "yarn.lock";
+
 	export const YarnrcYmlName = ".yarnrc.yml";
+
 	export const HugoTomlFileName = "config.toml";
+
 	export const HugoYamlFileName = "config.yaml";
+
 	export const HugoJsonFileName = "config.json";
+
 	export const LernaJsonFileName = "lerna.json";
+
 	export const LageConfigJSFileName = "lage.config.js";
+
 	export const HugoConfigFolderName = "config";
+
 	export const NodeModulesDirName = "node_modules";
+
 	export const NodeModulesToBeDeletedName = "_del_node_modules";
+
 	export const NodeModulesZippedFileName = "node_modules.zip";
+
 	export const NodeModulesTarGzFileName = "node_modules.tar.gz";
+
 	export const NodeModulesFileBuildProperty = "compressedNodeModulesFile";
+
 	export const FlutterYamlFileName = "pubspec.yaml";
+
 	export const FlutterFrameworkeName = "Flutter";
+
 	export const IisStartupFiles = [
 		"default.htm",
 		"default.html",
