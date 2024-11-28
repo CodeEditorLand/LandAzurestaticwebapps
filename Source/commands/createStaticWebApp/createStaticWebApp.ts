@@ -84,6 +84,7 @@ function isSubscription(
 }
 
 let isVerifyingWorkspace: boolean = false;
+
 export async function createStaticWebApp(
 	context: IActionContext &
 		Partial<ICreateChildImplContext> &

@@ -8,15 +8,21 @@ import { MessageItem } from "vscode";
 import { localize } from "./utils/localize";
 
 export const githubApiEndpoint: string = "https://api.github.com";
+
 export const remoteRepositoriesId: string = "ms-vscode.remote-repositories";
 
 export const defaultAppLocation: string = "/";
+
 export const defaultApiLocation: string = "api";
+
 export const productionEnvironmentName: string = "Production";
 
 export const appSubpathSetting: string = "appSubpath";
+
 export const apiSubpathSetting: string = "apiSubpath";
+
 export const appArtifactSubpathSetting: string = "appArtifactSubpath";
+
 export const outputSubpathSetting: string = "outputSubpath";
 
 export const configFileName: string = "staticwebapp.config.json";
@@ -33,6 +39,7 @@ export const onlyGitHubSupported: string = localize(
 );
 
 export const isStartGroup = (t: string): boolean => /##\[group\]/.test(t);
+
 export const isEndGroup = (t: string): boolean => /##\[endgroup\]/.test(t);
 
 export const githubAuthProviderId: string = "github";
@@ -47,15 +54,23 @@ export const githubScopes: string[] = [
 export const angularOutputLocation = "dist/<project-name>";
 
 export const swaCliPackageName = "@azure/static-web-apps-cli";
+
 export const installSwaCliUrl: string = "https://aka.ms/installSwaCli";
 
 export const emulatorAddress = "http://localhost:4280";
+
 export const swaWatchProblemMatcher = "$swa-watch";
+
 export const swa: string = "swa";
+
 export const funcAddress: string = "http://localhost:7071";
+
 export const pwaChrome: string = "pwa-chrome";
+
 export const shell: string = "shell";
+
 export const minSwaCliVersion = "0.8.0";
+
 export const swaCliConfigFileName = "swa-cli.config.json";
 
 export const swaFilter = {

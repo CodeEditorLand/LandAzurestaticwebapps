@@ -51,6 +51,7 @@ export type GitWorkspaceState = {
 	remoteRepo: ReposGetResponseData | undefined;
 	hasAdminAccess: boolean;
 };
+
 export type VerifiedGitWorkspaceState = GitWorkspaceState & {
 	repo: Repository;
 };

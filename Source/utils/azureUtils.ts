@@ -30,6 +30,7 @@ export function getResourceGroupFromId(id: string): string {
 const activeAsyncTokens: {
 	[key: string]: CancellationTokenSource | undefined;
 } = {};
+
 export async function pollAsyncOperation(
 	pollingOperation: () => Promise<boolean>,
 	pollIntervalInSeconds: number,
