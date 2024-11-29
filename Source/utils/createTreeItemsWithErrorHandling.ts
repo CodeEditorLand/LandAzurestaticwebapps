@@ -21,7 +21,9 @@ export async function createTreeItemsWithErrorHandling<TSource>(
 	const treeItems: AzExtTreeItem[] = [];
 
 	let lastUnknownItemError: unknown;
+
 	sourceArray ||= [];
+
 	await Promise.all(
 		sourceArray.map(async (source: TSource) => {
 			try {
@@ -31,9 +33,13 @@ export async function createTreeItemsWithErrorHandling<TSource>(
 				if (item) {
 					// Verify at least the following properties can be accessed without an error
 					item.contextValue;
+
 					item.description;
+
 					item.label;
+
 					item.iconPath;
+
 					item.id;
 
 					treeItems.push(item);
@@ -68,6 +74,7 @@ export async function createTreeItemsWithErrorHandling<TSource>(
 			"cantShowItems",
 			"Some items could not be displayed",
 		);
+
 		treeItems.push(
 			new InvalidTreeItem(parent, lastUnknownItemError, {
 				label,

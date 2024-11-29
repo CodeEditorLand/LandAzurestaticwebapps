@@ -21,6 +21,7 @@ export class DeleteResourceGroupStep extends AzureWizardExecuteStep<IDeleteWizar
 		context: IDeleteWizardContext,
 		progress: Progress<{
 			message?: string | undefined;
+
 			increment?: number | undefined;
 		}>,
 	): Promise<void> {
@@ -31,10 +32,12 @@ export class DeleteResourceGroupStep extends AzureWizardExecuteStep<IDeleteWizar
 			'Deleting resource group "{0}"...',
 			resourceGroupName,
 		);
+
 		progress.report({ message });
 
 		const resourceClient: ResourceManagementClient =
 			await createResourceClient([context, context.subscription]);
+
 		await resourceClient.resourceGroups.beginDeleteAndWait(
 			resourceGroupName,
 		);

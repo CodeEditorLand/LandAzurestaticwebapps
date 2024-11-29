@@ -48,16 +48,19 @@ export async function rerunAction(
 		'Rerun for action "{0}" has started.',
 		node.data.id,
 	);
+
 	ext.outputChannel.appendLog(rerunRunning);
 
 	const client: Octokit = await createOctokitClient(context);
 
 	const owner = nonNullProp(node.data.repository, "owner");
+
 	await client.actions.reRunWorkflow({
 		owner: owner.login,
 		repo: node.data.repository.name,
 		run_id: node.data.id,
 	});
+
 	await node.refresh(context); // need to refresh to update the data
 	await checkActionStatus(context, node);
 }
@@ -87,16 +90,19 @@ export async function cancelAction(
 		'Cancel for action "{0}" has started.',
 		node.data.id,
 	);
+
 	ext.outputChannel.appendLog(cancelRunning);
 
 	const client: Octokit = await createOctokitClient(context);
 
 	const owner = nonNullProp(node.data.repository, "owner");
+
 	await client.actions.cancelWorkflowRun({
 		owner: owner.login,
 		repo: node.data.repository.name,
 		run_id: node.data.id,
 	});
+
 	await node.refresh(context); // need to refresh to update the data
 	await checkActionStatus(context, node);
 }
@@ -131,14 +137,18 @@ export async function checkActionStatus(
 					node.data.id,
 					workflowRun.conclusion,
 				);
+
 				ext.outputChannel.appendLog(actionCompleted);
+
 				void window.showInformationMessage(actionCompleted);
 			}
 
 			await node.refresh(context);
+
 			context.telemetry.properties.secToReport = String(
 				(Date.now() - startTime) / 1000,
 			);
+
 			context.telemetry.properties.conclusion =
 				workflowRun.conclusion || "";
 
@@ -157,7 +167,9 @@ export async function checkActionStatus(
 			node.data.id,
 			node.data.html_url,
 		);
+
 		ext.outputChannel.appendLog(operationTimedOut);
+
 		void window.showInformationMessage(operationTimedOut);
 	}
 

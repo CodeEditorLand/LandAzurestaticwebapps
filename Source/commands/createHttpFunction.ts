@@ -25,6 +25,7 @@ export async function createHttpFunction(
 			"noWorkspace",
 			"This action cannot be completed because there is no workspace opened.  Please open a workspace.",
 		);
+
 		context.errorHandling.suppressReportIssue = true;
 
 		throw new Error(noWorkspaceError);
@@ -48,6 +49,7 @@ export async function createHttpFunction(
 	);
 
 	const funcApi: AzureFunctionsExtensionApi = await getFunctionsApi(context);
+
 	await funcApi.createFunction({
 		folderPath,
 		suppressCreateProjectPrompt: true,

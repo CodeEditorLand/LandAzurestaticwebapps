@@ -20,10 +20,15 @@ export type ActionsGetJobForWorkflowRunResponseData =
 
 export type ActionWorkflowStepData = {
 	status: "queued" | "in_progress" | "completed";
+
 	conclusion: string | null;
+
 	name: string;
+
 	number: number;
+
 	started_at?: string | null | undefined;
+
 	completed_at?: string | null | undefined;
 };
 

@@ -46,6 +46,7 @@ export async function validateSwaCliInstalled(
 				// Ensure minimum version if provided.
 				if (minVersion) {
 					hasMinVersion = semver.gte(installedVersion, minVersion);
+
 					installed = hasMinVersion;
 				}
 			}
@@ -72,6 +73,7 @@ export async function validateSwaCliInstalled(
 
 				if (input === install || input === update) {
 					await installOrUpdateSwaCli(context);
+
 					installed = true;
 				} else if (input === DialogResponses.learnMore) {
 					await openUrl(installSwaCliUrl);

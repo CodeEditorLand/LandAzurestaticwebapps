@@ -19,6 +19,7 @@ export class ConfirmDeleteStep extends AzureWizardPromptStep<IDeleteWizardContex
 			'Are you sure you want to delete static web app "{0}"?',
 			nonNullValueAndProp(context.node, "name"),
 		);
+
 		await context.ui.showWarningMessage(
 			confirmMessage,
 			{ modal: true },

@@ -47,6 +47,7 @@ function getRangeFromError(error: YAMLSyntaxError): Range {
 			end.col - 1,
 		);
 	}
+
 	return new Range(0, 0, 0, 0);
 }
 
@@ -62,15 +63,22 @@ function getYamlErrorMessage(error: unknown): string {
 
 export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 	public static contextValue: string = "azureStaticWorkflowGroup";
+
 	public contextValue: string = WorkflowGroupTreeItem.contextValue;
+
 	public parent!: EnvironmentTreeItem;
+
 	public yamlFilePath: string;
+
 	public buildConfigs: BuildConfigs | undefined;
+
 	public parseYamlError: unknown;
 
 	public constructor(parent: EnvironmentTreeItem, yamlFilePath: string) {
 		super(parent);
+
 		this.yamlFilePath = yamlFilePath;
+
 		this.id = `${parent.id}-${this.yamlFilePath}`;
 	}
 
@@ -118,7 +126,9 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 					parent,
 					join(workflowsDir.fsPath, yamlFile),
 				);
+
 				await ti.refreshImpl(context);
+
 				treeItems.push(ti);
 			}
 		}
@@ -153,6 +163,7 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 				contextValue: "parseYamlErrorTreeItem",
 				commandId: "staticWebApps.openYAMLConfigFile",
 			});
+
 			errorTreeItem.commandArgs = [this];
 
 			return [errorTreeItem];
@@ -164,6 +175,7 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 			const value: string | undefined = <string | undefined>(
 				this.buildConfigs[buildConfig as keyof BuildConfigs]
 			);
+
 			value !== undefined &&
 				treeItems.push(
 					new WorkflowTreeItem(this, <BuildConfig>buildConfig, value),
@@ -176,6 +188,7 @@ export class WorkflowGroupTreeItem extends AzExtParentTreeItem {
 	public async refreshImpl(context: IActionContext): Promise<void> {
 		try {
 			this.buildConfigs = await parseYamlFile(context, this.yamlFilePath);
+
 			this.parseYamlError = undefined;
 		} catch (e) {
 			this.parseYamlError = e;

@@ -72,6 +72,7 @@ export async function getGitHubAccessToken(): Promise<string> {
 				)
 			).accessToken;
 		}
+
 		return token;
 	} catch (error) {
 		if (parseError(error).message === "User did not consent to login.") {
@@ -143,6 +144,7 @@ export async function createFork(
 			'Forking "{0}"...',
 			remoteRepo.name,
 		);
+
 		ext.outputChannel.appendLog(forking);
 
 		await window.withProgress(

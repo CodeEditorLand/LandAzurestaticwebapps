@@ -47,8 +47,11 @@ import { getSingleRootFsPath } from "./workspaceUtils";
 
 export type GitWorkspaceState = {
 	repo: Repository | null;
+
 	dirty: boolean;
+
 	remoteRepo: ReposGetResponseData | undefined;
+
 	hasAdminAccess: boolean;
 };
 
@@ -82,7 +85,9 @@ export async function getGitWorkspaceState(
 	if (repo) {
 		// remote repo should have metadata to get a lot of this information so hopefully we can just fill it all out here
 		const originUrl: string | undefined = await tryGetRemote(uri);
+
 		gitWorkspaceState.repo = repo;
+
 		gitWorkspaceState.dirty = !!(
 			repo.state.workingTreeChanges.length ||
 			repo.state.indexChanges.length
@@ -93,6 +98,7 @@ export async function getGitWorkspaceState(
 				context,
 				originUrl,
 			);
+
 			gitWorkspaceState.hasAdminAccess = hasAdminAccessToRepo(
 				gitWorkspaceState.remoteRepo,
 			);
@@ -132,6 +138,7 @@ export async function verifyGitWorkspaceForCreation(
 				"remoteRepoRequired",
 				"A GitHub repository is required to proceed. Open a remote repository?",
 			);
+
 			await context.ui.showWarningMessage(
 				remoteRepoRequired,
 				{ modal: true, stepName: "openRemoteRepo" },
@@ -182,6 +189,7 @@ export async function verifyGitWorkspaceForCreation(
 				defaultGitignoreContents,
 			);
 		}
+
 		await promptForCommit(
 			context,
 			repo,
@@ -201,6 +209,7 @@ export async function verifyGitWorkspaceForCreation(
 		const createForkItem: MessageItem = {
 			title: localize("createFork", "Create Fork"),
 		};
+
 		await context.ui.showWarningMessage(
 			adminAccess,
 			{ modal: true, stepName: "adminAccess" },
@@ -218,6 +227,7 @@ export async function verifyGitWorkspaceForCreation(
 			'Successfully forked "{0}".',
 			gitWorkspaceState.remoteRepo.name,
 		);
+
 		ext.outputChannel.appendLog(forkSuccess);
 
 		const buttons: MessageItem[] = [];
@@ -229,6 +239,7 @@ export async function verifyGitWorkspaceForCreation(
 				"cloneNewRepo",
 				" Would you like to clone your new repository?",
 			);
+
 			buttons.push(clone);
 		}
 
@@ -241,9 +252,11 @@ export async function verifyGitWorkspaceForCreation(
 
 		if (result === clone) {
 			void cloneRepo(context, repoUrl);
+
 			cancelStep = "afterCloneFork";
 		} else if (result === openRemoteProjectMsg) {
 			const { owner, name } = getRepoFullname(repoUrl);
+
 			await commands.executeCommand(
 				"vscode.openFolder",
 				Uri.parse(`vscode-vfs://github/${owner}/${name}`, true),
@@ -256,11 +269,13 @@ export async function verifyGitWorkspaceForCreation(
 			"commitChanges",
 			"Commit all working changes to create a Static Web App.",
 		);
+
 		await context.ui.showWarningMessage(
 			commitChanges,
 			{ modal: true, stepName: "dirtyWorkspace" },
 			{ title: localize("commit", "Commit") },
 		);
+
 		await promptForCommit(
 			context,
 			gitWorkspaceState.repo,
@@ -292,6 +307,7 @@ export async function tryGetRemote(uri?: Uri): Promise<string | undefined> {
 
 export function getRepoFullname(gitUrl: string): {
 	owner: string;
+
 	name: string;
 } {
 	const parsedUrl: gitUrlParse.GitUrl = gitUrlParse(gitUrl);
@@ -362,6 +378,7 @@ export async function tryGetLocalBranch(): Promise<string | undefined> {
 	} catch (error) {
 		handleGitError(error);
 	}
+
 	return;
 }
 
@@ -373,7 +390,9 @@ export async function warnIfNotOnDefaultBranch(
 		context,
 		gitState,
 	);
+
 	context.telemetry.properties.defaultBranch = defaultBranch;
+
 	context.telemetry.properties.notOnDefault = "false";
 
 	const { repo } = gitState;
@@ -403,6 +422,7 @@ export async function warnIfNotOnDefaultBranch(
 			} catch (err) {
 				handleGitError(err);
 			}
+
 			context.telemetry.properties.checkoutDefault = "true";
 		} else {
 			context.telemetry.properties.checkoutDefault = "false";
@@ -415,6 +435,7 @@ export async function gitPull(repo: Repository): Promise<void> {
 		location: ProgressLocation.Notification,
 		title: localize("executingGitPull", 'Executing "git pull"...'),
 	};
+
 	await window.withProgress(options, async () => {
 		try {
 			await repo.pull();
@@ -432,6 +453,7 @@ async function tryGetDefaultBranch(
 
 	if (gitState.remoteRepo) {
 		defaultBranches = [gitState.remoteRepo.default_branch];
+
 		context.telemetry.properties.defaultBranchSource = "remoteConfig";
 	} else {
 		context.telemetry.properties.defaultBranchSource = "defaultConfig";
@@ -444,6 +466,7 @@ async function tryGetDefaultBranch(
 			defaultBranches.unshift(
 				await gitState.repo.getConfig("init.defaultBranch"),
 			);
+
 			context.telemetry.properties.defaultBranchSource = "localConfig";
 		} catch (err) {
 			// if no local config setting is found, try global
@@ -451,6 +474,7 @@ async function tryGetDefaultBranch(
 				defaultBranches.unshift(
 					await gitState.repo.getGlobalConfig("init.defaultBranch"),
 				);
+
 				context.telemetry.properties.defaultBranchSource =
 					"globalConfig";
 			} catch (err) {

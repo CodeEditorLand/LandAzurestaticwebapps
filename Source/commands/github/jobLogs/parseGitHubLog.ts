@@ -7,10 +7,15 @@ import { isEndGroup, isStartGroup } from "../../../constants";
 
 export type LogState = {
 	withinGroup: boolean;
+
 	overlappingEntries: boolean;
+
 	filteredJobsLog: string[];
+
 	startFoldingIndices: number[];
+
 	endFoldingIndices: number[];
+
 	firstIndex: number;
 };
 
@@ -48,6 +53,7 @@ export function parseGitHubLog(
 		}
 
 		pushFoldingIndex(entry, i, state);
+
 		isWithinGroup(entry, state, !!currentTimestamp);
 
 		if (shouldPushStep(state, !!currentTimestamp)) {
@@ -130,7 +136,9 @@ function isOverlappingStep(entry: string, state: LogState): boolean {
 			if (!state.withinGroup) {
 				// the first time we hit an endgroup when not within a group, it's overflow from the previous step so reset state
 				state.filteredJobsLog.length = 0;
+
 				state.firstIndex = 0;
+
 				state.overlappingEntries = true;
 
 				return true;

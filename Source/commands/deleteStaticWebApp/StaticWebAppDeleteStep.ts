@@ -37,6 +37,7 @@ export class StaticWebAppDeleteStep extends AzureWizardExecuteStep<IDeleteWizard
 			'Deleting static web app "{0}"...',
 			swaNode.name,
 		);
+
 		progress.report({ message });
 
 		const resourceClient: ResourceManagementClient =
@@ -53,6 +54,7 @@ export class StaticWebAppDeleteStep extends AzureWizardExecuteStep<IDeleteWizard
 			context,
 			context.subscription,
 		]);
+
 		await client.staticSites.beginDeleteStaticSiteAndWait(
 			swaNode.resourceGroup,
 			swaNode.name,
@@ -63,6 +65,7 @@ export class StaticWebAppDeleteStep extends AzureWizardExecuteStep<IDeleteWizard
 			'Successfully deleted static web app "{0}".',
 			swaNode.name,
 		);
+
 		ext.outputChannel.appendLog(deleteSucceeded);
 
 		// if there is only one resource in the resource group, delete it as well

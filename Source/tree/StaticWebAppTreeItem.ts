@@ -53,22 +53,30 @@ export function isResolvedStaticWebAppTreeItem(
 
 export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 	public static contextValue: string = "azureStaticWebApp";
+
 	public readonly data: StaticSiteARMResource;
+
 	public readonly childTypeLabel: string = localize(
 		"environment",
 		"Environment",
 	);
 
 	public name: string;
+
 	public resourceGroup: string;
+
 	public label: string;
+
 	public repositoryUrl: string;
+
 	public branch: string;
+
 	public defaultHostname: string;
 
 	public contextValuesToAdd?: string[] = [];
 
 	private readonly _subscription: ISubscriptionContext;
+
 	readonly viewProperties;
 
 	constructor(
@@ -77,9 +85,13 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 		ss: StaticSiteARMResource & AppResource,
 	) {
 		this.data = ss;
+
 		this.name = nonNullProp(this.data, "name");
+
 		this.resourceGroup = getResourceGroupFromId(ss.id);
+
 		this.label = this.name;
+
 		this._subscription = subscription;
 
 		this.viewProperties = {
@@ -98,6 +110,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 		}
 
 		this.branch = nonNullProp(this.data, "branch");
+
 		this.defaultHostname = nonNullProp(this.data, "defaultHostname");
 	}
 
@@ -164,6 +177,7 @@ export class StaticWebAppTreeItem implements ResolvedStaticWebApp {
 		});
 
 		await wizard.prompt();
+
 		await wizard.execute();
 	}
 

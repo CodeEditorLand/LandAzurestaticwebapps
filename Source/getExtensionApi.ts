@@ -45,6 +45,7 @@ export async function getFunctionsApi(
 	);
 
 	const commandToRun: string = "extension.open";
+
 	void commands.executeCommand(commandToRun, funcExtensionId);
 
 	// we still need to throw an error even if the user installs
@@ -61,6 +62,7 @@ export async function getGitApi(): Promise<IGit> {
 
 				if (gitExtension) {
 					const api = gitExtension.getAPI(1);
+
 					ext.vscodeGitApi = api;
 				} else
 					throw new Error(

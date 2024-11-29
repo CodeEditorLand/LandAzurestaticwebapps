@@ -21,11 +21,14 @@ import { FunctionTreeItem } from "./FunctionTreeItem";
 
 export class FunctionsTreeItem extends AzExtParentTreeItem {
 	public static contextValue: string = "azureStaticFunctions";
+
 	public readonly contextValue: string = FunctionsTreeItem.contextValue;
+
 	public parent: EnvironmentTreeItem;
 
 	constructor(parent: EnvironmentTreeItem) {
 		super(parent);
+
 		this.parent = parent;
 	}
 

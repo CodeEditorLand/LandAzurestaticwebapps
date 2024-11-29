@@ -16,9 +16,11 @@ type PackageJson = {
 	engines?: {
 		node?: string;
 	};
+
 	devDependencies?: {
 		[key: string]: string;
 	};
+
 	dependencies?: {
 		[key: string]: string;
 	};
@@ -26,18 +28,27 @@ type PackageJson = {
 
 type FrameworkInfo = {
 	framework: string;
+
 	version: string;
 };
 
 export type DetectorResults = {
 	platform: string | undefined;
+
 	platformVersion: string | undefined;
+
 	appDirectory: string | undefined;
+
 	frameworks: FrameworkInfo[];
+
 	hasLernaJsonFile: boolean;
+
 	hasLageConfigJSFile: boolean;
+
 	lernaNpmClient: string | undefined;
+
 	hasYarnrcYmlFile: boolean;
+
 	isYarnLockFileValidYamlFormat: boolean;
 };
 
@@ -76,6 +87,7 @@ export class NodeDetector {
 			uri,
 			NodeConstants.YarnLockFileName,
 		);
+
 		isYarnLockFileValidYamlFormat =
 			(await AzExtFsExtra.pathExists(yarnLockUri)) &&
 			(await this.isYarnLockFileYamlFile(yarnLockUri));
@@ -86,6 +98,7 @@ export class NodeDetector {
 			)
 		) {
 			hasLernaJsonFile = true;
+
 			lernaNpmClient = await this.getLearnJsonNpmClient(uri);
 		}
 
@@ -150,6 +163,7 @@ export class NodeDetector {
 	private async isYarnLockFileYamlFile(yamlFileUri: Uri): Promise<boolean> {
 		try {
 			const yamlFile = await AzExtFsExtra.readFile(yamlFileUri);
+
 			parse(yamlFile);
 
 			return true;
@@ -270,6 +284,7 @@ export class NodeDetector {
 				`Exception caught while trying to deserialize ${NodeConstants.LernaJsonFileName}`,
 			);
 		}
+
 		return npmClientName;
 	}
 }

@@ -128,6 +128,7 @@ export async function createStaticWebApp(
 						context.telemetry.properties.detectedFrameworks =
 							`(${detectorResult?.frameworks.map((fi) => fi.framework).join("), (")})` ??
 							"N/A";
+
 						context.telemetry.properties.rootHasSrcFolder = (
 							await AzExtFsExtra.pathExists(
 								Uri.joinPath(
@@ -173,6 +174,7 @@ export async function createStaticWebApp(
 								.map((dr) => dr.frameworks)
 								.map((fis) => fis.map((fi) => fi.framework))
 								.join("), (")})`;
+
 							context.telemetry.properties.subFoldersWithSrc =
 								subWithSrcFolder.join(", ");
 						}
@@ -180,6 +182,7 @@ export async function createStaticWebApp(
 				);
 
 				await setGitWorkspaceContexts(context, folder);
+
 				context.detectedApiLocations = await tryGetApiLocations(
 					context,
 					folder,
@@ -191,6 +194,7 @@ export async function createStaticWebApp(
 	} finally {
 		isVerifyingWorkspace = false;
 	}
+
 	const client: WebSiteManagementClient = await createWebSiteClient([
 		context,
 		node.subscription,
@@ -215,6 +219,7 @@ export async function createStaticWebApp(
 
 	if (!context.advancedCreation) {
 		wizardContext.sku = SkuListStep.getSkus()[0];
+
 		executeSteps.push(new ResourceGroupCreateStep());
 	} else {
 		promptSteps.push(new ResourceGroupListStep());
@@ -232,6 +237,7 @@ export async function createStaticWebApp(
 			new RepoPrivacyStep(),
 			new RemoteShortnameStep(),
 		);
+
 		executeSteps.push(new RepoCreateStep());
 	}
 
@@ -252,6 +258,7 @@ export async function createStaticWebApp(
 		Promise.resolve(locations),
 		webProvider,
 	);
+
 	LocationListStep.addStep(wizardContext, promptSteps, {
 		placeHolder: localize(
 			"selectLocation",
@@ -268,6 +275,7 @@ export async function createStaticWebApp(
 	);
 
 	executeSteps.push(new VerifyProvidersStep([webProvider]));
+
 	executeSteps.push(new StaticWebAppCreateStep());
 
 	const wizard: AzureWizard<IStaticWebAppWizardContext> = new AzureWizard(
@@ -281,7 +289,9 @@ export async function createStaticWebApp(
 	);
 
 	wizardContext.telemetry.properties.gotRemote = String(hasRemote);
+
 	wizardContext.uri = wizardContext.uri || getSingleRootFsPath();
+
 	wizardContext.telemetry.properties.numberOfWorkspaces =
 		!workspace.workspaceFolders
 			? String(0)
@@ -308,6 +318,7 @@ export async function createStaticWebApp(
 		wizardContext,
 		"staticWebApp",
 	);
+
 	await gitPull(nonNullProp(wizardContext, "repo"));
 
 	const appResource: AppResource = {

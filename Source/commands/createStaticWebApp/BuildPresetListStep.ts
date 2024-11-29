@@ -31,6 +31,7 @@ export class BuildPresetListStep extends AzureWizardPromptStep<IStaticWebAppWiza
 							: localize("framework", "Framework"),
 				};
 			});
+
 		picks.push({
 			label: localize("custom", "$(keyboard) Custom"),
 			data: undefined,
@@ -47,6 +48,7 @@ export class BuildPresetListStep extends AzureWizardPromptStep<IStaticWebAppWiza
 
 		// prefill locations with the preset locations, but don't force the users to use them
 		context.buildPreset = pick.data;
+
 		context.telemetry.properties.buildPreset =
 			pick.data?.displayName || "Custom";
 	}

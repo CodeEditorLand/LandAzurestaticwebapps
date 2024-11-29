@@ -25,9 +25,13 @@ export class JobTreeItem
 	implements IAzureResourceTreeItem
 {
 	public static contextValue: string = "azureStaticJob";
+
 	public readonly contextValue: string = JobTreeItem.contextValue;
+
 	public parent!: ActionTreeItem;
+
 	public childTypeLabel: string = localize("step", "step");
+
 	public data: ActionsGetJobForWorkflowRunResponseData;
 
 	constructor(
@@ -35,6 +39,7 @@ export class JobTreeItem
 		data: ActionsGetJobForWorkflowRunResponseData,
 	) {
 		super(parent);
+
 		this.data = data;
 	}
 
@@ -84,6 +89,7 @@ export class JobTreeItem
 		);
 
 		const octokitClient: Octokit = await createOctokitClient(context);
+
 		this.data = <ActionsGetJobForWorkflowRunResponseData>(
 			await octokitClient.actions.getJobForWorkflowRun({
 				job_id: this.data.id,

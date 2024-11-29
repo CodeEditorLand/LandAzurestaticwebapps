@@ -37,6 +37,7 @@ export class RepoNameStep extends AzureWizardPromptStep<IStaticWebAppWizardConte
 				value,
 			})
 		).trim();
+
 		context.valuesToMask.push(context.newRepoName);
 	}
 

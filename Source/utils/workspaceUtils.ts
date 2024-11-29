@@ -133,6 +133,7 @@ export async function tryGetWorkspaceFolder(
 			context,
 			localize(selectAppFolder, "Select folder with your app"),
 		);
+
 		context.telemetry.properties.noWorkspaceResult = "multiRootProject";
 
 		return workspace.getWorkspaceFolder(folder);
@@ -179,13 +180,16 @@ export async function showNoWorkspacePrompt(
 
 	if (result === cloneProjectMsg) {
 		await cloneRepo(context, "");
+
 		context.telemetry.properties.noWorkspaceResult = "cloneProject";
 	} else if (result === openExistingProjectMsg) {
 		await openFolder(context);
+
 		context.telemetry.properties.noWorkspaceResult = openExistingProject;
 	} else if (result === openRemoteProjectMsg) {
 		await commands.executeCommand("remoteHub.openRepository");
 	}
+
 	context.errorHandling.suppressDisplay = true;
 
 	throw new NoWorkspaceError();
@@ -216,6 +220,7 @@ export async function getSubFolders(
 			subfolders.push(Uri.joinPath(uri, file[0]));
 		}
 	}
+
 	context.telemetry.properties.subfolders = subfolders.length.toString();
 
 	return subfolders;

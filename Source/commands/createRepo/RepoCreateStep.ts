@@ -27,6 +27,7 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 		context: IStaticWebAppWizardContext,
 		progress: Progress<{
 			message?: string | undefined;
+
 			increment?: number | undefined;
 		}>,
 	): Promise<void> {
@@ -48,7 +49,9 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 					'Creating new public GitHub repository "{0}"...',
 					newRepoName,
 				);
+
 		ext.outputChannel.appendLog(creatingGitHubRepo);
+
 		progress.report({ message: creatingGitHubRepo });
 
 		const client: Octokit = await createOctokitClient(context);
@@ -65,6 +68,7 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 						private: newRepoIsPrivate,
 					})
 		).data;
+
 		context.repoHtmlUrl = gitHubRepoRes.html_url;
 
 		const createdGitHubRepo: string = newRepoIsPrivate
@@ -78,7 +82,9 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 					'Created new public GitHub repository "{0}".',
 					newRepoName,
 				);
+
 		ext.outputChannel.appendLog(createdGitHubRepo);
+
 		progress.report({ message: createdGitHubRepo });
 
 		const repo: Repository = nonNullProp(context, "repo");
@@ -96,9 +102,11 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 				branch.name,
 				context.newRepoName,
 			);
+
 			ext.outputChannel.appendLog(pushingBranch);
 
 			progress.report({ message: pushingBranch });
+
 			await repo.push(remoteName, branch.name, true);
 
 			const pushedBranch: string = localize(
@@ -107,7 +115,9 @@ export class RepoCreateStep extends AzureWizardExecuteStep<IStaticWebAppWizardCo
 				branch.name,
 				context.newRepoName,
 			);
+
 			ext.outputChannel.appendLog(pushedBranch);
+
 			progress.report({ message: pushedBranch });
 
 			// getBranch will return undefined sometimes, most likely a timing issue so try to retrieve it for a minute

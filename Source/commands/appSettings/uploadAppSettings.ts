@@ -35,6 +35,7 @@ export async function uploadAppSettings(
 
 	const client: IAppSettingsClient =
 		await node.clientProvider.createClient(context);
+
 	await node.runWithTemporaryDescription(
 		context,
 		localize("uploading", "Uploading..."),

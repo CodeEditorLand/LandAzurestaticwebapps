@@ -48,22 +48,28 @@ export async function activate(
 	perfStats ||= { loadStartTime: Date.now(), loadEndTime: Date.now() };
 
 	ext.context = context;
+
 	ext.ignoreBundle = ignoreBundle;
+
 	ext.outputChannel = createAzExtOutputChannel(
 		"Azure Static Web Apps",
 		ext.prefix,
 	);
+
 	context.subscriptions.push(ext.outputChannel);
 
 	registerUIExtensionVariables(ext);
+
 	registerAzureUtilsExtensionVariables(ext);
 
 	await callWithTelemetryAndErrorHandling(
 		"staticWebApps.activate",
 		async (activateContext: IActionContext) => {
 			activateContext.telemetry.properties.isActivationEvent = "true";
+
 			activateContext.telemetry.measurements.mainFileLoad =
 				(perfStats.loadEndTime - perfStats.loadStartTime) / 1000;
+
 			void validateStaticWebAppsCliIsLatest();
 
 			/**
@@ -82,12 +88,14 @@ export async function activate(
 					new GitHubLogFoldingProvider(),
 				),
 			);
+
 			context.subscriptions.push(
 				vscode.debug.registerDebugConfigurationProvider(
 					pwaChrome,
 					new StaticWebAppDebugProvider(),
 				),
 			);
+
 			context.subscriptions.push(
 				vscode.debug.registerDebugConfigurationProvider(
 					swa,
@@ -95,6 +103,7 @@ export async function activate(
 					vscode.DebugConfigurationProviderTriggerKind.Dynamic,
 				),
 			);
+
 			context.subscriptions.push(
 				vscode.debug.registerDebugConfigurationProvider(
 					swa,
@@ -102,18 +111,22 @@ export async function activate(
 					vscode.DebugConfigurationProviderTriggerKind.Initial,
 				),
 			);
+
 			context.subscriptions.push(
 				vscode.tasks.registerTaskProvider(shell, new SwaTaskProvider()),
 			);
 
 			ext.rgApi = await getResourceGroupsApi();
+
 			ext.rgApi.registerApplicationResourceResolver(
 				AzExtResourceType.StaticWebApps,
 				new StaticWebAppResolver(),
 			);
 
 			ext.remoteRepoApi = new RemoteRepoApi();
+
 			registerSwaCliTaskEvents();
+
 			registerCommands();
 
 			ext.experimentationService =

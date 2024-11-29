@@ -40,10 +40,13 @@ export class SwaTaskProvider implements TaskProvider {
 							await this.provideTasksForWorkspaceFolder(
 								workspaceFolder,
 							);
+
 						tasks.push(...workspaceTasks);
 					}
+
 					context.telemetry.measurements.workspaceFolderCount =
 						workspace.workspaceFolders?.length ?? 0;
+
 					context.telemetry.measurements.detectedCount = tasks.length;
 
 					return tasks;
@@ -69,12 +72,16 @@ export class SwaTaskProvider implements TaskProvider {
 							context,
 							workspaceFolder,
 						);
+
 						tasks.push(...configTasks, ...detectorTasks);
+
 						context.telemetry.measurements.configCount =
 							configTasks.length;
+
 						context.telemetry.measurements.detectedCount =
 							detectorTasks.length;
 					}
+
 					return tasks;
 				},
 			)) ?? []
@@ -203,8 +210,10 @@ export class SwaTaskProvider implements TaskProvider {
 
 			if (object[property]) {
 				args.push(`--${name ?? property.toString()}`);
+
 				args.push(object[property] as string);
 			}
+
 			return args;
 		};
 

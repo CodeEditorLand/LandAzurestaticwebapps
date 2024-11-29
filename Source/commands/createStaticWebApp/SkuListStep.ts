@@ -29,6 +29,7 @@ export class SkuListStep extends AzureWizardPromptStep<IStaticWebAppWizardContex
 			"selectPricingOption",
 			"Select pricing option",
 		);
+
 		context.sku = (
 			await context.ui.showQuickPick(skus, {
 				placeHolder,
@@ -43,6 +44,7 @@ export class SkuListStep extends AzureWizardPromptStep<IStaticWebAppWizardContex
 
 	public static getSkus(): (SkuDescription & {
 		description: string;
+
 		detail: string;
 	})[] {
 		// seems incomplete, but only name/tier are necessary for the SiteEnvelope to pick the right sku

@@ -22,8 +22,11 @@ import { EnvironmentTreeItem } from "./EnvironmentTreeItem";
 
 export class ActionsTreeItem extends AzExtParentTreeItem {
 	public static contextValue: string = "azureStaticActions";
+
 	public readonly contextValue: string = ActionsTreeItem.contextValue;
+
 	public readonly childTypeLabel: string = localize("action", "action");
+
 	public parent!: EnvironmentTreeItem;
 
 	constructor(parent: EnvironmentTreeItem) {

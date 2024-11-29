@@ -34,21 +34,30 @@ export class SwaAppSettingsClientProvider implements AppSettingsClientProvider {
 
 export class SwaAppSettingsClient implements IAppSettingsClient {
 	public fullName: string;
+
 	public isLinux: boolean;
 
 	private _parentName: string;
+
 	private _resourceGroup: string;
+
 	private _prId: string;
+
 	private _isBuild: boolean;
+
 	private _client: WebSiteManagementClient;
 
 	constructor(node: EnvironmentTreeItem, client: WebSiteManagementClient) {
 		this._client = client;
+
 		this._parentName = node.parent.name;
+
 		this.fullName = `${this._parentName}/${node.branch}`;
+
 		this._resourceGroup = node.parent.resourceGroup;
 
 		this._prId = node.buildId;
+
 		this._isBuild = !node.isProduction;
 
 		// For IAppSettingsClient, isLinux is used for app settings key validation and Linux app settings restrictions

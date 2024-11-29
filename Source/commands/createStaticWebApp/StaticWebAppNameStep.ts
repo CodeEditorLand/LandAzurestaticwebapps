@@ -34,6 +34,7 @@ export class StaticWebAppNameStep extends AzureNameStep<IStaticWebAppWizardConte
 			"staticWebAppNamePrompt",
 			"Enter a name for the new static web app.",
 		);
+
 		context.newStaticWebAppName = (
 			await context.ui.showInputBox({
 				prompt,
@@ -46,6 +47,7 @@ export class StaticWebAppNameStep extends AzureNameStep<IStaticWebAppWizardConte
 		).trim();
 
 		context.valuesToMask.push(context.newStaticWebAppName);
+
 		context.relatedNameTask = this.getRelatedName(
 			context,
 			context.newStaticWebAppName,

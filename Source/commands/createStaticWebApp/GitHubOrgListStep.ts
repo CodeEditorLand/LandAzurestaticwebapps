@@ -41,6 +41,7 @@ export class GitHubOrgListStep extends AzureWizardPromptStep<IStaticWebAppWizard
 		} while (!orgData);
 
 		context.orgData = orgData;
+
 		context.valuesToMask.push(context.orgData.login);
 	}
 
@@ -77,6 +78,7 @@ export class GitHubOrgListStep extends AzureWizardPromptStep<IStaticWebAppWizard
 
 		const orgRes: OctokitResponse<ListOrgsForUserData[]> =
 			await octokitClient.orgs.listForAuthenticatedUser();
+
 		quickPickItems = quickPickItems.concat(
 			createQuickPickFromJsons<
 				ListOrgsForUserData | OrgForAuthenticatedUserData

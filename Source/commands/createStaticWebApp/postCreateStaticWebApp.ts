@@ -47,6 +47,7 @@ export async function postCreateStaticWebApp(
 			if (!realSwaNode) {
 				return;
 			}
+
 			const productionEnv: EnvironmentTreeItem | undefined = <
 				EnvironmentTreeItem | undefined
 			>(await realSwaNode.loadAllChildren(context)).find((ti) => {
@@ -147,6 +148,7 @@ export async function postCreateStaticWebApp(
 								'Deployment for "{0}" has failed. Commit and push changes to the GitHub repository to create a new deployment.',
 								swaNode.name,
 							);
+
 					ext.outputChannel.appendLog(deploymentMsg);
 
 					const browseWebsite: MessageItem = {
@@ -156,6 +158,7 @@ export async function postCreateStaticWebApp(
 					const msgItem: MessageItem = success
 						? browseWebsite
 						: showActionsMsg;
+
 					void window
 						.showInformationMessage(deploymentMsg, msgItem)
 						.then(async (input) => {
@@ -170,6 +173,7 @@ export async function postCreateStaticWebApp(
 						});
 				}
 			}
+
 			return;
 		},
 	);

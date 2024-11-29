@@ -57,6 +57,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 							Object.entries(
 								swaCliConfigFile?.configurations ?? [],
 							).length;
+
 						result.push(
 							...Object.entries(
 								swaCliConfigFile?.configurations ?? [],
@@ -74,9 +75,11 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 						context,
 						folder,
 					);
+
 					context.telemetry.measurements.appCount = appFolders.length;
 
 					const foundPresets: IBuildPreset[] = [];
+
 					appFolders.forEach((appFolder) => {
 						const buildPreset = buildPresets.find((preset) =>
 							appFolder.frameworks.find(
@@ -86,6 +89,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 
 						if (buildPreset) {
 							foundPresets.push(buildPreset);
+
 							result.push(
 								this.createDebugConfiguration(
 									path.basename(appFolder.uri.fsPath),
@@ -117,11 +121,14 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 			"staticWebApps.resolveDebugConfiguration",
 			async (context: IActionContext) => {
 				context.telemetry.properties.isActivationEvent = "true";
+
 				context.errorHandling.suppressDisplay = true;
+
 				context.telemetry.suppressIfSuccessful = true;
 
 				if (this.isSwaDebugConfig(debugConfiguration)) {
 					context.telemetry.properties.isActivationEvent = "false";
+
 					context.telemetry.suppressIfSuccessful = false;
 
 					if (!folder) {
@@ -175,6 +182,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 							const fixMi: MessageItem = {
 								title: localize("fix", "Fix"),
 							};
+
 							void context.ui
 								.showWarningMessage(
 									localize(
@@ -190,6 +198,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 								.then(async (action) => {
 									if (action === fixMi) {
 										config.apiLocation = funcAddress;
+
 										await AzExtFsExtra.writeJSON(
 											Uri.joinPath(
 												folder.uri,
@@ -203,6 +212,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 
 						if (!cancellationToken.isCancellationRequested) {
 							context.telemetry.properties.debugApi = "true";
+
 							await this.startDebuggingFunctions(folder);
 						}
 					}
@@ -241,6 +251,7 @@ export class StaticWebAppDebugProvider implements DebugConfigurationProvider {
 				"azureFunctions.initProjectForVSCode",
 				folder.uri.fsPath,
 			);
+
 			funcConfig = this.getFuncDebugConfig(folder);
 		}
 

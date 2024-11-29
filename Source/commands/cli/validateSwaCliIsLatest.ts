@@ -29,6 +29,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 		"staticWebApps.validateStaticWebAppsCliIsLatest",
 		async (context: IActionContext) => {
 			context.errorHandling.suppressDisplay = true;
+
 			context.telemetry.properties.isActivationEvent = "true";
 
 			const showSwaCliWarningKey: string = "showStaticWebAppsCliWarning";
@@ -39,6 +40,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 			if (!(await verifyHasNpm(context))) {
 				return;
 			}
+
 			context.telemetry.properties.hasNpm = "true";
 
 			if (showSwaCliWarning) {
@@ -48,6 +50,7 @@ export async function validateStaticWebAppsCliIsLatest(): Promise<void> {
 				if (!installedVersion) {
 					return;
 				}
+
 				context.telemetry.properties.localVersion = installedVersion;
 
 				const newestVersion: string | undefined =

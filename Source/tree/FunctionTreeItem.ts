@@ -15,7 +15,9 @@ import { FunctionsTreeItem } from "./FunctionsTreeItem";
 
 export class FunctionTreeItem extends AzExtTreeItem {
 	public static contextValue: string = "azureStaticFunction";
+
 	public readonly contextValue: string = FunctionTreeItem.contextValue;
+
 	public data: StaticSiteFunctionOverviewARMResource;
 
 	constructor(
@@ -23,6 +25,7 @@ export class FunctionTreeItem extends AzExtTreeItem {
 		func: StaticSiteFunctionOverviewARMResource,
 	) {
 		super(parent);
+
 		this.data = func;
 	}
 

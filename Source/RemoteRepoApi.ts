@@ -20,6 +20,7 @@ export class RemoteRepoApi
 	implements apiUtils.AzureExtensionApiProvider, IGit, vscode.Disposable
 {
 	private static _handlePool: number = 0;
+
 	private _providers = new Map<number, IGit>();
 
 	public get repositories(): RemoteRepository[] {
@@ -64,15 +65,22 @@ export class RemoteRepoApi
 	]).getApi;
 
 	private _onDidOpenRepository = new vscode.EventEmitter<RemoteRepository>();
+
 	readonly onDidOpenRepository: vscode.Event<RemoteRepository> =
 		this._onDidOpenRepository.event;
+
 	private _onDidCloseRepository = new vscode.EventEmitter<RemoteRepository>();
+
 	readonly onDidCloseRepository: vscode.Event<RemoteRepository> =
 		this._onDidCloseRepository.event;
+
 	private _onDidChangeState = new vscode.EventEmitter<APIState>();
+
 	readonly onDidChangeState: vscode.Event<APIState> =
 		this._onDidChangeState.event;
+
 	private _onDidPublish = new vscode.EventEmitter<PublishEvent>();
+
 	readonly onDidPublish: vscode.Event<PublishEvent> =
 		this._onDidPublish.event;
 
@@ -89,6 +97,7 @@ export class RemoteRepoApi
 			},
 			0,
 		);
+
 		void vscode.commands.executeCommand(
 			"setContext",
 			"gitHubOpenRepositoryCount",
@@ -98,6 +107,7 @@ export class RemoteRepoApi
 
 	registerGitProvider(provider: IGit): vscode.Disposable {
 		const handle = this._nextHandle();
+
 		this._providers.set(handle, provider);
 
 		this._disposables.push(
@@ -105,9 +115,11 @@ export class RemoteRepoApi
 				this._onDidCloseRepository.fire(e),
 			),
 		);
+
 		this._disposables.push(
 			provider.onDidOpenRepository((e) => {
 				this._updateReposContext();
+
 				this._onDidOpenRepository.fire(e);
 			}),
 		);
@@ -119,6 +131,7 @@ export class RemoteRepoApi
 				),
 			);
 		}
+
 		if (provider.onDidPublish) {
 			this._disposables.push(
 				provider.onDidPublish((e) => this._onDidPublish.fire(e)),
@@ -126,6 +139,7 @@ export class RemoteRepoApi
 		}
 
 		this._updateReposContext();
+
 		provider.repositories.forEach((repository) => {
 			this._onDidOpenRepository.fire(repository);
 		});
@@ -137,6 +151,7 @@ export class RemoteRepoApi
 				if (repos && repos.length > 0) {
 					repos.forEach((r) => this._onDidCloseRepository.fire(r));
 				}
+
 				this._providers.delete(handle);
 			},
 		};
@@ -152,6 +167,7 @@ export class RemoteRepoApi
 						provider,
 					);
 				}
+
 				return {
 					dispose: (): void => {
 						// do nothing

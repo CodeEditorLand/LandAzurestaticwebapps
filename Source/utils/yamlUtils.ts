@@ -12,6 +12,7 @@ import { localize } from "./localize";
 
 type BuildDeployStep = {
 	id?: "builddeploy";
+
 	with?: BuildConfigs;
 };
 

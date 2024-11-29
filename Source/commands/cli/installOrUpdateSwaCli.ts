@@ -24,6 +24,7 @@ export async function installOrUpdateSwaCli(
 		)
 	) {
 		ext.outputChannel.show();
+
 		await cpUtils.executeCommand(
 			ext.outputChannel,
 			undefined,

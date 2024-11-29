@@ -11,6 +11,7 @@ export interface AzureFunctionsExtensionApi {
 	createFunction(options: ICreateFunctionOptions): Promise<void>;
 
 	downloadAppSettings(client: IAppSettingsClient): Promise<void>;
+
 	uploadAppSettings(
 		client: IAppSettingsClient,
 		exclude?: (RegExp | string)[],
@@ -29,7 +30,9 @@ export type ProjectVersion = "~1" | "~2" | "~3" | "~4";
 
 export interface IAppSettingsClient {
 	fullName: string;
+
 	listApplicationSettings(): Promise<IStringDictionary>;
+
 	updateApplicationSettings(
 		appSettings: IStringDictionary,
 	): Promise<IStringDictionary>;

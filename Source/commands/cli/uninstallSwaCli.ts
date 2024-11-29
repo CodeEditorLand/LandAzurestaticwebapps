@@ -32,6 +32,7 @@ export async function uninstallSwaCli(context: IActionContext): Promise<void> {
 		}
 
 		ext.outputChannel.show();
+
 		await cpUtils.executeCommand(
 			ext.outputChannel,
 			undefined,

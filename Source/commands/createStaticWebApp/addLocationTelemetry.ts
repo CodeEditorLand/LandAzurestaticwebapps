@@ -12,8 +12,10 @@ export function addLocationTelemetry(
 	valueFromSetting?: string,
 ): void {
 	const value: string | undefined = context[key];
+
 	context.telemetry.properties[`${key}HasSetting`] =
 		(!!valueFromSetting).toString();
+
 	context.telemetry.properties[`${key}MatchesSetting`] = (
 		defaultValue === valueFromSetting
 	).toString();

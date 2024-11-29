@@ -42,9 +42,11 @@ export async function openGitHubLog(
 			new Date(node.data.started_at ?? ""),
 			new Date(node.data.completed_at ?? ""),
 		);
+
 		content = logState.filteredJobsLog.length
 			? logState.filteredJobsLog.join(EOL)
 			: localize("noLogs", "There are no logs to display for this step.");
+
 		foldingRanges = createFoldingRanges(logState);
 	} catch (err) {
 		if (parseError(err).errorType !== "410") {

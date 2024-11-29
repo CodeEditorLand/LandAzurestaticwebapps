@@ -35,7 +35,9 @@ export async function setGitWorkspaceContexts(
 		);
 
 	await warnIfNotOnDefaultBranch(context, verifiedWorkspace);
+
 	context.uri = folder.uri;
+
 	context.repo = verifiedWorkspace.repo;
 
 	if (gitWorkspaceState.remoteRepo) {
@@ -58,12 +60,14 @@ export async function setGitWorkspaceContexts(
 					),
 				},
 			);
+
 			await verifiedWorkspace.repo.push(
 				"origin",
 				verifiedWorkspace.repo.state.HEAD?.name,
 				true,
 			);
 		}
+
 		context.branchData = { name: verifiedWorkspace.repo.state.HEAD?.name };
 	} else {
 		if (!context.advancedCreation) {
@@ -76,6 +80,8 @@ export async function setGitWorkspaceContexts(
 	}
 
 	const origin: string = "origin";
+
 	context.originExists = await remoteShortnameExists(folder.uri, origin);
+
 	context.newRemoteShortname = context.originExists ? undefined : origin;
 }

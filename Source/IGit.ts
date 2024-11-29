@@ -10,14 +10,20 @@ import { Metadata, PostCommitCommandsProvider } from "./rrapi";
 
 export interface IGit {
 	readonly repositories: Repository[];
+
 	readonly onDidOpenRepository: Event<Repository>;
+
 	readonly onDidCloseRepository: Event<Repository>;
+
 	openRepository(root: Uri): Promise<Repository | null>;
 
 	// Used by the actual git extension to indicate it has finished initializing state information
 	readonly state?: APIState;
+
 	readonly metadata?: Metadata;
+
 	readonly onDidChangeState?: Event<APIState>;
+
 	readonly onDidPublish?: Event<PublishEvent>;
 
 	registerPostCommitCommandsProvider?(

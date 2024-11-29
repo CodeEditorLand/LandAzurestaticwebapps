@@ -51,18 +51,23 @@ export function convertTaskLabel(label: string, type: string): string {
 
 export interface ITasksJson {
 	version: string;
+
 	tasks?: ITask[];
 }
 
 export interface ITask extends TaskDefinition {
 	label?: string;
+
 	command?: string;
+
 	options?: ITaskOptions;
+
 	dependsOn?: string[];
 }
 
 export interface ITaskOptions {
 	cwd?: string;
+
 	env?: {
 		[key: string]: string;
 	};
@@ -92,6 +97,7 @@ export class SwaTask extends Task {
 			execution,
 			swaWatchProblemMatcher,
 		);
+
 		this.isBackground = true;
 	}
 }

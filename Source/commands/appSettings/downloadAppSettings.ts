@@ -35,6 +35,7 @@ export async function downloadAppSettings(
 
 	const client: IAppSettingsClient =
 		await node.clientProvider.createClient(context);
+
 	await node.runWithTemporaryDescription(
 		context,
 		localize("downloading", "Downloading..."),

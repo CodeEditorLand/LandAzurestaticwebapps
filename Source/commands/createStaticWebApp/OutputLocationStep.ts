@@ -47,6 +47,7 @@ export class OutputLocationStep extends AzureWizardPromptStep<IStaticWebAppWizar
 							"Fill in the name of your Angular project.",
 						);
 					}
+
 					return validateLocationYaml(value, "output_location");
 				},
 			})

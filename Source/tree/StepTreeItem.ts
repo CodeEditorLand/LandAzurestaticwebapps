@@ -15,13 +15,18 @@ export class StepTreeItem
 	implements IAzureResourceTreeItem
 {
 	public static contextValue: string = "azureStaticStep";
+
 	public readonly contextValue: string = StepTreeItem.contextValue;
+
 	public parent!: JobTreeItem;
+
 	public data: ActionWorkflowStepData;
 
 	constructor(parent: JobTreeItem, data: ActionWorkflowStepData) {
 		super(parent);
+
 		this.data = data;
+
 		this.commandId = "staticWebApps.openGitHubLog";
 	}
 

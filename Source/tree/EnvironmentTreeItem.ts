@@ -48,33 +48,47 @@ export class EnvironmentTreeItem
 	implements IAzureResourceTreeItem
 {
 	public static contextValue: string = "azureStaticEnvironment";
+
 	public readonly contextValue: string = EnvironmentTreeItem.contextValue;
 
 	public parent!: AzExtParentTreeItem &
 		ResolvedAppResourceTreeItem<ResolvedStaticWebApp>;
+
 	public data: StaticSiteBuildARMResource;
 
 	public actionsTreeItem!: ActionsTreeItem;
+
 	public gitHubConfigGroupTreeItems!: WorkflowGroupTreeItem[];
+
 	public appSettingsTreeItem?: AppSettingsTreeItem;
+
 	public functionsTreeItem?: FunctionsTreeItem;
 
 	public name: string;
+
 	public label: string;
+
 	public repositoryUrl: string;
+
 	public branch: string;
+
 	public buildId: string;
+
 	public localProjectPath: Uri | undefined;
 
 	public isProduction: boolean;
+
 	public inWorkspace!: boolean;
 
 	constructor(parent: AzExtParentTreeItem, env: StaticSiteBuildARMResource) {
 		super(parent);
+
 		this.data = env;
 
 		this.name = nonNullProp(this.data, "name");
+
 		this.id = nonNullProp(this.data, "id");
+
 		this.buildId = nonNullProp(this.data, "buildId");
 
 		this.repositoryUrl = this.parent.repositoryUrl;
@@ -146,6 +160,7 @@ export class EnvironmentTreeItem
 
 		if (!this.functionsTreeItem || !this.appSettingsTreeItem) {
 			context.telemetry.properties.hasFunctions = "false";
+
 			children.push(
 				new GenericTreeItem(this, {
 					label: localize(
@@ -159,6 +174,7 @@ export class EnvironmentTreeItem
 			);
 		} else {
 			context.telemetry.properties.hasFunctions = "true";
+
 			children.push(this.appSettingsTreeItem, this.functionsTreeItem);
 		}
 
@@ -179,6 +195,7 @@ export class EnvironmentTreeItem
 			'Deleting environment "{0}"...',
 			this.label,
 		);
+
 		await window.withProgress(
 			{ location: ProgressLocation.Notification, title: deleting },
 			async (): Promise<void> => {
@@ -186,6 +203,7 @@ export class EnvironmentTreeItem
 
 				const client: WebSiteManagementClient =
 					await createWebSiteClient([context, this]);
+
 				await client.staticSites.beginDeleteStaticSiteBuildAndWait(
 					this.parent.resourceGroup,
 					this.parent.name,
@@ -197,7 +215,9 @@ export class EnvironmentTreeItem
 					'Successfully deleted environment "{0}".',
 					this.label,
 				);
+
 				void window.showInformationMessage(deleteSucceeded);
+
 				ext.outputChannel.appendLog(deleteSucceeded);
 			},
 		);
@@ -226,6 +246,7 @@ export class EnvironmentTreeItem
 				if (!this.appSettingsTreeItem) {
 					throw new Error(noApiError);
 				}
+
 				return this.appSettingsTreeItem;
 			}
 
@@ -238,6 +259,7 @@ export class EnvironmentTreeItem
 				if (!this.functionsTreeItem) {
 					throw new Error(noApiError);
 				}
+
 				return this.functionsTreeItem;
 			}
 
@@ -272,11 +294,13 @@ export class EnvironmentTreeItem
 			context,
 			this,
 		]);
+
 		this.data = await client.staticSites.getStaticSiteBuild(
 			this.parent.resourceGroup,
 			this.parent.name,
 			this.buildId,
 		);
+
 		this.localProjectPath = getSingleRootFsPath();
 
 		this.actionsTreeItem = new ActionsTreeItem(this);
@@ -287,6 +311,7 @@ export class EnvironmentTreeItem
 				this.parent.name,
 				this.buildId,
 			);
+
 			this.appSettingsTreeItem = new AppSettingsTreeItem(
 				this,
 				new SwaAppSettingsClientProvider(this),
@@ -295,10 +320,12 @@ export class EnvironmentTreeItem
 					contextValuesToAdd: ["staticWebApps"],
 				},
 			);
+
 			this.functionsTreeItem = new FunctionsTreeItem(this);
 		} catch {
 			// if it errors here, then there is no Functions API
 			this.appSettingsTreeItem = undefined;
+
 			this.functionsTreeItem = undefined;
 		}
 
@@ -309,6 +336,7 @@ export class EnvironmentTreeItem
 		const branch: string | undefined = remote
 			? await tryGetLocalBranch()
 			: undefined;
+
 		this.inWorkspace =
 			this.parent.repositoryUrl === remote && this.branch === branch;
 

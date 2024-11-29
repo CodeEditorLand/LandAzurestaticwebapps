@@ -25,6 +25,7 @@ let _cachedContentProvider: GitHubLogContentProvider | undefined;
 function getContentProvider(): GitHubLogContentProvider {
 	if (!_cachedContentProvider) {
 		_cachedContentProvider = new GitHubLogContentProvider();
+
 		ext.context.subscriptions.push(
 			workspace.registerTextDocumentContentProvider(
 				contentScheme,
@@ -32,6 +33,7 @@ function getContentProvider(): GitHubLogContentProvider {
 			),
 		);
 	}
+
 	return _cachedContentProvider;
 }
 
@@ -59,10 +61,12 @@ export async function openGitHubLogContent(
 
 export class GitHubLogContent {
 	private _content: string;
+
 	private _foldingRanges: FoldingRange[];
 
 	constructor(content: string, foldingRanges: FoldingRange[]) {
 		this._content = content;
+
 		this._foldingRanges = foldingRanges;
 	}
 
@@ -103,9 +107,11 @@ class GitHubLogContentProvider implements TextDocumentContentProvider {
 			content,
 			foldingRanges,
 		);
+
 		this._contentMap.set(uri.toString(), gitHubLogContent);
 
 		await window.showTextDocument(uri);
+
 		await commands.executeCommand("editor.foldAll", uri);
 
 		return gitHubLogContent;

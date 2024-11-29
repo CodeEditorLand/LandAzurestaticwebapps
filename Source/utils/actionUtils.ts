@@ -34,24 +34,28 @@ export function getActionIconPath(
 		switch (ensureConclusion(data)) {
 			case Conclusion.Cancelled:
 				id = "circle-slash";
+
 				colorId = "testing.iconUnset";
 
 				break;
 
 			case Conclusion.Failure:
 				id = "error";
+
 				colorId = "testing.iconFailed";
 
 				break;
 
 			case Conclusion.Skipped:
 				id = "debug-step-over";
+
 				colorId = "testing.iconSkipped";
 
 				break;
 
 			case Conclusion.Success:
 				id = "pass";
+
 				colorId = "testing.iconPassed";
 
 				break;
@@ -60,18 +64,21 @@ export function getActionIconPath(
 		switch (ensureStatus(data)) {
 			case Status.Queued:
 				id = "clock";
+
 				colorId = "testing.iconQueued";
 
 				break;
 
 			case Status.InProgress:
 				id = "play-circle";
+
 				colorId = "testing.iconUnset";
 
 				break;
 
 			case Status.Completed:
 				id = "pass";
+
 				colorId = "testing.iconPassed";
 
 				break;

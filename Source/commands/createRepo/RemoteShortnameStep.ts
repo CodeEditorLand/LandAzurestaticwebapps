@@ -27,6 +27,7 @@ export class RemoteShortnameStep extends AzureWizardPromptStep<IStaticWebAppWiza
 					"enterRemote",
 					"Enter a unique shortname for the remote Git repository",
 				);
+
 		context.newRemoteShortname = await context.ui.showInputBox({
 			prompt,
 			value: context.originExists ? undefined : "origin",

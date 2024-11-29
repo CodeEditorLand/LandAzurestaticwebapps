@@ -10,11 +10,15 @@ import { BuildConfig, WorkflowGroupTreeItem } from "./WorkflowGroupTreeItem";
 
 export class WorkflowTreeItem extends AzExtTreeItem {
 	public static contextValue: string = "azureStaticWorkflow";
+
 	public contextValue: string = WorkflowTreeItem.contextValue;
 
 	public commandArgs: unknown[];
+
 	public readonly buildConfig: string;
+
 	public buildConfigValue: string;
+
 	public parent!: WorkflowGroupTreeItem;
 
 	public constructor(
@@ -23,10 +27,13 @@ export class WorkflowTreeItem extends AzExtTreeItem {
 		buildConfigValue: string,
 	) {
 		super(parent);
+
 		this.buildConfig = buildConfig;
+
 		this.buildConfigValue = buildConfigValue;
 
 		this.commandId = "staticWebApps.openYAMLConfigFile";
+
 		this.commandArgs = [this.parent, undefined, this.buildConfig];
 	}
 

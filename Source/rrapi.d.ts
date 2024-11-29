@@ -15,8 +15,11 @@ export interface InputBox {
 // unique to Remote Repositories API
 export interface RefQuery {
 	readonly contains?: string;
+
 	readonly count?: number;
+
 	readonly pattern?: string;
+
 	readonly sort?: "alphabetically" | "committerdate";
 }
 
@@ -25,6 +28,7 @@ export interface RemoteRepository extends Repository {
 		query: RefQuery,
 		cancellationToken?: CancellationToken,
 	): Promise<Ref[]>;
+
 	add?(paths: string[]): Promise<void>;
 }
 
@@ -53,6 +57,7 @@ export interface RepositoryDescriptor {
 
 export interface Metadata<T extends RepositoryMetadata = RepositoryMetadata> {
 	readonly revision: string | undefined;
+
 	readonly cachedMetadata?: Readonly<T>;
 }
 
@@ -84,6 +89,7 @@ export const enum PullRequestState {
 
 export interface IncomingChange {
 	uri: Uri;
+
 	type: OperationType;
 }
 
@@ -122,11 +128,14 @@ export interface RepositoryMetadata<
 				name: string;
 				/** The current HEAD commit SHA */
 				sha: string;
+
 				detached?: undefined;
 				/** The current branch including the branch's tip SHA */
 				branch: {
 					name: string;
+
 					sha: string;
+
 					remote?: undefined;
 				};
 		  }
@@ -137,14 +146,19 @@ export interface RepositoryMetadata<
 				name: string;
 				/** The current HEAD commit SHA */
 				sha: string;
+
 				detached?: undefined;
 				/** The current branch including the branch's tip SHA */
 				branch: {
 					name: string;
+
 					sha: string;
+
 					remote: {
 						name: string;
+
 						accessLevel: AccessLevel;
+
 						repo: T;
 					};
 				};
@@ -159,8 +173,10 @@ export interface RepositoryMetadata<
 				/** Indicates if the current HEAD is detached (e.g. not on a branch) */
 				detached: {
 					type: HeadType.Tag;
+
 					name: string;
 				};
+
 				branch?: undefined;
 		  }
 		| {
@@ -173,19 +189,24 @@ export interface RepositoryMetadata<
 				/** Indicates if the current HEAD is detached (e.g. not on a branch) */
 				detached: {
 					type: HeadType.Commit;
+
 					name: string;
 				};
+
 				branch?: undefined;
 		  };
 	/** The repository's default branch including the branch's tip SHA */
 	defaultBranch: {
 		name: string;
+
 		sha: string;
 	};
 	/** Optional. The pull request, if the repository was opened to a pull request */
 	pullRequest?: {
 		id: string;
+
 		state: PullRequestState;
+
 		title: string;
 	};
 	// /** The current SHA */
@@ -193,11 +214,15 @@ export interface RepositoryMetadata<
 	/** Optional. The current state (think `git status`) of the current branch/SHA to the upstream */
 	state?: {
 		ahead: number;
+
 		behind: number;
+
 		incomingChanges: IncomingChange[];
 	};
+
 	cloneUrl: {
 		http: string;
+
 		ssh: string;
 	};
 }

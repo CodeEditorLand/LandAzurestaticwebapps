@@ -24,14 +24,19 @@ export interface IStaticWebAppWizardContext
 	extends IResourceGroupWizardContext,
 		ExecuteActivityContext {
 	advancedCreation?: boolean;
+
 	accessToken: string;
+
 	client: WebSiteManagementClient;
 
 	orgData?: OrgForAuthenticatedUserData | ListOrgsForUserData;
+
 	branchData?: Partial<BranchData>;
+
 	repoHtmlUrl?: string;
 
 	repo?: Repository;
+
 	uri?: Uri;
 
 	// Function projects detected via host.json at SWA create time
@@ -40,7 +45,9 @@ export interface IStaticWebAppWizardContext
 	newStaticWebAppName?: string;
 
 	newRepoName?: string;
+
 	newRepoIsPrivate?: boolean;
+
 	newRemoteShortname?: string;
 
 	originExists?: boolean;
@@ -50,7 +57,9 @@ export interface IStaticWebAppWizardContext
 	buildPreset?: IBuildPreset;
 
 	appLocation?: string;
+
 	apiLocation?: string;
+
 	outputLocation?: string;
 
 	sku?: SkuDescription;

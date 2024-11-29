@@ -65,6 +65,7 @@ export async function openYAMLConfigFile(
 				"selectGitHubConfig",
 				"Select the GitHub workflow file to open.",
 			);
+
 			yamlFileUri = Uri.file(
 				(await context.ui.showQuickPick(picks, { placeHolder })).data,
 			);
@@ -96,6 +97,7 @@ export async function openYAMLConfigFile(
 		buildConfigToSelect as BuildConfig,
 		node instanceof WorkflowGroupTreeItem ? node : undefined,
 	);
+
 	await window.showTextDocument(configDocument, { selection });
 }
 
@@ -158,8 +160,11 @@ export async function tryGetSelection(
 				if (range && range.end) {
 					// Range isn't zero-indexed by default
 					range.start.line--;
+
 					range.start.col--;
+
 					range.end.line--;
+
 					range.end.col--;
 
 					if (cstNode?.comment) {

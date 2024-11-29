@@ -15,6 +15,7 @@ import { localize } from "../../utils/localize";
 interface IPackageMetadata {
 	"dist-tags": {
 		[tag: string]: string;
+
 		latest: string;
 	};
 }

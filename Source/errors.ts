@@ -18,6 +18,7 @@ export class NoWorkspaceError extends Error {
 export class VerifyingWorkspaceError extends Error {
 	constructor(context: IActionContext) {
 		super("Internal error: User is currently verifying their workspace");
+
 		context.errorHandling.suppressDisplay = true;
 	}
 }
@@ -40,7 +41,9 @@ export function handleGitError(err: unknown): void {
 
 type GitErrorType = Error & {
 	gitErrorCode: GitErrorCodes;
+
 	stdout?: string;
+
 	stderr?: string;
 };
 // copied from https://github.com/microsoft/vscode/blob/779434d2d118889e2a5a2113714ad6c8bcb3a6e3/extensions/git/src/commands.ts#L2800-L2863

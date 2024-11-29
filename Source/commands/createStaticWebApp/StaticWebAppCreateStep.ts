@@ -24,6 +24,7 @@ export class StaticWebAppCreateStep extends AzureWizardExecuteStep<IStaticWebApp
 		context: IStaticWebAppWizardContext,
 		progress: Progress<{
 			message?: string | undefined;
+
 			increment?: number | undefined;
 		}>,
 	): Promise<void> {
@@ -50,14 +51,18 @@ export class StaticWebAppCreateStep extends AzureWizardExecuteStep<IStaticWebApp
 			'Creating new static web app "{0}"...',
 			newName,
 		);
+
 		progress.report({ message: creatingSwa });
+
 		ext.outputChannel.appendLog(creatingSwa);
+
 		context.staticWebApp =
 			await context.client.staticSites.beginCreateOrUpdateStaticSiteAndWait(
 				nonNullValueAndProp(context.resourceGroup, "name"),
 				newName,
 				siteEnvelope,
 			);
+
 		context.activityResult = context.staticWebApp as AppResource;
 	}
 

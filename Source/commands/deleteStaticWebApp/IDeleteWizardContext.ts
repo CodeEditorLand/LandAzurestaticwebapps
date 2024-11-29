@@ -15,6 +15,8 @@ export interface IDeleteWizardContext
 	extends IActionContext,
 		ExecuteActivityContext {
 	node?: ResolvedStaticWebAppTreeItem;
+
 	resourceGroupToDelete?: string;
+
 	subscription: ISubscriptionContext;
 }

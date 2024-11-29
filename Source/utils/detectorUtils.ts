@@ -20,6 +20,7 @@ export async function detectAppFoldersInWorkspace(
 	const results: (DetectorResults & { uri: Uri })[] = [];
 
 	const subfolders = await getSubFolders(context, workspaceFolder.uri);
+
 	subfolders.push(workspaceFolder.uri);
 
 	const detector = new NodeDetector();

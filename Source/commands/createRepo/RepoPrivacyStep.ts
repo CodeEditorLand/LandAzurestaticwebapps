@@ -36,6 +36,7 @@ export class RepoPrivacyStep extends AzureWizardPromptStep<IStaticWebAppWizardCo
 			"selectPrivacy",
 			"Select the privacy of your repository",
 		);
+
 		context.newRepoIsPrivate = (
 			await context.ui.showQuickPick(picks, { placeHolder })
 		).data;

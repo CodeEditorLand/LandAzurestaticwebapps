@@ -35,6 +35,7 @@ export async function createSwaConfigFile(
 		const overwrite: MessageItem = {
 			title: localize("overwrite", "Overwrite"),
 		};
+
 		await context.ui.showWarningMessage(
 			configFileExists,
 			{ modal: true },
@@ -43,6 +44,7 @@ export async function createSwaConfigFile(
 	}
 
 	await AzExtFsExtra.writeFile(configFilePath, exampleConfigFile);
+
 	await window.showTextDocument(configFilePath);
 }
 

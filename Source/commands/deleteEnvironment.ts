@@ -40,10 +40,12 @@ export async function deleteEnvironment(
 		'Are you sure you want to delete environment "{0}"?',
 		node.label,
 	);
+
 	await context.ui.showWarningMessage(
 		confirmMessage,
 		{ modal: true },
 		DialogResponses.deleteResponse,
 	);
+
 	await node.deleteTreeItem(context);
 }

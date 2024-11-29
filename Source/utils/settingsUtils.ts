@@ -23,6 +23,7 @@ export async function updateWorkspaceSetting<T = string>(
 ): Promise<void> {
 	const projectConfiguration: WorkspaceConfiguration =
 		workspace.getConfiguration(prefix, uri);
+
 	await projectConfiguration.update(section, value);
 }
 
@@ -50,6 +51,7 @@ export async function updateGlobalSetting<T = string>(
 ): Promise<void> {
 	const projectConfiguration: WorkspaceConfiguration =
 		workspace.getConfiguration(prefix);
+
 	await projectConfiguration.update(
 		section,
 		value,

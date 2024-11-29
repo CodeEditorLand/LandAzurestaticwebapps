@@ -29,10 +29,14 @@ export class ActionTreeItem
 	implements IAzureResourceTreeItem
 {
 	public static contextValueCompleted: string = "azureStaticActionCompleted";
+
 	public static contextValueInProgress: string =
 		"azureStaticActionInProgress";
+
 	public parent!: ActionsTreeItem;
+
 	public childTypeLabel: string = localize("job", "job");
+
 	public data: ActionsGetWorkflowRunResponseData;
 
 	constructor(
@@ -40,6 +44,7 @@ export class ActionTreeItem
 		data: ActionsGetWorkflowRunResponseData,
 	) {
 		super(parent);
+
 		this.data = data;
 	}
 
@@ -107,6 +112,7 @@ export class ActionTreeItem
 				repo: name,
 				run_id: this.data.id,
 			});
+
 		this.data = response.data;
 	}
 
