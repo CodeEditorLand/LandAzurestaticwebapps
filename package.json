@@ -432,13 +432,13 @@
 		"dayjs": "1.11.13",
 		"git-url-parse": "16.0.0",
 		"semver": "7.6.3",
-		"yaml": "2.6.1"
+		"yaml": "2.7.0"
 	},
 	"devDependencies": {
 		"@octokit/types": "13.6.2",
 		"@types/fs-extra": "11.0.4",
 		"@types/git-url-parse": "9.0.3",
-		"@types/node": "22.10.1",
+		"@types/node": "22.10.5",
 		"@types/semver": "7.5.8",
 		"fs-extra": "11.2.0",
 		"glob": "11.0.0",
