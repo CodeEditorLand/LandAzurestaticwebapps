@@ -438,7 +438,7 @@
 		"@octokit/types": "13.7.0",
 		"@types/fs-extra": "11.0.4",
 		"@types/git-url-parse": "9.0.3",
-		"@types/node": "22.10.7",
+		"@types/node": "22.10.9",
 		"@types/semver": "7.5.8",
 		"fs-extra": "11.3.0",
 		"glob": "11.0.1",
